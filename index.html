@@ -7,51 +7,124 @@
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="assets/libs/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="assets/libs/simplemde/simplemde.min.css">
+        <link rel="stylesheet" href="assets/libs/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="assets/css/styles.css">
     </head>
     <body ng-app="nanodesuApp">
-        <div class="header">
-            <div class="navbar navbar-default" role="navigation">
-                <div class="container">
-                    <div class="navbar-header">
+        <nav class="navbar navbar-default no-margin">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header fixed-brand">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
+                    <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                </button>
+                    <a class="navbar-brand" href="#/">
+                        <i class="fa fa-rocket fa-4"></i>
+                        Nanodesu
+                    </a>
+            </div>
 
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-                            <span class="sr-only">Toogle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2">
+                            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
                         </button>
-
-                        <a ng-href="#/" class="navbar-brand">Nanodesu</a>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-                        <ul class="nav navbar-nav">
-                            <li><a ng-href="#/">Home</a></li>
-                            <li><a ng-href="#/about/">About</a></li>
+                    </li>
+                </ul>    
+            </div>
+        </nav>
+              
+        <div id="wrapper">
+            <!-- sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+                    <li class="active">
+                        <a href="#/">
+                            <span class="fa-stack fa-lg pull-left">
+                                <i class="fa fa-dashboard fa-stack-1x"></i>
+                            </span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="fa-stack fa-lg pull-left">
+                                <i class="fa fa-flag fa-stack-1x"></i>
+                            </span>
+                            Dropdown Menu
+                        </a>
+                        <ul class="nav-pilss nav-stacked" style="list-style-type:none;"?
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg pull-left">
+                                        <i class="fa fa-flag fa-stack-1x"></i>
+                                    </span>
+                                    Dropdwon Menu 1
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg pull-left">
+                                        <i class="fa fa-flag fa-stack-1x"></i>
+                                    </span>
+                                    Dropdwon Menu 2
+                                </a>
+                            </li>
                         </ul>
-                        
-                    </div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="fa-stack fa-lg pull-left">
+                                <i class="fa fa-flag fa-stack-1x"></i>
+                            </span>
+                            Another Dropdown Menu
+                        </a>
+                        <ul class="nav-pilss nav-stacked" style="list-style-type:none;"?
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg pull-left">
+                                        <i class="fa fa-flag fa-stack-1x"></i>
+                                    </span>
+                                    Dropdwon Menu 1
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg pull-left">
+                                        <i class="fa fa-flag fa-stack-1x"></i>
+                                    </span>
+                                    Dropdwon Menu 2
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#/about">
+                            <span class="fa-stack fa-lg pull-left">
+                                <i class="fa fa-server fa-stack-1x"></i>
+                            </span>
+                            About
+                        </a>
+                    </li>
+                </ul>
+        </div><!-- /#sidebar-wrapper -->
+        
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid xyz">
+                <div ng-view="">
+                    <!-- content loaded in here -->
                 </div>
             </div>
         </div>
-
-        <div class="container">
-            <div ng-view=""></div>
-        </div>
         
-        <div class="footer">
-            <div class="container">
-                <p><span class="glyphicon glyphicon-heart"></span> Nanodesu</p>
-            </div>
-        </div>
-
         <script src="assets/libs/jquery/jquery.js"></script>
         <script src="assets/libs/angular/angular.js"></script>
         <script src="assets/libs/bootstrap/js/bootstrap.js"></script>
         <script src="assets/libs/angular-route/angular-route.min.js"></script>
         <script src="assets/libs/angular-touch/angular-touch.js"></script>
         <script src="assets/libs/simplemde/simplemde.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
             
             <script src="scripts/app.js"></script>
             <script src="scripts/controllers/main.js"></script>

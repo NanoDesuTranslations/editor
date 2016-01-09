@@ -12,7 +12,8 @@
 angular
     .module('nanodesuApp', [
         'ngRoute',
-        'ngTouch'
+        'ngTouch',
+        'ngResource'
         ])
     .config(function ($routeProvider){
         $routeProvider
@@ -25,6 +26,11 @@ angular
                 templateUrl: 'views/about.html',
                 controller: 'AboutCtrl',
                 controllerAs: 'about'
+            })
+            .when('/page/list', {
+                templateUrl: 'views/page.html',
+                controller: 'PageCtrl',
+                controllerAs: 'page'
             })
             .otherwise({
                 redirectTo: '/'

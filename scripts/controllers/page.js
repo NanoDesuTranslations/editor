@@ -9,5 +9,15 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageCtrl', function(){
-    });
+    .controller('PageCtrl', function($scope, PageService){
+        var auth = 'nano';
+        
+        //query json data
+        $scope.data = PageService.query_all(auth).query();
+        
+        //filter for pages by id series
+        $scope.seriesFilter = function(param){
+            $scope.idSeries = param;
+        }
+        //$scope.page = PageService.get_page('nano').get({'id': '4'});
+   }); 

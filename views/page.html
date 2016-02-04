@@ -1,3 +1,75 @@
-<div class="jumbotron">
-    <h1>List Page</h1>
+<h2>Pages List</h2>
+<hr />
+
+<!-- Modal -->
+<div class="modal fade" id="pages" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">List Pages</h4>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn btn-sm btn-success" ng-click="">
+                    <span class="glyphicon glyphicon-plus"></span>
+                        Create New
+                </button>
+                <hr />
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="pg in data.pages | filter: {series: idSeries}">
+                        <td>{{ pg.id }}</td>
+                        <td>{{ pg.meta.title }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" ng-click="">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger" ng-click="">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Delete
+                            </button>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- End Modal -->
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Series Name</th>
+            <th>Hierarchy</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="sr in data.series">
+            <td>{{$index + 1}}</td>
+            <td>{{ sr.name }}</td>
+            <td>{{ sr.config.hierarchy }}</td>
+            <td>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#pages" ng-click="seriesFilter(sr.id)">
+                    <span class="glyphicon glyphicon-search"></span>
+                    Show
+                </button>
+            </td>
+    </tbody>
+</table>

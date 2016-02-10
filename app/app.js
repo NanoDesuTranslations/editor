@@ -32,6 +32,14 @@ angular
                 controller: 'PageCtrl',
                 //controllerAs: 'page'
             })
+            .when('/page/:idSeries/add', {
+                templateUrl: 'partials/page_add.html',
+                controller: 'PageAddCtrl',
+            })
+            .when('/page/:idSeries/edit/:idPage', {
+                templateUrl: 'partials/page_edit.html',
+                controller: 'PageEditCtrl',
+            })
             .otherwise({
                 redirectTo: '/'
             });

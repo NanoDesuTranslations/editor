@@ -12,25 +12,42 @@ angular.module('nanodesuApp')
     .controller('PageCtrl', function($scope, PageService, $location){
         var auth = 'nano';
         
+        //query json data from api
+        $scope.data = PageService.query_all(auth).query();
+        
         /**
-        * 
+        * Make a custom URL
+        * @param {int} arg1 id Series
+        * @param {int} arg2 id Page
+        * @return location path
         */
-        $scope.redirect = function(path){
+        $scope.redirect = function(idSeries, idPage){
+            var path = "/page";
+            if(idPage != null){
+                path = "page/"+idSeries+"/edit/"+idPage;
+            }else if(idPage == null){
+                path = "page/"+idSeries+"/add";
+            }
+            console.log(path)
             $location.path(path);
             $scope.closeModal();
         }
-
+        
+        /**
+        * This function is to close modal pages after click button
+        */
         $scope.closeModal = function(){
             $('#pages').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
         }
         
-        //query json data
-        $scope.data = PageService.query_all(auth).query();
         
-        //filter for pages by id series
-        $scope.seriesFilter = function(param){
+        /**
+        * filter pages by id Series
+        */
+        $scope.pages = function(param){
+            //console.log(param)
             $scope.idSeries = param;
         }
         //$scope.page = PageService.get_page('nano').get({'id': '4'});

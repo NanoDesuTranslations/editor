@@ -12,9 +12,9 @@
                 <h4 class="modal-title">List Pages</h4>
             </div>
             <div class="modal-body">
-                <button ng-click="redirect('/page/new')" type="button" class="btn btn-sm btn-success">
+                <button ng-click="redirect(idSeries)" type="button" class="btn btn-sm btn-success">
                     <span class="glyphicon glyphicon-plus"></span>
-                        Create New
+                    Create New 
                 </button>
                 <hr />
                 <table class="table table-bordered table-striped">
@@ -29,7 +29,7 @@
                         <td>{{ pg.id }}</td>
                         <td>{{ pg.meta.title }}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary" ng-click="redirect('/page/'+pg.id)">
+                            <button class="btn btn-sm btn-primary" ng-click="redirect(idSeries, pg.id)">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 Edit
                             </button>
@@ -66,7 +66,7 @@
             <td>{{ sr.name }}</td>
             <td>{{ sr.config.hierarchy }}</td>
             <td>
-                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#pages" ng-click="seriesFilter(sr.id)">
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#pages" ng-click="pages(sr.id)">
                     <span class="glyphicon glyphicon-search"></span>
                     Show
                 </button>

@@ -9,5 +9,5 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('MainCtrl', function(){
+    .controller('HomeCtrl', function(){
     });

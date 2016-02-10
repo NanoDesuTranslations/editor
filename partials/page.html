@@ -12,7 +12,7 @@
                 <h4 class="modal-title">List Pages</h4>
             </div>
             <div class="modal-body">
-                <button type="button" class="btn btn-sm btn-success" ng-click="">
+                <button ng-click="redirect('/page/new')" type="button" class="btn btn-sm btn-success">
                     <span class="glyphicon glyphicon-plus"></span>
                         Create New
                 </button>
@@ -29,7 +29,7 @@
                         <td>{{ pg.id }}</td>
                         <td>{{ pg.meta.title }}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary" ng-click="">
+                            <button class="btn btn-sm btn-primary" ng-click="redirect('/page/'+pg.id)">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 Edit
                             </button>

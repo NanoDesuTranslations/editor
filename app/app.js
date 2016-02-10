@@ -18,19 +18,19 @@ angular
     .config(function ($routeProvider){
         $routeProvider
             .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                controllerAs: 'main'
+                templateUrl: 'partials/main.html',
+                controller: 'HomeCtrl',
+                //controllerAs: 'main'
             })
             .when('/about', {
-                templateUrl: 'views/about.html',
+                templateUrl: 'partials/about.html',
                 controller: 'AboutCtrl',
-                controllerAs: 'about'
+                //controllerAs: 'about'
             })
-            .when('/page/list', {
-                templateUrl: 'views/page.html',
+            .when('/page', {
+                templateUrl: 'partials/page.html',
                 controller: 'PageCtrl',
-                controllerAs: 'page'
+                //controllerAs: 'page'
             })
             .otherwise({
                 redirectTo: '/'

@@ -10,3 +10,6 @@ Nanodesu translation editor website project
 * angular-touch
 * angular-resource
 * [simplemde 1.9.0](https://github.com/NextStepWebs/simplemde-markdown-editor)
+
+## Folder Structure ##
+This project folder structure following style guide from [here](https://github.com/mgechev/angularjs-style-guide)

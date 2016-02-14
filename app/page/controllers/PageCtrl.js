@@ -28,7 +28,7 @@ angular.module('nanodesuApp')
             }else if(idPage == null){
                 path = "page/"+idSeries+"/add";
             }
-            console.log(path)
+            //console.log(path)
             $location.path(path);
             $scope.closeModal();
         }

@@ -31,5 +31,15 @@ angular.module('nanodesuApp')
                     }    
                 })
             },
+            save_data: function(param){
+                return $resource('pages/:id', null, {
+                    save: {
+                        method: "POST",
+                        headers: {
+                            'Authorization': param,
+                        }
+                    }
+                });
+            },
         }
     });

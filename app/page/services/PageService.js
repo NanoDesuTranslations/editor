@@ -41,5 +41,15 @@ angular.module('nanodesuApp')
                     }
                 });
             },
+            update_data: function(param){
+                return $resource('pages/:id', {id: '@id'}, {
+                    update: {
+                        method: "PUT",
+                        headers: {
+                            'Authorization': param,
+                        }
+                    }
+                });
+            }
         }
     });

@@ -43,9 +43,11 @@ angular.module('nanodesuApp')
             data.content = content;
             data.meta = meta
             //console.log(data)
-            PageService.save_data(auth).save(data, function(response){
+            PageService.save_data(auth).save(data, function(success){
                 //console.log(response)
                 alert("success")
+            }, function(error){
+                console.log(error)
             });
         }
     });

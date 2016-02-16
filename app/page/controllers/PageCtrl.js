@@ -13,7 +13,11 @@ angular.module('nanodesuApp')
         var auth = 'nano';
         
         //query json data from api
-        $scope.data = PageService.query_all(auth).query();
+        $scope.data = PageService.query_all(auth).query(function(success){
+            //console.log(success)
+        }, function(error){
+            //console.log(error)
+        });
         
         /**
         * Make a custom URL

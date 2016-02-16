@@ -56,8 +56,10 @@ angular.module('nanodesuApp')
             data.content = content;
             data.meta = meta;
 
-            PageService.update_data(auth).update({id: id}, data, function(response){
+            PageService.update_data(auth).update(data, function(success){
                 alert("success")
+            }, function(error){
+                //console.log(error.status)
             });
             //console.log(data)
         }

@@ -28,16 +28,16 @@ angular
                 //controllerAs: 'about'
             })
             .when('/page', {
-                templateUrl: 'partials/page.html',
+                templateUrl: 'partials/pages/page.html',
                 controller: 'PageCtrl',
                 //controllerAs: 'page'
             })
             .when('/page/:idSeries/add', {
-                templateUrl: 'partials/page_add.html',
+                templateUrl: 'partials/pages/pageadd.html',
                 controller: 'PageAddCtrl',
             })
             .when('/page/:idSeries/edit/:idPage', {
-                templateUrl: 'partials/page_edit.html',
+                templateUrl: 'partials/pages/pageedit.html',
                 controller: 'PageEditCtrl',
             })
             .otherwise({

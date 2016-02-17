@@ -42,7 +42,7 @@ angular.module('nanodesuApp')
                 });
             },
             update_data: function(param){
-                return $resource('pages/:id', {id: '@id'}, {
+                return $resource('pages/:id', {}, {
                     update: {
                         method: "PUT",
                         headers: {

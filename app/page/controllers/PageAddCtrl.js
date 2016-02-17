@@ -8,12 +8,20 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageAddCtrl', function($scope, $routeParams, SeriesService, PageService){
+    .controller('PageAddCtrl', function($scope, $routeParams, $location,  SeriesService, PageService){
         var auth = 'nano';
         var idSeries = $routeParams.idSeries;
         var hierarchy;
         //console.log(idSeries);
-        
+
+        /**
+        * redirect into page URL
+        */
+        $scope.redirect = function(){
+            var path = "/page";
+            $location.path(path);
+        }
+
         // get configuration of hierarchy from series
         $scope.data = SeriesService.get_all(auth).get({'id': idSeries}, function(events){
             hierarchy = events.config.hierarchy;

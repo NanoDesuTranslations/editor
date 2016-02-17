@@ -55,4 +55,12 @@ angular.module('nanodesuApp')
             $scope.idSeries = param;
         }
         //$scope.page = PageService.get_page('nano').get({'id': '4'});
+        
+        $scope.delete_data = function(idPage){
+            PageService.delete_data(auth).delete({id: idPage}, function(success){
+                console.log('success')
+            }, function(error){
+                console.log(error)
+            });
+        }
    }); 

@@ -50,6 +50,16 @@ angular.module('nanodesuApp')
                         }
                     }
                 });
+            },
+            delete_data: function(param){
+                return $resource('pages/:id', null, {
+                    delete: {
+                        method: "DELETE",
+                        headers: {
+                            'Authorization': param,
+                        }
+                    }
+                });
             }
         }
     });

@@ -40,6 +40,10 @@ angular
                 templateUrl: 'partials/pages/pageedit.html',
                 controller: 'PageEditCtrl',
             })
+            .when('/series', {
+                templateUrl: 'partials/series/series.html',
+                controller: 'SeriesCtrl',
+            })
             .otherwise({
                 redirectTo: '/'
             });

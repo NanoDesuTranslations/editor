@@ -33,11 +33,11 @@ angular
                 //controllerAs: 'page'
             })
             .when('/page/:idSeries/add', {
-                templateUrl: 'app/page/views/pageadd.html',
+                templateUrl: 'app/page/views/pageAdd.html',
                 controller: 'PageAddCtrl',
             })
             .when('/page/:idSeries/edit/:idPage', {
-                templateUrl: 'app/page/views/pageedit.html',
+                templateUrl: 'app/page/views/pageEdit.html',
                 controller: 'PageEditCtrl',
             })
             .when('/series', {

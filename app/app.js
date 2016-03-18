@@ -18,30 +18,30 @@ angular
     .config(function ($routeProvider){
         $routeProvider
             .when('/', {
-                templateUrl: 'partials/main.html',
+                templateUrl: 'app/home/views/main.html',
                 controller: 'HomeCtrl',
                 //controllerAs: 'main'
             })
             .when('/about', {
-                templateUrl: 'partials/about.html',
+                templateUrl: 'app/about/views/about.html',
                 controller: 'AboutCtrl',
                 //controllerAs: 'about'
             })
             .when('/page', {
-                templateUrl: 'partials/pages/page.html',
+                templateUrl: 'app/page/views/page.html',
                 controller: 'PageCtrl',
                 //controllerAs: 'page'
             })
             .when('/page/:idSeries/add', {
-                templateUrl: 'partials/pages/pageadd.html',
+                templateUrl: 'app/page/views/pageadd.html',
                 controller: 'PageAddCtrl',
             })
             .when('/page/:idSeries/edit/:idPage', {
-                templateUrl: 'partials/pages/pageedit.html',
+                templateUrl: 'app/page/views/pageedit.html',
                 controller: 'PageEditCtrl',
             })
             .when('/series', {
-                templateUrl: 'partials/series/series.html',
+                templateUrl: 'app/series/views/series.html',
                 controller: 'SeriesCtrl',
             })
             .otherwise({

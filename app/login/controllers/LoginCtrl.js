@@ -11,16 +11,15 @@
 angular.module('nanodesuApp')
     .controller('LoginCtrl', function($scope, $cookies, AuthService){
         $scope.logIn = function(){
-            //console.log($scope.username+""+$scope.password);
+            //console.log($scope.username+" "+$scope.password);
             var status = AuthService.login($scope.username,$scope.password);
-            if(status == "Success"){
-                console.log("Log in Success");
+            //console.log(status);
+            if(status == true){
                 $cookies.put('auth','nano');
-                AuthService.isLogin(true);
-                console.log(AuthService.isLogin())
-                //$cookies.remove('auth');
-            }else if(status == "Failed"){
-                console.log("Log in Failed");
             }
+        }
+
+        $scope.logOut = function(){
+            AuthService.logout();
         }
     });

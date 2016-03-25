@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .factory('PageService', function ($resource){
+    .factory('PageService', function ($resource,$cookies){
         //var site_url = 'http://127.0.0.1:3000/';
        
         return {
@@ -17,7 +17,8 @@ angular.module('nanodesuApp')
                 return $resource('pages/:id',null,{
                     query: {
                         headers:{
-                            'Authorization': param,
+                            'Authorization': $cookies.get('auth')
+                            //'Authorization': param,
                         }
                     }
                 })

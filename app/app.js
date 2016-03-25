@@ -21,6 +21,16 @@ angular
             .when('/', {
                 templateUrl: 'app/home/views/main.html',
                 controller: 'HomeCtrl',
+                resolve: {
+                    auth: function($cookies,$location){
+                        if($cookies.get('auth')){
+                            console.log($cookies.get('auth'));
+                        }else{
+                            $location.path('/login');
+                            alert("Failed");
+                        }
+                    }
+                }
                 //controllerAs: 'main'
             })
             .when('/login', {

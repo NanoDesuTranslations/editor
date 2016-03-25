@@ -9,16 +9,18 @@
  */
 
  angular.module('nanodesuApp')
-    .factory('SeriesService', function($resource){
-        return{
-            get_all: function(param){
-                return $resource('series/:id', null, {
-                    get: {
-                        headers: {
-                            'Authorization': param,
-                        }
-                    }
-                })
+    .factory('SeriesService', function($resource,$cookies){
+        
+        return $resource('series/:id',null,{
+            get:{
+                headers:{
+                    'Authorization': auth
+                }
             }
+        });
+        
+        function auth(){
+            var token = $cookies.get('auth');
+            return token;
         }
     });

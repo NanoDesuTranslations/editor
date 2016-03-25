@@ -13,7 +13,7 @@ angular.module('nanodesuApp')
         var auth = 'nano';
         
         //query json data from api
-        $scope.data = PageService.query_all(auth).query(function(success){
+        $scope.data = PageService.query(function(success){
             //console.log(success)
         }, function(error){
             //console.log(error)
@@ -57,7 +57,7 @@ angular.module('nanodesuApp')
         //$scope.page = PageService.get_page('nano').get({'id': '4'});
         
         $scope.delete_data = function(idPage){
-            PageService.delete_data(auth).delete({id: idPage}, function(success){
+            PageService.delete({id: idPage}, function(success){
                 console.log('success')
             }, function(error){
                 console.log(error)

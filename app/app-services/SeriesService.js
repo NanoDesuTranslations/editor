@@ -9,17 +9,40 @@
  */
 
  angular.module('nanodesuApp')
-    .factory('SeriesService', function($resource,$cookies){
+    .factory('SeriesService', function($resource,$cookies) {
         
         return $resource('series/:id',null,{
-            get:{
-                headers:{
+            query: {
+                headers: {
                     'Authorization': auth
                 }
-            }
+            },
+            get: {
+                headers: {
+                    'Authorization': auth
+                }
+            },
+            save: {
+                method: "POST",
+                headers: {
+                    'Authorization': auth
+                }
+            },
+            update: {
+                method: "PUT",
+                headers: {
+                    'Authorization': auth
+                }
+            },
+            delete: {
+                method: "DELETE",
+                headers: {
+                    'Authorization': auth
+                }
+            },
         });
         
-        function auth(){
+        function auth() {
             var token = $cookies.get('auth');
             return token;
         }

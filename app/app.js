@@ -21,10 +21,11 @@ angular
             .when('/', {
                 templateUrl: 'app/home/views/main.html',
                 controller: 'HomeCtrl',
+                //access: { requiredLogin: true }
                 resolve: {
-                    auth: function($cookies,$location){
-                        if($cookies.get('auth')){
-                            console.log($cookies.get('auth'));
+                    auth: function(AuthService,$location){
+                        if(AuthService.isLogin()){
+                            console.log(AuthService.isLogin());
                         }else{
                             $location.path('/login');
                             alert("Failed");
@@ -63,3 +64,12 @@ angular
                 redirectTo: '/'
             });
     });
+    /**
+    .run(function($rootScope, $location, AuthService){
+        $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+            if(nextRoute.access.requiredLogin && !AuthService.isLogin){
+                $location.path('/login');
+            }
+        });
+    });
+    */

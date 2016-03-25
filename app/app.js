@@ -13,7 +13,8 @@ angular
     .module('nanodesuApp', [
         'ngRoute',
         'ngTouch',
-        'ngResource'
+        'ngResource',
+        'ngCookies'
         ])
     .config(function ($routeProvider){
         $routeProvider
@@ -21,6 +22,10 @@ angular
                 templateUrl: 'app/home/views/main.html',
                 controller: 'HomeCtrl',
                 //controllerAs: 'main'
+            })
+            .when('/login', {
+                templateUrl: 'app/login/views/login.html',
+                controller: 'LoginCtrl',
             })
             .when('/about', {
                 templateUrl: 'app/about/views/about.html',

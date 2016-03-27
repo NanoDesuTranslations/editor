@@ -17,6 +17,14 @@ angular.module('nanodesuApp')
             //console.log(error);
         });
 
+        $scope.delete = function(idSeries){
+            SeriesService.delete({id: idSeries}, function(success){
+                alert("success");
+            }, function(error){
+                alert("error");
+            });
+        }
+
         $scope.redirect = function(idSeries){
             var path = "/series";
             if(idSeries == null){

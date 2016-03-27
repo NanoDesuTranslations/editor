@@ -9,4 +9,24 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesAddCtrl', function(){});
+    .controller('SeriesAddCtrl', function($scope, SeriesService){
+        
+        $scope.save = function(){
+            var data = new Object();
+            var hierarchy = new Array();
+            var name = $('#name').val();
+            var hr = $('input[name="fields[]"]')
+                                .map(function(){
+                                    return $(this).val();
+                                })
+                                .get();
+            //console.log(hierarchy);
+            data.name = name;
+            data.config = {hierarchy: hr};
+            SeriesService.save(data, function(success){
+                alert("success");
+            }, function(error){
+                alert("error");
+            });
+        }
+    });

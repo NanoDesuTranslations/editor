@@ -60,6 +60,14 @@ angular
                 templateUrl: 'app/series/views/series.html',
                 controller: 'SeriesCtrl',
             })
+            .when('/series/add', {
+                templateUrl: 'app/series/views/seriesAdd.html',
+                controller: 'SeriesAddCtrl',
+            })
+            .when('series/edit/:idSeries', {
+                templateUrl: 'app/series/views/seriesEdit.html',
+                controller: 'SeriesEditCtrl',
+            })
             .otherwise({
                 redirectTo: '/'
             });

@@ -11,8 +11,10 @@
  angular.module('nanodesuApp')
     .factory('SeriesService', function($resource,$cookies) {
         
-        return $resource('series/:id',null,{
+        //use query parameter ({}) to avoid Error [$resource:badcfg]
+        return $resource('series/:id',{},{
             query: {
+                isArray: true,
                 headers: {
                     'Authorization': auth
                 }

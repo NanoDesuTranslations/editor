@@ -10,7 +10,6 @@
 
 angular.module('nanodesuApp')
     .controller('PageCtrl', function($scope, PageService, $location){
-        var auth = 'nano';
         
         //query json data from api
         $scope.data = PageService.query(function(success){

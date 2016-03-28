@@ -9,7 +9,7 @@
 
 angular.module('nanodesuApp')
     .controller('PageAddCtrl', function($scope, $routeParams, $location,  SeriesService, PageService){
-        var auth = 'nano';
+        //var auth = 'nano';
         var idSeries = $routeParams.idSeries;
         var hierarchy;
         //console.log(idSeries);
@@ -23,7 +23,7 @@ angular.module('nanodesuApp')
         }
 
         // get configuration of hierarchy from series
-        $scope.data = SeriesService.get_all(auth).get({'id': idSeries}, function(events){
+        $scope.data = SeriesService.get({'id': idSeries}, function(events){
             hierarchy = events.config.hierarchy;
             //console.log(events.config.hierarchy)
         });
@@ -51,7 +51,7 @@ angular.module('nanodesuApp')
             data.content = content;
             data.meta = meta
             //console.log(data)
-            PageService.save_data(auth).save(data, function(success){
+            PageService.save(data, function(success){
                 //console.log(response)
                 alert("success")
             }, function(error){

@@ -1,0 +1,28 @@
+<h1>Series Add</h1>
+<hr />
+<div class="controls">
+    <form role="form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Name">
+        </div>
+        <hr />
+        <h2>Configuration</h2>
+        <hr />
+        <h3>Hierarchy</h3>
+        <!-- Dynamic Input Fields -->
+        <div class="entry input-group col-xs-3">
+            <input type="text" class="form-control" name="fields[]">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-success btn-add">
+                    <span class="glyphicon glyphicon-plus">
+                </button>
+            </span>
+        </div>
+        <hr />
+        <div class="form-group">
+            <button type="button" class="btn btn-success" ng-click="save()">Save</button>
+            <button type="button" class="btn btn-warning" ng-click="redirect()">Back</button>
+            </div>
+    </form>
+</div>

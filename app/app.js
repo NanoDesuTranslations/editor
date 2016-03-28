@@ -13,38 +13,71 @@ angular
     .module('nanodesuApp', [
         'ngRoute',
         'ngTouch',
-        'ngResource'
+        'ngResource',
+        'ngCookies'
         ])
     .config(function ($routeProvider){
         $routeProvider
             .when('/', {
-                templateUrl: 'partials/main.html',
+                templateUrl: 'app/home/views/main.html',
                 controller: 'HomeCtrl',
+                //access: { requiredLogin: true }
+                resolve: {
+                    auth: function(AuthService,$location){
+                        if(AuthService.isLogin()){
+                            console.log(AuthService.isLogin());
+                        }else{
+                            $location.path('/login');
+                            alert("Failed");
+                        }
+                    }
+                }
                 //controllerAs: 'main'
             })
+            .when('/login', {
+                templateUrl: 'app/login/views/login.html',
+                controller: 'LoginCtrl',
+            })
             .when('/about', {
-                templateUrl: 'partials/about.html',
+                templateUrl: 'app/about/views/about.html',
                 controller: 'AboutCtrl',
                 //controllerAs: 'about'
             })
             .when('/page', {
-                templateUrl: 'partials/pages/page.html',
+                templateUrl: 'app/page/views/page.html',
                 controller: 'PageCtrl',
                 //controllerAs: 'page'
             })
             .when('/page/:idSeries/add', {
-                templateUrl: 'partials/pages/pageadd.html',
+                templateUrl: 'app/page/views/pageAdd.html',
                 controller: 'PageAddCtrl',
             })
             .when('/page/:idSeries/edit/:idPage', {
-                templateUrl: 'partials/pages/pageedit.html',
+                templateUrl: 'app/page/views/pageEdit.html',
                 controller: 'PageEditCtrl',
             })
             .when('/series', {
-                templateUrl: 'partials/series/series.html',
+                templateUrl: 'app/series/views/series.html',
                 controller: 'SeriesCtrl',
+            })
+            .when('/series/add', {
+                templateUrl: 'app/series/views/seriesAdd.html',
+                controller: 'SeriesAddCtrl',
+            })
+            .when('/series/edit/:idSeries', {
+                templateUrl: 'app/series/views/seriesEdit.html',
+                controller: 'SeriesEditCtrl',
             })
             .otherwise({
                 redirectTo: '/'
             });
     });
+    /**
+    .run(function($rootScope, $location, AuthService){
+        $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+            if(nextRoute.access.requiredLogin && !AuthService.isLogin){
+                $location.path('/login');
+            }
+        });
+    });
+    */

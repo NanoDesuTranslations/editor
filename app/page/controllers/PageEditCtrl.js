@@ -24,12 +24,12 @@ angular.module('nanodesuApp')
         }
 
         //get configuration of hierarchy from series
-        $scope.series = SeriesService.get_all(auth).get({'id': idSeries}, function(events){
+        $scope.series = SeriesService.get({'id': idSeries}, function(events){
             hierarchy = events.config.hierarchy;
         });
 
         //get page data
-        PageService.get_all(auth).get({'id': idPage}, function(events){
+        PageService.get({'id': idPage}, function(events){
             $scope.data = events.page;
             metaTemp = events.page.meta;
             simplemde.value($scope.data.content);
@@ -64,7 +64,7 @@ angular.module('nanodesuApp')
             data.content = content;
             data.meta = meta;
 
-            PageService.update_data(auth).update({id: idPage}, data, function(success){
+            PageService.update({id: idPage}, data, function(success){
                 alert("success")
             }, function(error){
                 //console.log(error.status)

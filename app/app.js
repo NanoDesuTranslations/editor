@@ -64,7 +64,7 @@ angular
                 templateUrl: 'app/series/views/seriesAdd.html',
                 controller: 'SeriesAddCtrl',
             })
-            .when('series/edit/:idSeries', {
+            .when('/series/edit/:idSeries', {
                 templateUrl: 'app/series/views/seriesEdit.html',
                 controller: 'SeriesEditCtrl',
             })

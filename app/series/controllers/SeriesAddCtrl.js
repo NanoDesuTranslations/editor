@@ -9,8 +9,13 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesAddCtrl', function($scope, SeriesService){
-        
+    .controller('SeriesAddCtrl', function($scope, $location, SeriesService){
+
+        $scope.redirect = function(){
+            var path = '/series';
+            $location.path(path);
+        }
+
         $scope.save = function(){
             var data = new Object();
             var hierarchy = new Array();

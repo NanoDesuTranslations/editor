@@ -9,8 +9,13 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesEditCtrl', function($scope, $routeParams, SeriesService){
+    .controller('SeriesEditCtrl', function($scope, $routeParams, $location, SeriesService){
         var idSeries = $routeParams.idSeries;  
+
+        $scope.redirect = function(){
+            var path = '/series';
+            $location.path(path);
+        }
         
         $scope.data = SeriesService.get({'id': idSeries}, function(success){
                 alert("success");

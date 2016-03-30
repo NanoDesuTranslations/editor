@@ -21,17 +21,18 @@ angular
             .when('/', {
                 templateUrl: 'app/home/views/main.html',
                 controller: 'HomeCtrl',
-                //access: { requiredLogin: true }
+                access: { requiredLogin: true }
+                /*
                 resolve: {
                     auth: function(AuthService,$location){
                         if(AuthService.isLogin()){
-                            console.log(AuthService.isLogin());
+                            return AuthService.isLogin();
                         }else{
                             $location.path('/login');
                             alert("Failed");
                         }
                     }
-                }
+                }*/
                 //controllerAs: 'main'
             })
             .when('/login', {
@@ -41,43 +42,49 @@ angular
             .when('/about', {
                 templateUrl: 'app/about/views/about.html',
                 controller: 'AboutCtrl',
+                access: {requiredLogin: true}
                 //controllerAs: 'about'
             })
             .when('/page', {
                 templateUrl: 'app/page/views/page.html',
                 controller: 'PageCtrl',
+                access: {requiredLogin: true}
                 //controllerAs: 'page'
             })
             .when('/page/:idSeries/add', {
                 templateUrl: 'app/page/views/pageAdd.html',
                 controller: 'PageAddCtrl',
+                access: {requiredLogin: true}
             })
             .when('/page/:idSeries/edit/:idPage', {
                 templateUrl: 'app/page/views/pageEdit.html',
                 controller: 'PageEditCtrl',
+                access: {requiredLogin: true}
             })
             .when('/series', {
                 templateUrl: 'app/series/views/series.html',
                 controller: 'SeriesCtrl',
+                access: {requiredLogin: true}
             })
             .when('/series/add', {
                 templateUrl: 'app/series/views/seriesAdd.html',
                 controller: 'SeriesAddCtrl',
+                access: {requiredLogin: true}
             })
             .when('/series/edit/:idSeries', {
                 templateUrl: 'app/series/views/seriesEdit.html',
                 controller: 'SeriesEditCtrl',
+                access: {requiredLogin: true}
             })
             .otherwise({
                 redirectTo: '/'
             });
-    });
-    /**
+    })
     .run(function($rootScope, $location, AuthService){
-        $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-            if(nextRoute.access.requiredLogin && !AuthService.isLogin){
+        $rootScope.$on("$routeChangeStart", function(event, next, current) {
+            if(next.access.requiredLogin && AuthService.isLogin() === false){
                 $location.path('/login');
             }
         });
     });
-    */
+    

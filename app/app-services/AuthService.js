@@ -33,7 +33,7 @@ angular.module('nanodesuApp')
         function login(username, password){
             //return $http.post('/login',data).then(handleSuccess, handleError('login failed'));
             var status;
-            if(username == "admin" && password == "admin"){
+            if(username == "nano" || username == "sora" || username == "admin"){
                 alert('success');
                 status = true;
             }else{                

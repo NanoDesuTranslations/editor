@@ -3,6 +3,11 @@
 <div class="controls">
     <form role="form">
         <div class="form-group">
+            <button type="button" class="btn btn-warning" ng-click="redirect()">Back</button>
+            <button type="button" class="btn btn-success pull-right" ng-click="save()">Save</button>
+        </div>
+        <hr />
+        <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" placeholder="Name">
         </div>
@@ -19,10 +24,5 @@
                 </button>
             </span>
         </div>
-        <hr />
-        <div class="form-group">
-            <button type="button" class="btn btn-success" ng-click="save()">Save</button>
-            <button type="button" class="btn btn-warning" ng-click="redirect()">Back</button>
-            </div>
     </form>
 </div>

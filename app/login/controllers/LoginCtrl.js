@@ -10,16 +10,22 @@
 
 angular.module('nanodesuApp')
     .controller('LoginCtrl', function($scope, $cookies, AuthService){
+
         $scope.logIn = function(){
-            //console.log($scope.username+" "+$scope.password);
-            var status = AuthService.login($scope.username,$scope.password);
-            //console.log(status);
-            if(status == true){
-                $cookies.put('auth','nano');
-            }
+            $cookies.put('token',$scope.token);
         }
 
         $scope.logOut = function(){
-            AuthService.logout();
+            $cookies.remove('token');
+        }
+
+        $scope.isLogin = function(){
+            var status
+            if($cookies.get('token')){
+                status = true;
+            }else{
+                status = false;
+            }
+            return status;
         }
     });

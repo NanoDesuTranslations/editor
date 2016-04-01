@@ -18,9 +18,9 @@ angular.module('nanodesuApp')
         }
         
         $scope.data = SeriesService.get({'id': idSeries}, function(success){
-                alert("success");
+                //alert("success");
             }, function(error){
-                alert("error");
+                //alert("error");
             });
 
         $scope.edit = function(){
@@ -41,9 +41,9 @@ angular.module('nanodesuApp')
             data.config = {hierarchy: hr};
             
             SeriesService.update({id: idSeries}, data, function(success){
-                alert("success");
+                alert("Success update data");
             }, function(error){
-                alert("error");
+                alert("error, please try again");
             });
         }
     });

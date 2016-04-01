@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="assets/libs/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="assets/libs/simplemde/simplemde.min.css">
         <link rel="stylesheet" href="assets/libs/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="assets/libs/select2/css/select2.min.css">
         <link rel="stylesheet" href="assets/css/styles.css">
     </head>
     <body ng-app="nanodesuApp">
@@ -33,7 +34,7 @@
                 </ul>    
             </div>
         </nav>
-              
+            
         <div id="wrapper">
             <!-- sidebar -->
             <div id="sidebar-wrapper">
@@ -47,72 +48,46 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#/login">
                             <span class="fa-stack fa-lg pull-left">
-                                <i class="fa fa-flag fa-stack-1x"></i>
+                                <i class="fa fa-server fa-stack-1x"></i>
                             </span>
-                            Dropdown Menu
+                            Token
                         </a>
-                        <ul class="nav-pilss nav-stacked" style="list-style-type:none;"?
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg pull-left">
-                                        <i class="fa fa-flag fa-stack-1x"></i>
-                                    </span>
-                                    Dropdwon Menu 1
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg pull-left">
-                                        <i class="fa fa-flag fa-stack-1x"></i>
-                                    </span>
-                                    Dropdwon Menu 2
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li>
                         <a href="#">
                             <span class="fa-stack fa-lg pull-left">
                                 <i class="fa fa-flag fa-stack-1x"></i>
                             </span>
-                            Another Dropdown Menu
+                            Main Menu
                         </a>
                         <ul class="nav-pilss nav-stacked" style="list-style-type:none;"?
                             <li>
-                                <a href="#">
+                                <a href="#/build">
                                     <span class="fa-stack fa-lg pull-left">
                                         <i class="fa fa-flag fa-stack-1x"></i>
                                     </span>
-                                    Dropdwon Menu 1
+                                    Generate
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#/page">
                                     <span class="fa-stack fa-lg pull-left">
                                         <i class="fa fa-flag fa-stack-1x"></i>
                                     </span>
-                                    Dropdwon Menu 2
+                                    Translation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#/series">
+                                    <span class="fa-stack fa-lg pull-left">
+                                        <i class="fa fa-flag fa-stack-1x"></i>
+                                    </span>
+                                    Series
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="#/page">
-                            <span class="fa-stack fa-lg pull-left">
-                                <i class="fa fa-server fa-stack-1x"></i>
-                            </span>
-                            Page
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#/series">
-                            <span class="fa-stack fa-lg pull-left">
-                                <i class="fa fa-server fa-stack-1x"></i>
-                            </span>
-                            Series
-                        </a>
                     </li>
                     <li>
                         <a href="#/about">
@@ -142,6 +117,7 @@
         <script src="assets/libs/angular-touch/angular-touch.min.js"></script>
         <script src="assets/libs/angular-cookies/angular-cookies.min.js"></script>
         <script src="assets/libs/simplemde/simplemde.min.js"></script>
+        <script src="assets/libs/select2/js/select2.min.js"></script>
         <script src="assets/js/scripts.js"></script>
             
             <script src="app/app.js"></script>
@@ -154,8 +130,10 @@
             <script src="app/series/controllers/SeriesCtrl.js"></script>
             <script src="app/series/controllers/SeriesAddCtrl.js"></script>
             <script src="app/series/controllers/SeriesEditCtrl.js"></script>
+            <script src="app/generate/controllers/GenerateCtrl.js"></script>
             <script src="app/app-services/PageService.js"></script>
             <script src="app/app-services/SeriesService.js"></script>
             <script src="app/app-services/AuthService.js"></script>
+            <script src="app/app-services/GenerateService.js"></script>
     </body>
 </html>

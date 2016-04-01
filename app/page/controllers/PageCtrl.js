@@ -9,15 +9,23 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageCtrl', function($scope, PageService, $location){
+    .controller('PageCtrl', function($scope, PageService, SeriesService, $location, $route){
+        $scope.show = false;
+        
+        $scope.series = SeriesService.query(function(success){
+                //console.log(success);
+            }, function(error){
+                //console.log(error);
+            });
         
         //query json data from api
-        $scope.data = PageService.query(function(success){
+        PageService.query(function(success){
+            $scope.page = success.pages;
             //console.log(success)
         }, function(error){
             //console.log(error)
         });
-        
+
         /**
         * Make a custom URL
         * @param {int} arg1 id Series
@@ -33,18 +41,19 @@ angular.module('nanodesuApp')
             }
             //console.log(path)
             $location.path(path);
-            $scope.closeModal();
         }
         
         /**
         * This function is to close modal pages after click button
         */
-        $scope.closeModal = function(){
-            $('#pages').modal('hide');
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
+        $scope.refresh = function(){
+            //$scope.series = null;
+            $route.reload();
         }
         
+        $scope.update = function(){
+            $scope.show = true;
+        }
         
         /**
         * filter pages by id Series
@@ -55,7 +64,7 @@ angular.module('nanodesuApp')
         }
         //$scope.page = PageService.get_page('nano').get({'id': '4'});
         
-        $scope.delete_data = function(idPage){
+        $scope.delete = function(idPage){
             PageService.delete({id: idPage}, function(success){
                 console.log('success')
             }, function(error){

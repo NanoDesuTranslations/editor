@@ -22,16 +22,20 @@ angular.module('nanodesuApp')
             var name = $('#name').val();
             var hr = $('input[name="fields[]"]')
                                 .map(function(){
-                                    return $(this).val();
+                                    var value = $(this).val()
+                                    //make sure to not include empty string
+                                    if(value != ""){
+                                        return $(this).val();
+                                    }
                                 })
                                 .get();
             //console.log(hierarchy);
             data.name = name;
             data.config = {hierarchy: hr};
             SeriesService.save(data, function(success){
-                alert("success");
+                alert("Success save data");
             }, function(error){
-                alert("error");
+                alert("error, please try again");
             });
         }
     });

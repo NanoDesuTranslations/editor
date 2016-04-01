@@ -44,7 +44,7 @@ angular.module('nanodesuApp')
         });
         
         function auth(){
-            var token = $cookies.get('auth');
+            var token = $cookies.get('token');
             return token;
         }
     });

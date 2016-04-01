@@ -38,11 +38,12 @@ angular
             .when('/login', {
                 templateUrl: 'app/login/views/login.html',
                 controller: 'LoginCtrl',
+                access: {requiredLogin: false}
             })
             .when('/about', {
                 templateUrl: 'app/about/views/about.html',
                 controller: 'AboutCtrl',
-                access: {requiredLogin: true}
+                access: {requiredLogin: false}
                 //controllerAs: 'about'
             })
             .when('/page', {
@@ -82,7 +83,7 @@ angular
     })
     .run(function($rootScope, $location, AuthService){
         $rootScope.$on("$routeChangeStart", function(event, next, current) {
-            if(next.access.requiredLogin && AuthService.isLogin() === false){
+            if(next.access.requiredLogin && AuthService.isLogin() == false){
                 $location.path('/login');
             }
         });

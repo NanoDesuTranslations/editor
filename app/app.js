@@ -46,6 +46,12 @@ angular
                 //access: {requiredLogin: false}
                 //controllerAs: 'about'
             })
+            .when('/build', {
+                templateUrl: 'app/generate/views/generate.html',
+                controller: 'GenerateCtrl',
+                //access: {requiredLogin: false}
+                //controllerAs: 'about'
+            })
             .when('/page', {
                 templateUrl: 'app/page/views/page.html',
                 controller: 'PageCtrl',

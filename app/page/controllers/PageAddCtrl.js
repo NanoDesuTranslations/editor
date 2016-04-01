@@ -13,6 +13,8 @@ angular.module('nanodesuApp')
         var idSeries = $routeParams.idSeries;
         var hierarchy;
         //console.log(idSeries);
+        $scope.config = true;
+        $scope.main = false;
 
         /**
         * redirect into page URL
@@ -27,6 +29,16 @@ angular.module('nanodesuApp')
             hierarchy = events.config.hierarchy;
             //console.log(events.config.hierarchy)
         });
+
+        $scope.back = function(){
+            $scope.config = true;
+            $scope.main = false;
+        }
+
+        $scope.next = function(){
+            $scope.config = false;
+            $scope.main = true;
+        }
         
         /**
         * This function is active when save button clicked

@@ -14,6 +14,8 @@ angular.module('nanodesuApp')
         var idSeries = $routeParams.idSeries;
         var idPage = $routeParams.idPage
         var metaTemp = new Object();
+        $scope.config = true;
+        $scope.main = false;
             
         /**
         * redirect into page URL
@@ -21,6 +23,16 @@ angular.module('nanodesuApp')
         $scope.redirect = function(){
             var path = "/page";
             $location.path(path);
+        }
+        
+        $scope.back = function(){
+            $scope.config = true;
+            $scope.main = false;
+        }
+
+        $scope.next = function(){
+            $scope.config = false;
+            $scope.main = true;
         }
 
         //get configuration of hierarchy from series

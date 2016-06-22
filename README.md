@@ -1,6 +1,6 @@
 ## Nanodesu Translation Editor
 Nanodesu translation editor website project
-Fork for UI revisions
+-- Fork for UI revisions
 
 ## Frameworks & Libraries
 * [jquery 2.1.4](http://jquery.com/) (being being removed due to conflict)

@@ -1,8 +1,9 @@
 ## Nanodesu Translation Editor
 Nanodesu translation editor website project
+Fork for UI revisions
 
 ## Frameworks & Libraries
-* [jquery 2.1.4](http://jquery.com/)
+* [jquery 2.1.4](http://jquery.com/) (being being removed due to conflict)
 * [bootstrap 3.3.5](http://getbootstrap.com)
 * [angularjs 1.4.4](http://angularjs.org)
 * [font-awesome 4.3.0](https://fortawesome.github.io/Font-Awesome/)
@@ -10,6 +11,7 @@ Nanodesu translation editor website project
 * angular-touch
 * angular-resource
 * angular-cookies
+* [angular UI Bootstrap](http://angular-ui.github.io/bootstrap/)
 * [simplemde 1.9.0](https://github.com/NextStepWebs/simplemde-markdown-editor)
 
 ## Folder Structure ##

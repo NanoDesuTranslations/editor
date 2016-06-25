@@ -6,7 +6,7 @@
     <select class="select" ng-model="series" ng-change="update()">
         <option ng-repeat="sr in series" value="{{ sr.id }}">{{ sr.name }}</option>
     </select>
-    <button type="button" class="btn btn-default glyphicon glyphicon-refresh" ng-click="refresh()">
+    <button type="button" class="btn btn-default glyphicon glyphicon-refresh" ng-click="refresh()" />
 </div>
 <div ng-show="show">
     <hr />

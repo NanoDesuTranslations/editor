@@ -11,21 +11,25 @@
 angular.module('nanodesuApp')
     .controller('LoginCtrl', function($scope, $cookies, AuthService){
 
-        $scope.logIn = function(){
-            $cookies.put('token',$scope.token);
-        }
+        $scope.logIn = function () {
+            $cookies.put('token', $scope.token);
+        };
 
-        $scope.logOut = function(){
+        $scope.logOut = function () {
             $cookies.remove('token');
-        }
+        };
 
-        $scope.isLogin = function(){
+        $scope.isLogin = function () {
             var status
-            if($cookies.get('token')){
+            if ($cookies.get('token')) {
                 status = true;
-            }else{
+            } else {
                 status = false;
             }
             return status;
-        }
+        };
+
+        $scope.loginName = function () {
+            return $cookies.get('token');
+        };
     });

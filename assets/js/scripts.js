@@ -27,6 +27,9 @@ function initMenu() {
     );
 }
 
+/* TODO: For another approach to dynamic fields, more in keeping with AngularJS, see:
+ * http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/
+ */
 function dynamicInput(){
     //http://bootsnipp.com/snippets/featured/dynamic-form-fields-add-amp-remove-bs3
     $(document).on('click', '.btn-add', function(e){

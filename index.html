@@ -16,9 +16,6 @@
         <nav class="navbar navbar-default no-margin">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header fixed-brand">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
-                    <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-                </button>
                     <a class="navbar-brand" href="#/">
                         <i class="fa fa-rocket fa-4"></i>
                         Nanodesu
@@ -27,16 +24,16 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a>Home</a></li>
-                    <li><a>Series</a></li>
-                    <li><a>Pages</a></li>
-                    <li class="warning"><a>Generate <span class="glyphicon-chevron-down"></span></a></li>
+                    <li class="active"><a href="#/">Home</a></li>
+                    <li><a href="#/series">Series</a></li>
+                    <li><a href="#/page">Pages</a></li>
+                    <li><a href="#/build">Generate <span class="glyphicon-chevron-down"></span></a></li>
                 </ul>    
                 <ul class="nav navbar-nav navbar-right form-group" ng-controller="LoginCtrl">
                     <!-- only one of these will be visible at a time
                         TODO: apparently this requires a variable? -->
                     <li class="dropdown" ng-show="isLogin()">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User {{loginName()}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#" class="disabled">Profile</a></li>
                             <li><a href="#/login">Sign Out</a></li>
@@ -48,9 +45,9 @@
             </div>
         </nav>
             
-        <div id="wrapper">
+        <!--<div id="wrapper">-->
             <!-- sidebar -->
-            <div id="sidebar-wrapper">
+            <!-- <div id="sidebar-wrapper">
                 <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
                     <li class="active">
                         <a href="#/">
@@ -111,16 +108,17 @@
                         </a>
                     </li>
                 </ul>
-            </div><!-- /#sidebar-wrapper -->
+            </div> --> <!-- /#sidebar-wrapper -->
+
             <!-- Page Content -->
-            <div id="page-content-wrapper">
-                <div class="container-fluid xyz">
-                    <div ng-view="">
-                        <!-- content loaded in here -->
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                        <div class="col-lg-12" ng-view="">
+                            <!-- content loaded in here -->
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+        <!--</div>  from #wrapper -->
         
         <script src="assets/libs/jquery/jquery.js"></script>
         <script src="assets/libs/angular/angular.min.js"></script>

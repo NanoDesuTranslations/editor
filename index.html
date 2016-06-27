@@ -17,19 +17,21 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header fixed-brand">
                     <a class="navbar-brand" href="#/">
-                        <i class="fa fa-rocket fa-4"></i>
+                        <i class="fa fa-rocket fa-lg" aria-hidden="true"></i>
                         Nanodesu
                     </a>
             </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="LoginCtrl">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#/">Home</a></li>
-                    <li><a href="#/series">Series</a></li>
-                    <li><a href="#/page">Pages</a></li>
-                    <li><a href="#/build">Generate <span class="glyphicon-chevron-down"></span></a></li>
+                    <li class="active"><a href="#/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
+                    <li ng-show="isLogin()"><a href="#/series" >Series</a></li>
+                    <li ng-show="isLogin()"><a href="#/page">Pages</a></li>
+                    <li ng-show="isLogin()"><a href="#/build" >Generate 
+                        <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i></a>
+                    </li>
                 </ul>    
-                <ul class="nav navbar-nav navbar-right form-group" ng-controller="LoginCtrl">
+                <ul class="nav navbar-nav navbar-right form-group" >
                     <!-- only one of these will be visible at a time
                         TODO: apparently this requires a variable? -->
                     <li class="dropdown" ng-show="isLogin()">

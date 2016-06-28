@@ -27,7 +27,7 @@
                     <li class="active"><a href="#/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
                     <li ng-show="isLogin()"><a href="#/series" >Series</a></li>
                     <li ng-show="isLogin()"><a href="#/page">Pages</a></li>
-                    <li ng-show="isLogin()"><a href="#/build" >Generate 
+                    <li ng-show="isLogin()"><a class="disabled" href="#/build" >Generate 
                         <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i></a>
                     </li>
                 </ul>    
@@ -35,7 +35,7 @@
                     <!-- only one of these will be visible at a time
                         TODO: apparently this requires a variable? -->
                     <li class="dropdown" ng-show="isLogin()">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User {{loginName()}} <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Token: {{loginName()}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#" class="disabled">Profile</a></li>
                             <li><a href="#/login">Sign Out</a></li>

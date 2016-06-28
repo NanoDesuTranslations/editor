@@ -17,7 +17,10 @@ angular.module('nanodesuApp')
 
         $scope.logOut = function () {
             $cookies.remove('token');
+            $scope.token = null;
         };
+
+        $scope.token = $cookies.get('token') ? $cookies.get('token') : null;
 
         $scope.isLogin = function () {
             var status

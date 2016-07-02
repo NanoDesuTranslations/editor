@@ -83,6 +83,11 @@ angular
                 controller: 'SeriesEditCtrl',
                 //access: {requiredLogin: true}
             })
+            .when('/projects', {
+                templateUrl: 'app/projects/views/projects.html',
+                controller: 'ProjectsCtrl'
+                //access: {requiredLogin: true}
+            })
             .otherwise({
                 redirectTo: '/'
             });

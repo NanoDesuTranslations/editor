@@ -12,15 +12,16 @@ angular.module('nanodesuApp')
     .controller('LoginCtrl', function($scope, $cookies, AuthService){
 
         $scope.logIn = function () {
-            $cookies.put('token', $scope.token);
+            // The service call below is for the shortened, temp auth systen. Real args will be username + password.
+            AuthService.login($scope.token);
         };
 
         $scope.logOut = function () {
-            $cookies.remove('token');
+            AuthService.logout();
             $scope.token = null;
         };
 
-        $scope.token = $cookies.get('token') ? $cookies.get('token') : null;
+        $scope.token = AuthService.userName();
 
         $scope.isLogin = function () {
             var status
@@ -33,6 +34,6 @@ angular.module('nanodesuApp')
         };
 
         $scope.loginName = function () {
-            return $cookies.get('token');
+            return AuthService.userName();
         };
     });

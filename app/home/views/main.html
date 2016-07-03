@@ -1,3 +1,11 @@
 <div class="page-header">
     <h1>Main Page</h1>
 </div>
+<h2 ng-hide="isLogin()">Please <button class="btn btn-default" ng-click="">Sign in</button></h2>
+<div ng-show="isLogin()">
+    <h2>
+        Available series
+    </h2>
+    <h3>Table of available series goes here.</h3>
+    <!-- TODO: borrow series display from series page. -->
+</div>

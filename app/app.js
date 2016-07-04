@@ -83,7 +83,7 @@ angular
                 controller: 'SeriesEditCtrl',
                 //access: {requiredLogin: true}
             })
-            .when('/projects', {
+            .when('/projects', {  // TODO: Deprecated.  Remove this.
                 templateUrl: 'app/projects/views/projects.html',
                 controller: 'ProjectsCtrl'
                 //access: {requiredLogin: true}

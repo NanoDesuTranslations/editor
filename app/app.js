@@ -58,6 +58,11 @@ angular
                 //access: {requiredLogin: true}
                 //controllerAs: 'page'
             })
+            .when('/page/:idSeries', {
+                templateUrl: 'app/page/views/page.html',
+                controller: 'PageCtrl',
+                //access: {requiredLogin: true}
+            })
             .when('/page/:idSeries/add', {
                 templateUrl: 'app/page/views/pageAdd.html',
                 controller: 'PageAddCtrl',
@@ -81,11 +86,6 @@ angular
             .when('/series/edit/:idSeries', {
                 templateUrl: 'app/series/views/seriesEdit.html',
                 controller: 'SeriesEditCtrl',
-                //access: {requiredLogin: true}
-            })
-            .when('/projects', {  // TODO: Deprecated.  Remove this.
-                templateUrl: 'app/projects/views/projects.html',
-                controller: 'ProjectsCtrl'
                 //access: {requiredLogin: true}
             })
             .otherwise({

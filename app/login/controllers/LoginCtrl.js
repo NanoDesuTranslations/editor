@@ -9,11 +9,14 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('LoginCtrl', function($scope, $cookies, AuthService){
+    .controller('LoginCtrl', function($scope, $location, AuthService){
 
         $scope.logIn = function () {
             // The service call below is for the shortened, temp auth systen. Real args will be username + password.
             AuthService.login($scope.token);
+            // TODO: show message about "signed in as...."
+            // Route to main page on success.
+            $location.path("/");
         };
 
         $scope.logOut = function () {
@@ -24,12 +27,7 @@ angular.module('nanodesuApp')
         $scope.token = AuthService.userName();
 
         $scope.isLogin = function () {
-            var status
-            if ($cookies.get('token')) {
-                status = true;
-            } else {
-                status = false;
-            }
+            var status = AuthService.isLogin();
             return status;
         };
 

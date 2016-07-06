@@ -1,7 +1,6 @@
 <div class="page-header">
     <h1>Pages List</h1>
 </div>
-<p>SeriesView.html for {{series}}</p>
 <!--<div class="form-group">
     <label>Choose Series:</label>
     <select class="select" ng-model="series" ng-change="update()">
@@ -10,10 +9,10 @@
     <button type="button" class="btn btn-default glyphicon glyphicon-refresh" ng-click="refresh()" />
 </div>-->
 <div>
-    <h4>Series {{idSeries}}</h4>
+    <h3>Series {{sr.name}}</h3>
     <button type="button" class="btn btn-success" ng-click="redirect(series)">
-        <span class="glyphicon glyphicon-pluss"></span>
-        Create New
+        <span class="glyphicon glyphicon-plus"></span>
+        Add page
     </button>
     <hr />
     <table class="table table-bordered table-striped">
@@ -24,10 +23,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="dt in page | filter:{'series':series}">
+            <tr ng-repeat="dt in page | filter:{'series':sr.id}">
                 <td>{{ dt.meta.title }}</td>
                 <td>
-                    <button type="button" ng-click="redirect(series,dt.id)" class="btn btn-primary">
+                    <button type="button" ng-click="redirect(sr.id,dt.id)" class="btn btn-primary">
                         <span class="glyphicon glyphicon-pencil"></span>
                         Edit
                     </button>

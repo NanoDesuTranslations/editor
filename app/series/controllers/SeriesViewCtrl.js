@@ -16,7 +16,14 @@ angular.module('nanodesuApp')
         //    //console.log(error);
         //});
 
-        $scope.series = $routeParams.idSeries;
+        var idSeries =  $routeParams.idSeries;
+
+        SeriesService.get({id: idSeries}, function(sr){
+            $scope.sr = sr;
+            console.log("series get success for "+sr.name);
+        }, function (error) {
+            console.log("Series GET error"+error);
+        })
 
         //query json data from api -- gets page head data regardless of series.
         PageService.query(function (success) {

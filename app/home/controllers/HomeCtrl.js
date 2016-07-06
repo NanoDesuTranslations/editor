@@ -47,7 +47,7 @@ angular.module('nanodesuApp')
             if(idSeries == null){
                 path = "/series/add";
             }else {
-                path = "/page/"+idSeries; // TODO: for now, this page lists the pages in the series. Really belongs in the Series area.
+                path = "/series/"+idSeries; // TODO: for now, this page lists the pages in the series. Really belongs in the Series area.
             }
             $location.path(path);
         }

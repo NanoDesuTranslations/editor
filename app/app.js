@@ -58,14 +58,14 @@ angular
                 //access: {requiredLogin: true}
                 //controllerAs: 'page'
             })
-            .when('/page/:idSeries', {
-                templateUrl: 'app/page/views/page.html',
-                controller: 'PageCtrl',
-                //access: {requiredLogin: true}
-            })
+            //.when('/page/:idSeries', {
+            //    templateUrl: 'app/page/views/pageList.html',
+            //    controller: 'PageCtrl',
+            //    //access: {requiredLogin: true}
+            //})
             .when('/page/:idSeries/add', {
                 templateUrl: 'app/page/views/pageAdd.html',
-                controller: 'PageAddCtrl',
+                controller: 'PageCtrl',
                 //access: {requiredLogin: true}
             })
             .when('/page/:idSeries/edit/:idPage', {
@@ -76,6 +76,11 @@ angular
             .when('/series', {
                 templateUrl: 'app/series/views/series.html',
                 controller: 'SeriesCtrl',
+                //access: {requiredLogin: true}
+            })
+            .when('/series/:idSeries', {
+                templateUrl: 'app/series/views/seriesView.html',
+                controller: 'SeriesViewCtrl',
                 //access: {requiredLogin: true}
             })
             .when('/series/add', {

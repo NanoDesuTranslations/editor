@@ -1,7 +1,10 @@
 <div class="page-header">
     <h1>Main Page</h1>
 </div>
-<h2 ng-hide="isLogin()">Please <button class="btn btn-default" ng-click="signIn()">Sign in</button></h2>
+<div class="form-horizontal" ng-hide="isLogin()">
+    <label class="col-sm-2 control-label" for="btnLogin">Please </label>
+    <button class="btn btn-primary" id="btnLogin" ng-click="signIn()">Sign in</button>
+</div>
 <div ng-show="isLogin()">
     <h2>
         Available series
@@ -35,9 +38,9 @@
             </tr>
         </tbody>
     </table>
-    <button type="button" ng-click="redirect()" class="btn btn-success">
+    <button type="button" ng-click="openSeries()" class="btn btn-success">
         <span class="glyphicon glyphicon-plus"></span>
-        Create New
+        Add
     </button>
-    
+
 </div>

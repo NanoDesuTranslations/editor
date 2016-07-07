@@ -1,23 +1,56 @@
 <div class="page-header">
-    <h1>Pages for {{sr.name}}</h1>
+    <h1>Series: <span ng-class="{ small : propsOpen }">
+        {{propsOpen ? "editing" : sr.name}}
+        </span></h1>
 </div>
 <div>
     <div class="panel panel-body">
         <div ng-show="propsOpen">
-            <h4>TODO: include editing page for series properties</h4>
+            <h4 class="text-danger">TODO: move contents of this form to a partial template</h4>
+            <!-- Begin (temp) series props form -->
+            <div class="controls">
+                <form role="form" class="form-horizontal">
+                    <!--<div class="form-group">
+                        <button type="button" class="btn btn-warning" ng-click="spropBack()">Back</button>
+                        <button type="button" class="btn btn-success pull-right" ng-click="spropBack()">Save</button>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="name" class="control-label col-sm-2">Title</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="name" class="form-control" placeholder="Title" value="{{sr.name}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="hierarchy" class="control-label col-sm-2">Hierarchy</label>
+                        <!-- Dynamic Input Fields -->
+                        <div class="col-sm-3" >
+                            <div class="entry input-group" id="hierarchy" ng-repeat="hr in sr.config.hierarchy">
+                                <input type="text" class="form-control" value="{{hr}}">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success btn-add">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- End (temp) series props form -->
         </div>
-        <div >
-            <button ng-show="!propsOpen" type="button" class="btn btn-info pull-right" ng-click="openProps()">
+        <div>
+            <button ng-hide="propsOpen" type="button" class="btn btn-info pull-right" ng-click="openProps()">
                 <i class="fa fa-gear"></i> Properties
             </button>
             <button ng-show="propsOpen" type="button" class="btn btn-success pull-right" ng-click="saveProps()">
                 <i class="glyphicon glyphicon-save"></i> Save changes
             </button>
-        </div>    </div>
+        </div>
+    </div>
+    <h3>Pages</h3>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Title</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -42,8 +75,3 @@
         Add page
     </button>
 </div>
-<script type="text/javascript">
-    $(".select").select2({
-        placeholder: "Select a Series",
-    });
-</script>

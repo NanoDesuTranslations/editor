@@ -80,7 +80,7 @@ angular.module('nanodesuApp')
         }
 
         //// Series Properties
-        $scope.propsOpen = false;
+        $scope.propsOpen;
 
         $scope.openProps = function () {
             $scope.propsOpen = !$scope.propsOpen;

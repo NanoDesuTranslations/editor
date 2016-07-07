@@ -78,4 +78,16 @@ angular.module('nanodesuApp')
                 console.log(error)
             });
         }
+
+        //// Series Properties
+        $scope.propsOpen = false;
+
+        $scope.openProps = function () {
+            $scope.propsOpen = !$scope.propsOpen;
+        }
+
+        $scope.saveProps = function () {
+            // TODO: actually save the edited properties
+            $scope.propsOpen = false;
+        }
     });

@@ -32,7 +32,7 @@ angular.module('nanodesuApp')
 
         $scope.delete = function (idSeries) {
             SeriesService.delete({ id: idSeries }, function (success) {
-                // TODO: use a model/view friendly way to show status.
+                // TODO: use a MVC-friendly way to show result of the call.
                 alert("Info: Series "+idSeries+" deleted.");
                 refreshData();
             }, function (error) {
@@ -47,7 +47,7 @@ angular.module('nanodesuApp')
             if(idSeries == null){
                 path = "/series/add";
             }else {
-                path = "/series/"+idSeries; // TODO: for now, this page lists the pages in the series. Really belongs in the Series area.
+                path = "/series/"+idSeries;
             }
             $location.path(path);
         }

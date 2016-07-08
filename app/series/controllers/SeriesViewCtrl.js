@@ -84,6 +84,12 @@ angular.module('nanodesuApp')
 
         $scope.openProps = function () {
             $scope.propsOpen = !$scope.propsOpen;
+            if ($scope.propsOpen) {
+                $scope.propsHierarchy = [];
+                for (var i = 0; i < $scope.sr.config.hierarchy.length; i++) {
+                    $scope.propsHierarchy.push({ id: i, name: $scope.sr.config.hierarchy[i] });
+                }
+            }
         }
 
         $scope.saveProps = function () {

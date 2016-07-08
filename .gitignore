@@ -7,3 +7,5 @@ bower_components/
 *.iws
 .idea/
 /Web.config
+/jsconfig.json
+

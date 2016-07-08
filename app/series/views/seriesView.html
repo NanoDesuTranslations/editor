@@ -1,12 +1,14 @@
 <div class="page-header">
-    <h1>Series: <span ng-class="{ small : propsOpen }">
-        {{propsOpen ? "editing" : sr.name}}
-        </span></h1>
+    <h1>
+        Series: <span ng-class="{ small : propsOpen }">
+            {{propsOpen ? "editing" : sr.name}}
+        </span>
+    </h1>
 </div>
-<div>
+<div class="panel">
     <div class="panel panel-body">
         <div ng-show="propsOpen">
-            <h4 class="text-danger">TODO: move contents of this form to a partial template</h4>
+            <h4 class="text-warning">TODO: move contents of this form to a partial template</h4>
             <!-- Begin (temp) series props form -->
             <div class="controls">
                 <form role="form" class="form-horizontal">
@@ -23,26 +25,32 @@
                     <div class="form-group">
                         <label for="hierarchy" class="control-label col-sm-2">Hierarchy</label>
                         <!-- Dynamic Input Fields -->
-                        <div class="col-sm-3" >
-                            <div class="entry input-group" id="hierarchy" ng-repeat="hr in sr.config.hierarchy">
-                                <input type="text" class="form-control" value="{{hr}}">
+                        <div class="col-sm-3">
+                            <div class="entry input-group" id="hierarchy" ng-repeat="hr in propsHierarchy">
+                                <input type="text" class="form-control" id="{{'level'+hr.id}}" value="{{hr.name}}">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-success btn-add">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
                                 </span>
-                            </div>                        </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
+            <div class="pull-right">
+                <button type="button" class="btn btn-warning" ng-click="cancelProps()">
+                    <i class="glyphicon glyphicon-remove"></i> Cancel
+                </button>
+                <button type="button" class="btn btn-success" ng-click="saveProps()">
+                    <i class="glyphicon glyphicon-save"></i> Save
+                </button>&nbsp;
+            </div>
             <!-- End (temp) series props form -->
         </div>
-        <div>
-            <button ng-hide="propsOpen" type="button" class="btn btn-info pull-right" ng-click="openProps()">
+        <div ng-hide="propsOpen">
+            <button type="button" class="btn btn-info pull-right" ng-click="openProps()">
                 <i class="fa fa-gear"></i> Properties
-            </button>
-            <button ng-show="propsOpen" type="button" class="btn btn-success pull-right" ng-click="saveProps()">
-                <i class="glyphicon glyphicon-save"></i> Save changes
             </button>
         </div>
     </div>

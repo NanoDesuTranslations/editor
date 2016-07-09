@@ -37,8 +37,10 @@ angular.module('nanodesuApp')
         $scope.redirect = function (idSeries, idPage) {
             var path = "/page";
             if (idPage != null) {
+                // We know idPage: edit the page.
                 path = "page/" + idSeries + "/edit/" + idPage;
-            } else if (idPage == null) {
+            } else {
+                // We have no idPage, so add a new page.
                 path = "page/" + idSeries + "/add";
             }
             //console.log(path)
@@ -69,6 +71,8 @@ angular.module('nanodesuApp')
             $scope.propsOpen = !$scope.propsOpen;
             if ($scope.propsOpen) {
                 $scope.propsTiers = [];
+                // Note: propsTiers holds objects, each with a name and id.  It's not that we actually use the ID,
+                // but databinding wasn't accurate when I simplified this array to just strings.
                 for (var i = 0; i < $scope.sr.config.hierarchy.length; i++) {
                     $scope.propsTiers.push({ id: i, name: $scope.sr.config.hierarchy[i] });
                 }
@@ -100,11 +104,13 @@ angular.module('nanodesuApp')
             }
             // TODO: message that we're saving?
             SeriesService.update({ id: idSeries }, sr, function (success) {
+                // sr (param) is the new metadata.  Save it into the model when we know it's been written to the database.
                 $scope.sr = sr;
-                $scope.propsOpen = false;
+                $scope.propsOpen = false; // Close the series properties.
                 // TODO: an MVC-friendly way of displaying this message
                 alert("Success save data");
-            }, function(error){
+            }, function (error) {
+                // properties stay open in case there's something the user can fix.  They can cancel changes if necessary.
                 // TODO: an MVC-friendly way of displaying this message
                 alert("error, please try again");
             });

@@ -10,11 +10,6 @@
 
 angular.module('nanodesuApp')
     .controller('SeriesViewCtrl', function ($scope, $routeParams, $location, PageService, SeriesService) {
-        //$scope.series = SeriesService.query(function (success) {
-        //    //console.log(success);
-        //}, function (error) {
-        //    //console.log(error);
-        //});
 
         var idSeries =  $routeParams.idSeries;
 
@@ -50,18 +45,6 @@ angular.module('nanodesuApp')
             $location.path(path);
         }
 
-        ///**
-        //* This function is to close modal pages after click button
-        //*/
-        //$scope.refresh = function () {
-        //    //$scope.series = null;
-        //    $route.reload();
-        //}
-
-        //$scope.update = function () {
-        //    $scope.show = true;
-        //}
-
         /**
         * filter pages by id Series
         */
@@ -85,15 +68,45 @@ angular.module('nanodesuApp')
         $scope.openProps = function () {
             $scope.propsOpen = !$scope.propsOpen;
             if ($scope.propsOpen) {
-                $scope.propsHierarchy = [];
+                $scope.propsTiers = [];
                 for (var i = 0; i < $scope.sr.config.hierarchy.length; i++) {
-                    $scope.propsHierarchy.push({ id: i, name: $scope.sr.config.hierarchy[i] });
+                    $scope.propsTiers.push({ id: i, name: $scope.sr.config.hierarchy[i] });
                 }
             }
         }
 
+        $scope.cancelProps = function () {
+            $scope.propsOpen = false;
+            // TODO: if we're using this to create a series we'll need to do more.
+        }
+
+        $scope.addTier = function () {
+            $scope.propsTiers.push({ id: $scope.propsTiers.length })
+        }
+
+        $scope.removeTier = function (idx) {
+            if (idx < 0 || idx >= $scope.propsTiers.length)
+                return;
+            var o = $scope.propsTiers.splice(idx, 1);
+            console.log("Removed element " + idx + " from tiers.  " + o.length + " gone, "+$scope.propsTiers.length+" left.");
+        }
+
         $scope.saveProps = function () {
             // TODO: actually save the edited properties
-            $scope.propsOpen = false;
+            var sr = $scope.sr;
+            sr.hierarchy = [];
+            for (var i = 0; i < $scope.propsTiers.length; i++) {
+                sr.hierarchy.push($scope.propsTiers[i].name);
+            }
+            // TODO: message that we're saving?
+            SeriesService.save(sr, function (success) {
+                $scope.sr = sr;
+                $scope.propsOpen = false;
+                // TODO: an MVC-friendly way of displaying this message
+                alert("Success save data");
+            }, function(error){
+                // TODO: an MVC-friendly way of displaying this message
+                alert("error, please try again");
+            });
         }
     });

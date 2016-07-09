@@ -11,6 +11,7 @@
 angular.module('nanodesuApp')
     .controller('HomeCtrl', function ($scope, $location, AuthService, SeriesService) {
         $scope.signIn = function () {
+            // Nothing fancy; just navigate to the sign-in page.
             $location.path("/login");
         }
 
@@ -19,12 +20,13 @@ angular.module('nanodesuApp')
         }
 
         //// local function refreshData - queries for the series list so that it can properly be displayed.
-        // TODO: for non-admins, need a way to get this list without the Series API, shich is admin-only.
+        // TODO: for non-admins, need a way to get this list without the Series API, which is admin-only.
         function refreshData() {
-            $scope.data = SeriesService.query(function (success) {
-                //console.log(success);
+            SeriesService.query(function (srs) {
+                $scope.data = srs;
+                // console.log(srs);
             }, function (error) {
-                //console.log(error);
+                // console.log(error);
             });
         }
 

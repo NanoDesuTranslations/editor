@@ -94,12 +94,12 @@ angular.module('nanodesuApp')
         $scope.saveProps = function () {
             // TODO: actually save the edited properties
             var sr = $scope.sr;
-            sr.hierarchy = [];
+            sr.config.hierarchy = [];
             for (var i = 0; i < $scope.propsTiers.length; i++) {
-                sr.hierarchy.push($scope.propsTiers[i].name);
+                sr.config.hierarchy.push($scope.propsTiers[i].name);
             }
             // TODO: message that we're saving?
-            SeriesService.save(sr, function (success) {
+            SeriesService.update({ id: idSeries }, sr, function (success) {
                 $scope.sr = sr;
                 $scope.propsOpen = false;
                 // TODO: an MVC-friendly way of displaying this message

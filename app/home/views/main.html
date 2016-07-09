@@ -1,3 +1,46 @@
-<div class="jumbotron">
+<div class="page-header">
     <h1>Main Page</h1>
+</div>
+<div class="form-horizontal" ng-hide="isLogin()">
+    <label class="col-sm-2 control-label" for="btnLogin">Please </label>
+    <button class="btn btn-primary" id="btnLogin" ng-click="signIn()">Sign in</button>
+</div>
+<div ng-show="isLogin()">
+    <h2>
+        Available series
+    </h2>
+    <table class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr style="table-layout:fixed">
+                <th style="width: 10%">Index</th>
+                <th style="width: 60%">Name</th>
+                <th style="width: 30%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="sr in data">
+                <td>{{ $index }}</td>
+                <td>{{ sr.name }}</td>
+                <td>
+                    <!--<button type="button" class="btn btn-default" ng-click="redirect(sr.id)" >
+                        <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                        Edit
+                    </button>-->
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="openSeries(sr.id)">
+                        <!-- TODO: open the pages list for this series -->
+                        <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+                        Open
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="delete(sr.id)">
+                        <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                        Delete
+                    </button>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" ng-click="openSeries()" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add
+    </button>
+
 </div>

@@ -1,139 +1,92 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Nanodesu Translation Editor</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="assets/libs/bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/libs/simplemde/simplemde.min.css">
-        <link rel="stylesheet" href="assets/libs/font-awesome/css/font-awesome.css">
-        <link rel="stylesheet" href="assets/libs/select2/css/select2.min.css">
-        <link rel="stylesheet" href="assets/css/styles.css">
-    </head>
-    <body ng-app="nanodesuApp">
-        <nav class="navbar navbar-default no-margin">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header fixed-brand">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
-                    <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-                </button>
-                    <a class="navbar-brand" href="#/">
-                        <i class="fa fa-rocket fa-4"></i>
-                        Nanodesu
-                    </a>
-            </div>
+<head>
+    <meta charset="utf-8">
+    <title>Nanodesu Translation Editor</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="assets/libs/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/libs/simplemde/simplemde.min.css">
+    <link rel="stylesheet" href="assets/libs/font-awesome/css/font-awesome.css">
+    <!--<link rel="stylesheet" href="assets/libs/select2/css/select2.min.css">-->
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2">
-                            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-                        </button>
-                    </li>
-                </ul>    
-            </div>
-        </nav>
-            
-        <div id="wrapper">
-            <!-- sidebar -->
-            <div id="sidebar-wrapper">
-                <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-                    <li class="active">
-                        <a href="#/">
-                            <span class="fa-stack fa-lg pull-left">
-                                <i class="fa fa-dashboard fa-stack-1x"></i>
-                            </span>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#/login">
-                            <span class="fa-stack fa-lg pull-left">
-                                <i class="fa fa-server fa-stack-1x"></i>
-                            </span>
-                            Token
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="fa-stack fa-lg pull-left">
-                                <i class="fa fa-flag fa-stack-1x"></i>
-                            </span>
-                            Main Menu
-                        </a>
-                        <ul class="nav-pilss nav-stacked" style="list-style-type:none;"?
-                            <li>
-                                <a href="#/build">
-                                    <span class="fa-stack fa-lg pull-left">
-                                        <i class="fa fa-flag fa-stack-1x"></i>
-                                    </span>
-                                    Generate
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#/page">
-                                    <span class="fa-stack fa-lg pull-left">
-                                        <i class="fa fa-flag fa-stack-1x"></i>
-                                    </span>
-                                    Translation
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#/series">
-                                    <span class="fa-stack fa-lg pull-left">
-                                        <i class="fa fa-flag fa-stack-1x"></i>
-                                    </span>
-                                    Series
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#/about">
-                            <span class="fa-stack fa-lg pull-left">
-                                <i class="fa fa-server fa-stack-1x"></i>
-                            </span>
-                            About
-                        </a>
-                    </li>
-                </ul>
-        </div><!-- /#sidebar-wrapper -->
-        
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid xyz">
-                <div ng-view="">
-                    <!-- content loaded in here -->
-                </div>
+<body ng-app="nanodesuApp">
+    <nav class="navbar navbar-default no-margin">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header fixed-brand">
+            <a class="navbar-brand" href="#/">
+                <i class="fa fa-rocket fa-lg" aria-hidden="true"></i>
+                Nanodesu
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="LoginCtrl">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
+                <li ng-show="isLogin()"><a href="#/series">Series</a></li>
+                <li ng-show="isLogin()"><a href="#/page">Pages</a></li>
+                <li ng-show="isLogin()">
+                    <a class="disabled" href="#/build">
+                        Generate
+                        <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right form-group">
+                <!-- only one of these will be visible at a time
+                    TODO: apparently this requires a variable? -->
+                <li class="dropdown" ng-show="isLogin()">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Token: {{loginName()}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="disabled">Profile</a></li>
+                        <li><a href="#/login">Sign Out</a></li>
+                    </ul>
+                </li>
+                <li ng-hide="isLogin()"><a href="#/login">Sign In</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-lg-12" ng-view="">
+                <!-- content loaded in here -->
             </div>
         </div>
-        
-        <script src="assets/libs/jquery/jquery.js"></script>
-        <script src="assets/libs/angular/angular.min.js"></script>
-        <script src="assets/libs/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/libs/angular-route/angular-route.min.js"></script>
-        <script src="assets/libs/angular-resource/angular-resource.min.js"></script>
-        <script src="assets/libs/angular-touch/angular-touch.min.js"></script>
-        <script src="assets/libs/angular-cookies/angular-cookies.min.js"></script>
-        <script src="assets/libs/simplemde/simplemde.min.js"></script>
-        <script src="assets/libs/select2/js/select2.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
-            
-            <script src="app/app.js"></script>
-            <script src="app/login/controllers/LoginCtrl.js"></script>
-            <script src="app/home/controllers/HomeCtrl.js"></script>
-            <script src="app/about/controllers/AboutCtrl.js"></script>
-            <script src="app/page/controllers/PageCtrl.js"></script>
-            <script src="app/page/controllers/PageAddCtrl.js"></script>
-            <script src="app/page/controllers/PageEditCtrl.js"></script>
-            <script src="app/series/controllers/SeriesCtrl.js"></script>
-            <script src="app/series/controllers/SeriesAddCtrl.js"></script>
-            <script src="app/series/controllers/SeriesEditCtrl.js"></script>
-            <script src="app/generate/controllers/GenerateCtrl.js"></script>
-            <script src="app/app-services/PageService.js"></script>
-            <script src="app/app-services/SeriesService.js"></script>
-            <script src="app/app-services/AuthService.js"></script>
-            <script src="app/app-services/GenerateService.js"></script>
-    </body>
+    </div>
+
+    <!-- <script src="assets/libs/jquery/jquery.js"></script> <!-- deprecated -->
+    <script src="assets/libs/angular/angular.min.js"></script>
+    <!-- <script src="assets/libs/bootstrap/js/bootstrap.min.js"></script> <!-- deprecated -->
+    <script src="assets/libs/angular-route/angular-route.min.js"></script>
+    <script src="assets/libs/angular-resource/angular-resource.min.js"></script>
+    <script src="assets/libs/angular-touch/angular-touch.min.js"></script>
+    <script src="assets/libs/angular-cookies/angular-cookies.min.js"></script>
+    <script src="assets/libs/simplemde/simplemde.min.js"></script>
+    <!--<script src="assets/libs/select2/js/select2.min.js"></script> <!-- deprecated. Was used only on one page. -->
+    <!-- <script src="assets/js/scripts.js"></script> <!-- deprecated -->
+
+    <script src="app/app.js"></script>
+    <script src="app/login/controllers/LoginCtrl.js"></script>
+    <script src="app/home/controllers/HomeCtrl.js"></script>
+    <script src="app/about/controllers/AboutCtrl.js"></script>
+    <script src="app/page/controllers/PageCtrl.js"></script>
+    <script src="app/page/controllers/PageAddCtrl.js"></script>
+    <script src="app/page/controllers/PageEditCtrl.js"></script>
+    <script src="app/series/controllers/SeriesCtrl.js"></script>
+    <script src="app/series/controllers/SeriesAddCtrl.js"></script>
+    <script src="app/series/controllers/SeriesEditCtrl.js"></script>
+    <script src="app/series/controllers/SeriesViewCtrl.js"></script>
+    <script src="app/series/controllers/SeriesNewCtrl.js"></script>
+    <script src="app/generate/controllers/GenerateCtrl.js"></script>
+    <script src="app/app-services/PageService.js"></script>
+    <script src="app/app-services/SeriesService.js"></script>
+    <script src="app/app-services/AuthService.js"></script>
+    <script src="app/app-services/GenerateService.js"></script>
+</body>
 </html>

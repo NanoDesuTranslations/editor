@@ -12,9 +12,10 @@ angular.module('nanodesuApp')
     .factory('AuthService', function($http,$cookies){
         var auth = {}
 
-        auth.login = login;
+        auth.login = loginToken;
         auth.logout = logout;
         auth.isLogin = isLogin;
+        auth.userName = userName;
         //auth.register = register;
 
         /**
@@ -30,6 +31,7 @@ angular.module('nanodesuApp')
         }
         */
 
+        //// Temp - not used, in favor of login using the "token" cookie.
         function login(username, password){
             //return $http.post('/login',data).then(handleSuccess, handleError('login failed'));
             var status;
@@ -43,18 +45,42 @@ angular.module('nanodesuApp')
             return status;
         }
 
-        function isLogin(){
-            var login;
-            if($cookies.get('auth')){
-                login = true;
-            }else{
-                login = false;
+        //// Temp - token cookie being used until real auth is implemented
+        function loginToken(tokenValue) {
+            $cookies.put('token', tokenValue);
+        }
+
+        function isLogin() {
+            //// Temp - not used, in favor of login using the "token" cookie.
+            //var login;
+            //if($cookies.get('auth')){
+            //    login = true;
+            //}else{
+            //    login = false;
+            //}
+            //return login;
+
+            //// Temp - 'token' cookie being used until real auth is implemented.
+            var status
+            if ($cookies.get('token')) {
+                status = true;
+            } else {
+                status = false;
             }
-            return login;
+            return status;
         }
 
         function logout(){
-            $cookies.remove('auth');
+            //// Temp - not used, in favor of login using the "token" cookie.
+            // $cookies.remove('auth');
+            //// Temp - 'token' cookie being used until real auth is implemented.
+            $cookies.remove('token');
+        }
+
+        function userName() {
+            //// Temp - 'token' cookie being used until real auth is implemented.
+            //// (in this case there's no implementation for "auth" cookie)
+            return ($cookies.get("token") ? $cookies.get("token") : "");
         }
 
         return auth;

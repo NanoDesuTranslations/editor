@@ -15,6 +15,8 @@ angular.module('nanodesuApp')
             $location.path("/login");
         }
 
+        console.log("HomeCtrl being instantiated");
+
         $scope.isLogin = function () {
             return AuthService.isLogin();
         }
@@ -22,15 +24,22 @@ angular.module('nanodesuApp')
         //// local function refreshData - queries for the series list so that it can properly be displayed.
         // TODO: for non-admins, need a way to get this list without the Series API, which is admin-only.
         function refreshData() {
+            console.log("HomeCtrl refreshData running");
             SeriesService.query(function (srs) {
                 $scope.data = srs;
+                console.log("HomeCtrl refreshData query success");
                 // console.log(srs);
             }, function (error) {
                 // console.log(error);
             });
         }
 
-        refreshData();
+        $scope.$on('$viewContentLoaded', function () {
+            console.log("HomeCtrl received $viewContentLoaded");
+            refreshData();
+        });
+
+        // refreshData();  // TODO: needs to be called on load.  Somehow it's not getting called on nav back to home.
 
         $scope.delete = function (idSeries) {
             SeriesService.delete({ id: idSeries }, function (success) {

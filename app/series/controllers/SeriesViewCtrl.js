@@ -96,7 +96,6 @@ angular.module('nanodesuApp')
         }
 
         $scope.saveProps = function () {
-            // TODO: actually save the edited properties
             var sr = $scope.sr;
             sr.config.hierarchy = [];
             for (var i = 0; i < $scope.propsTiers.length; i++) {

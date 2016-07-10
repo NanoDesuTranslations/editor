@@ -2,15 +2,15 @@
     <h1> Edit Page </h1>
 </div>
 <form>
-    <div ng-show="config">
-        <div class="form-group">
+    <div ng-show="propsOpen">
+        <!--<div class="form-group">
             <button type="button" class="btn btn-warning" ng-click="redirect()">Back</button>
             <button type="button" class="btn btn-success pull-right" ng-click="next()">Next</button>
-        </div>
+        </div>-->
         <hr />
         <div class="form-group">
             <label for"title">Title</label>
-            <input type="text" class="form-control" id="title", placeholder="title" value="{{ data.meta.title }}">
+            <input type="text" class="form-control" id="title", placeholder="title" ng-model="metaTemp.title">
         </div>
         <hr />
         <h2>Configuration</h2>
@@ -29,6 +29,21 @@
                 <option value="2">Draft</option>
                 <option value="3">N/A</option>
             </select>
+        </div>
+        <div class="pull-right">
+            <button type="button" class="btn btn-default" ng-click="cancelProps()">
+                <i class="glyphicon glyphicon-remove text-danger"></i> Cancel
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="saveProps()">
+                <i class="glyphicon glyphicon-save"></i> Close
+            </button>&nbsp;
+        </div>
+    </div>
+    <div class="form-group">
+        <div ng-hide="propsOpen">
+            <button type="button" class="btn btn-default pull-right" ng-click="openProps()">
+                <i class="fa fa-gear text-primary"></i> Properties
+            </button>
         </div>
     </div>
     <div ng-show="main">

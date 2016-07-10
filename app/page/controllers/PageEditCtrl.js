@@ -8,7 +8,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageEditCtrl', function($scope, $routeParams, $location, SeriesService, PageService){
+    .controller('PageEditCtrl', function($scope, $routeParams, $location, /* TODO: remove */ SeriesService, PageService){
         var auth = 'nano';
         var hierarchy;
         var idSeries = $routeParams.idSeries;
@@ -44,6 +44,8 @@ angular.module('nanodesuApp')
         PageService.get({'id': idPage}, function(events){
             $scope.data = events.page;
             metaTemp = events.page.meta;
+            if (events.series && events.series.length > 0)
+                $scope.sr = events.series[0]; // First and only series in the array. Save it in the model.
             simplemde.value($scope.data.content);
         });
         
@@ -84,4 +86,19 @@ angular.module('nanodesuApp')
             //console.log(data)
         }
         
+        // Page Properties:
+        $scope.openProps = function () {
+            $scope.propsOpen = true;
+            // TODO: initialize the page properties for editing--separate copy so the edits can be cancelled.
+        }
+
+        $scope.cancelProps = function () {
+            $scope.propsOpen = false;
+            // TODO: if we're using this to create a series we'll need to do more.
+        }
+
+        $scope.saveProps = function () {
+            $scope.propsOpen = false;
+            // TODO: if we're using this to create a series we'll need to do more.
+        }
     });

@@ -60,7 +60,7 @@ angular
             })
             .when('/page/:idSeries/add', {
                 templateUrl: 'app/page/views/pageAdd.html',
-                controller: 'PageCtrl',
+                controller: 'PageAddCtrl',
                 //access: {requiredLogin: true}
             })
             .when('/page/:idSeries/edit/:idPage', {

@@ -9,36 +9,8 @@
 
 angular.module('nanodesuApp')
     .controller('PageEditCtrl', function($scope, $routeParams, $location, /* TODO: remove SeriesService, */ PageService){
-        //var auth = 'nano';
-        //var hierarchy;
         var idSeries = $routeParams.idSeries;
         var idPage = $routeParams.idPage;
-        //var metaTemp = new Object();
-        //$scope.config = true;
-        //$scope.main = false;
-            
-        ///**
-        //* redirect into page URL
-        //*/
-        //$scope.redirect = function(){
-        //    var path = "/page";
-        //    $location.path(path);
-        //}
-        
-        //$scope.back = function(){
-        //    $scope.config = true;
-        //    $scope.main = false;
-        //}
-
-        //$scope.next = function(){
-        //    $scope.config = false;
-        //    $scope.main = true;
-        //}
-
-        //get configuration of hierarchy from series  (removed; this is the old way)
-        //$scope.series = SeriesService.get({'id': idSeries}, function(events){
-        //    hierarchy = events.config.hierarchy;
-        //});
 
         //page data schema from single-page PageService.get:
         //    {
@@ -82,46 +54,15 @@ angular.module('nanodesuApp')
             });
 
         /**
-        * get value from hierarchy like volume, part, etc
+        * get value from hierarchy e.g. volume, part, etc
         */
         $scope.hrValue = function (param) {
             return metaTemp[param];
         };
 
-        ///**
-        //* This function is active when save button clicked
-        //* PUT the data into API server (replace old content and properties of the page/chapter)
-        //*/
-        // TODO: replace the workings of this.
-        //$scope.save = function(){
-        //    var title = $('#title').val();
-        //    var content = simplemde.value();
-        //    var id = $('#idPage').val();
-        //    var status = $('#status').val();
-        //    var meta = new Object();
-        //    var data = new Object();
-
-        //    angular.forEach(hierarchy, function(item){
-        //        var key = item;
-        //        meta[key] = $('#'+item).val();
-        //    });
-        //    meta.title = title;
-        //    meta.status = status;
-
-        //    data.content = content;
-        //    data.meta = meta;
-
-        //    PageService.update({id: idPage}, data, function(success){
-        //        alert("success")
-        //    }, function(error){
-        //        //console.log(error.status)
-        //    });
-        //    //console.log(data)
-        //}
-
         $scope.save = function () {
             // If needed, finish editing properties.
-            if ($scope.openProps) {
+            if ($scope.propsOpen) {
                 $scope.saveProps();
             }
 
@@ -167,7 +108,9 @@ angular.module('nanodesuApp')
         // End editing the page's title etc. and save results in the model.
         $scope.saveProps = function () {
             $scope.propsOpen = false;
-            // TODO: Actually save props back into the model (not to DB). Reverse what openProps() did.
+
+            // Actually save props back into the model. Reverse what openProps() did.
+            // (the save() method does the actual save to DB.)
             $scope.pg.meta = {};
             $scope.pg.meta.title = $scope.propsTitle;
             $scope.pg.meta.status = $scope.propsStatus;
@@ -175,4 +118,5 @@ angular.module('nanodesuApp')
                 $scope.pg.meta[$scope.propsHr[i].label] = $scope.propsHr[i].value;
             }
         };
+
     });

@@ -8,14 +8,10 @@
 <div class="panel">
     <div class="panel panel-body">
         <div ng-show="propsOpen">
-            <h4 class="text-warning">TODO: move contents of this form to a partial template</h4>
+            <!-- TODO: move contents of this form to a partial template -->
             <!-- Begin (temp) series props form -->
             <div class="controls">
                 <form role="form" class="form-horizontal">
-                    <!--<div class="form-group">
-                        <button type="button" class="btn btn-warning" ng-click="spropBack()">Back</button>
-                        <button type="button" class="btn btn-success pull-right" ng-click="spropBack()">Save</button>
-                    </div>-->
                     <div class="form-group">
                         <label for="name" class="control-label col-sm-2">Title</label>
                         <div class="col-sm-8">
@@ -25,6 +21,7 @@
                     <div class="form-group">
                         <h4 class="control-label col-sm-2">Hierarchy:</h4>
                     </div>
+
                     <!-- Dynamic fields from http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/ -->
                     <div class="form-group" data-ng-repeat="tr in propsTiers">
                         <label class="control-label col-sm-2" for="{{'level'+$index}}">level {{$index}}</label>
@@ -49,6 +46,7 @@
                     </div>
                 </form>
             </div>
+            <!-- End (temp) series props form -->
             <div class="pull-right">
                 <button type="button" class="btn btn-default" ng-click="cancelProps()">
                     <i class="glyphicon glyphicon-remove text-danger"></i> Cancel
@@ -57,7 +55,6 @@
                     <i class="glyphicon glyphicon-save"></i> Save
                 </button>&nbsp;
             </div>
-            <!-- End (temp) series props form -->
         </div>
         <div ng-hide="propsOpen">
             <button type="button" class="btn btn-default pull-right" ng-click="openProps()">

@@ -10,13 +10,27 @@
 
 angular.module('nanodesuApp')
     .controller('LoginCtrl', function($scope, $location, AuthService){
+         // short-term storage for credentials that really should exist only while view is live.
+        $scope.cred = {} ;
+        $scope.cred.sName = "";
+        $scope.cred.sPW = "";
 
         $scope.logIn = function () {
             // The service call below is for the shortened, temp auth systen. Real args will be username + password.
-            AuthService.login($scope.token);
+            AuthService.login($scope.cred.sName, $scope.cred.sPW)
+                .then(function(res) {
+                    debugger;
+                    // Route to main page on success.
+                    $scope.cred = {}; // get rid of this when we no longer need it.
+                    $location.path("/");
+                },function(err) {
+                    // TODO: show error?
+
+                    debugger;
+                });
+            // remove the password
+            $scope.cred.sPW = "";
             // TODO: show message about "signed in as...."
-            // Route to main page on success.
-            $location.path("/");
         };
 
         $scope.logOut = function () {

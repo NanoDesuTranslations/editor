@@ -19,14 +19,14 @@ angular.module('nanodesuApp')
             // The service call below is for the shortened, temp auth systen. Real args will be username + password.
             AuthService.login($scope.cred.sName, $scope.cred.sPW)
                 .then(function(res) {
-                    debugger;
+                    $nd.warn("AuthService login, success response.")
                     // Route to main page on success.
                     $scope.cred = {}; // get rid of this when we no longer need it.
                     $location.path("/");
                 },function(err) {
                     // TODO: show error?
 
-                    debugger;
+                    $nd.warn("AuthService login, failed response.")
                 });
             // remove the password
             $scope.cred.sPW = "";

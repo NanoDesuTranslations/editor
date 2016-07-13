@@ -25,8 +25,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="LoginCtrl">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
-                <li ng-show="isLogin()"><a href="#/series">Series</a></li>
-                <li ng-show="isLogin()"><a href="#/page">Pages</a></li>
+                <!-- TODO: rework these; they'll be  tabs that show if there's an actuve series or page, and can be used to close that. -->
+                <li ng-show="isLogin()"><a href="#/">Series</a></li> 
+                <li ng-show="isLogin()"><a href="#/">Pages</a></li>
                 <li ng-show="isLogin()">
                     <a class="disabled" href="#/build">
                         Generate

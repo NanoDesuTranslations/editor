@@ -9,13 +9,16 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesViewCtrl', function ($scope, $routeParams, $location, PageService, SeriesService) {
+    .controller('SeriesViewCtrl', function ($scope, $routeParams, $location, PageService, SeriesService, NavService) {
 
         var idSeries =  $routeParams.idSeries;
 
+        NavService.setActive("series");
+
         SeriesService.get({id: idSeries}, function(sr){
             $scope.sr = sr;
-            console.log("series get success for "+sr.name);
+            NavService.setSeries(sr);
+            console.log("series get success for " + sr.name);
         }, function (error) {
             console.log("Series GET error"+error);
         })

@@ -9,5 +9,6 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('AboutCtrl', function(){
+    .controller('AboutCtrl', function ($scope, NavService) {
+        NavService.setActive("about");
     });

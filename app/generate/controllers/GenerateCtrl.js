@@ -9,7 +9,10 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('GenerateCtrl', function($scope, GenerateService){
+    .controller('GenerateCtrl', function ($scope, GenerateService, NavService) {
+
+        NavService.setActive("build");
+
         $scope.build = function(){
             GenerateService.query(function(success){
                 console.log(success);

@@ -9,11 +9,11 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesNewCtrl', function ($scope, $routeParams, $location, PageService, SeriesService) {
+    .controller('SeriesNewCtrl', function ($scope, $routeParams, $location, PageService, SeriesService, NavService) {
 
-        // var idSeries =  $routeParams.idSeries;
+        NavService.setActive("series");
 
-        // TODO: create a new sr object
+        // Create a new sr object
         $scope.sr = {
             name: "",
             config: {
@@ -21,6 +21,7 @@ angular.module('nanodesuApp')
             }
         };
         $scope.propsTiers = [];
+        NavService.setSeries($scope.sr);
 
         /**
         * Make a custom URL
@@ -70,6 +71,8 @@ angular.module('nanodesuApp')
             var o = $scope.propsTiers.splice(idx, 1);
             console.log("Removed element " + idx + " from tiers.  " + o.length + " gone, " + $scope.propsTiers.length + " left.");
         }
+
+        // TODO: a method to cancel this series we were creating, e.g if the user hits a cancel button
 
         $scope.saveProps = function () {
             // TODO: actually save the edited properties

@@ -8,8 +8,10 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageAddCtrl', function($scope, $routeParams, $location,  SeriesService, PageService){
+    .controller('PageAddCtrl', function($scope, $routeParams, $location,  SeriesService, PageService, NavService){
         var idSeries = $routeParams.idSeries;
+
+        NavService.setActive("page");
 
         //page data schema from single-page PageService.get:
         //        "page": {
@@ -35,24 +37,26 @@ angular.module('nanodesuApp')
                 }
             }
         };
+        NavService.setPage($scope.pg);
 
         // Model data for editing:
         $scope.propsTitle = "";
         $scope.propsStatus = "3"; // "NA" value: a string because that matches the result of the SELECT.
         $scope.propsHr = [];
 
-        // TODO: get this info via the pages endpoint (if auth reqson series GETs aren't loosened).
+        // old code: get this info via the NavService; the series for this new page should be the one currently active.
         // get configuration of hierarchy from series
-        SeriesService.get({ 'id': idSeries }, function (response) {
-            $scope.sr = response;
-            var hierarchy = $scope.sr.config.hierarchy;
-            for (var i = 0; i < hierarchy.length; i++) {
-                $scope.propsHr.push({
-                    label: hierarchy[i],
-                    value: ""
-                });
-            }
-        });
+        //SeriesService.get({ 'id': idSeries }, function (response) {
+        //    $scope.sr = response;
+        //    var hierarchy = $scope.sr.config.hierarchy;
+        //    for (var i = 0; i < hierarchy.length; i++) {
+        //        $scope.propsHr.push({
+        //            label: hierarchy[i],
+        //            value: ""
+        //        });
+        //    }
+        //});
+        $scope.sr = NavService.getSeries();
 
         $scope.save = function () {
             // Construct the page data that we'll save.
@@ -75,6 +79,7 @@ angular.module('nanodesuApp')
 
         $scope.cancelProps = function () {
             // Just abandon the form and return to the series it's part of.
+            NavService.setPage(null);
             $location.path("/series/" + idSeries);
         }
 

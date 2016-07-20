@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('LoginCtrl', function($scope, $location, AuthService){
+    .controller('LoginCtrl', function($scope, $location, AuthService, NavService){
          // short-term storage for credentials that really should exist only while view is live.
         $scope.cred = {} ;
         $scope.cred.sName = "";
@@ -30,7 +30,6 @@ angular.module('nanodesuApp')
                 });
             // remove the password
             $scope.cred.sPW = "";
-            // TODO: show message about "signed in as...."
         };
 
         $scope.logOut = function () {
@@ -48,4 +47,22 @@ angular.module('nanodesuApp')
         $scope.loginName = function () {
             return AuthService.userName();
         };
+
+        // This section is a helper for the nav bar on the front page.  Because the login status was already being used there.
+
+        $scope.hasSeries = function () {
+            return NavService.hasSeries();
+        }
+        $scope.hasPage = function () {
+            return NavService.hasPage();
+        }
+        $scope.gotoSeries = function () {
+            NavService.gotoSeries();
+        }
+        $scope.gotoPage = function () {
+            NavService.gotoPage();
+        }
+        $scope.curActive = function () {
+            return NavService.curActive();
+        }
     });

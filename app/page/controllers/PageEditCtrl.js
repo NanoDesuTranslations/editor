@@ -8,38 +8,47 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageEditCtrl', function($scope, $routeParams, $location, /* TODO: remove SeriesService, */ PageService){
+    .controller('PageEditCtrl', function($scope, $routeParams, $location, PageService, NavService){
         var idSeries = $routeParams.idSeries;
         var idPage = $routeParams.idPage;
 
-        //page data schema from single-page PageService.get:
-        //    {
-        //        "page": {
-        //            "meta": {
-        //                "Volume": "1",
-        //                "Chapter": "1",
-        //                "title": "Natsume Sōseki, Sōseki’s Complete Collection, new edition (Iwanami Shoten)",
-        //                "status": "1"
-        //            },
-        //            "series": "57788d46456e6cf036dd1492",
-        //            "content": "## Chapter One: Natsume Sōseki, Sōseki’s Complete Collection, new edition ....",
-        //            "id": "57788e6b456e6cf036dd1493"
-        //        },
-        //        "series": [
-        //          {
-        //              "config": { "hierarchy": [ "Volume", "Chapter" ] },
-        //              "name": "Biblia",
-        //              "id": "57788d46456e6cf036dd1492"
-        //          }
-        //        ]
-        //    }
+        NavService.setActive("page");
+
+        //page data schema from single-page PageService.get (updated 7/17):
+        // TODO: add the path property, as below, to the page properties for editing.
+        /*
+        {
+    "page": {
+        "meta": {
+            "title": "Afterword",
+            "status": "2",
+            "path": "afterword",
+            "Volume": "1"
+        },
+        "series": "575bb13025598017708f8907",
+        "content": "VOLUME 1\r\nAfterword\r\n... Actual Afterword continues on for a while",
+        "id": "5768657cb2c71e0b41d8fe59"
+    },
+    "series": [{
+        "config": {"hierarchy": [
+            "Volume",
+            "Part",
+            "chapter"
+        ]},
+        "name": "Sasami-san",
+        "id": "575bb13025598017708f8907"
+    }]
+}
+        */
 
         //get page data
         PageService.get({ 'id': idPage },
             function (data) { // Success: we're passed the data that was received.
                 $scope.pg = data.page;
+                NavService.setPage(data.page);
                 if (data.series && data.series.length > 0)
                     $scope.sr = data.series[0]; // First and only series in the array. Save it in the model.
+                NavService.setSeries($scope.sr);
                 simplemde.value($scope.pg.content);
 
                 // Assertions of data consistency.

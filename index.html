@@ -23,13 +23,19 @@
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="LoginCtrl">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
-                <!-- TODO: rework these; they'll be  tabs that show if there's an actuve series or page, and can be used to close that. -->
-                <!--<li ng-show="isLogin()"><a href="#/">Series</a></li> 
-                <li ng-show="isLogin()"><a href="#/">Pages</a></li>-->
-                <li ng-show="isLogin()">
-                    <a class="disabled" href="#/build">
+            <ul class="nav navbar-nav nav-pills">
+                <li ng-class="{active: curActive() == 'main'}"><a href="#/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
+                <li ng-class="{active: curActive() == 'series'}" ng-show="isLogin() && hasSeries()">
+                        <a href="javascript:return false;" ng-click="gotoSeries()">Series</a>
+                </li> 
+                <li ng-class="{active: curActive() == 'page'}" ng-show="isLogin() && hasPage()">
+                    <a href="javascript:return false;" ng-click="gotoPage()">Page</a>
+                </li>
+                <li class="disabled">
+                    &nbsp;
+                </li>
+                <li ng-class="{active: curActive() == 'build'}" ng-show="isLogin()">
+                    <a href="#/build">
                         Generate
                         <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i>
                     </a>
@@ -71,7 +77,6 @@
     <script src="assets/libs/angular-touch/angular-touch.min.js"></script>
     <script src="assets/libs/angular-cookies/angular-cookies.min.js"></script>
     <script src="assets/libs/simplemde/simplemde.min.js"></script>
-    <!--<script src="assets/libs/select2/js/select2.min.js"></script> <!-- deprecated. Was used only on one page. -->
     <script src="assets/js/scripts.js"></script>
 
     <script src="app/app.js"></script>
@@ -90,6 +95,7 @@
     <script src="app/app-services/PageService.js"></script>
     <script src="app/app-services/SeriesService.js"></script>
     <script src="app/app-services/AuthService.js"></script>
+    <script src="app/app-services/NavService.js"></script>
     <script src="app/app-services/GenerateService.js"></script>
 </body>
 </html>

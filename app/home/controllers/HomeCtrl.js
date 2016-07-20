@@ -9,13 +9,15 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('HomeCtrl', function ($scope, $location, AuthService, SeriesService) {
+    .controller('HomeCtrl', function ($scope, $location, AuthService, SeriesService, NavService) {
         $scope.signIn = function () {
             // Nothing fancy; just navigate to the sign-in page.
             $location.path("/login");
         }
 
-        console.log("HomeCtrl being instantiated");
+        // console.log("HomeCtrl being instantiated");
+
+        NavService.setActive("main");
 
         $scope.isLogin = function () {
             return AuthService.isLogin();

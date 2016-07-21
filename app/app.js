@@ -52,12 +52,12 @@ angular
                 //access: {requiredLogin: false}
                 //controllerAs: 'about'
             })
-            .when('/page', {
-                templateUrl: 'app/page/views/page.html',
-                controller: 'PageCtrl',
-                //access: {requiredLogin: true}
-                //controllerAs: 'page'
-            })
+            //.when('/page', {
+            //    templateUrl: 'app/page/views/page.html',
+            //    controller: 'PageCtrl',
+            //    //access: {requiredLogin: true}
+            //    //controllerAs: 'page'
+            //})
             .when('/page/:idSeries/add', {
                 templateUrl: 'app/page/views/pageAdd.html',
                 controller: 'PageAddCtrl',
@@ -68,21 +68,26 @@ angular
                 controller: 'PageEditCtrl',
                 //access: {requiredLogin: true}
             })
-            .when('/series', {
-                templateUrl: 'app/series/views/series.html',
-                controller: 'SeriesCtrl',
-                //access: {requiredLogin: true}
-            })
+            //.when('/series', {
+            //    templateUrl: 'app/series/views/series.html',
+            //    controller: 'SeriesCtrl',
+            //    //access: {requiredLogin: true}
+            //})
             .when('/series/add', {
-                templateUrl: 'app/series/views/seriesAdd.html',
-                controller: 'SeriesAddCtrl',
+                templateUrl: 'app/series/views/seriesNew.html',
+                controller: 'SeriesNewCtrl',
                 //access: {requiredLogin: true}
             })
-            .when('/series/edit/:idSeries', {
-                templateUrl: 'app/series/views/seriesEdit.html',
-                controller: 'SeriesEditCtrl',
+            .when('/series/:idSeries', {
+                templateUrl: 'app/series/views/seriesView.html',
+                controller: 'SeriesViewCtrl',
                 //access: {requiredLogin: true}
             })
+            //.when('/series/edit/:idSeries', {
+            //    templateUrl: 'app/series/views/seriesEdit.html',
+            //    controller: 'SeriesEditCtrl',
+            //    //access: {requiredLogin: true}
+            //})
             .otherwise({
                 redirectTo: '/'
             });

@@ -1,4 +1,4 @@
-'use strict'
+﻿'use strict';
 
 /**
  * @ngdoc function
@@ -8,66 +8,93 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageAddCtrl', function($scope, $routeParams, $location,  SeriesService, PageService){
-        //var auth = 'nano';
+    .controller('PageAddCtrl', function($scope, $routeParams, $location,  SeriesService, PageService, NavService){
         var idSeries = $routeParams.idSeries;
-        var hierarchy;
-        //console.log(idSeries);
-        $scope.config = true;
-        $scope.main = false;
 
-        /**
-        * redirect into page URL
-        */
-        $scope.redirect = function(){
-            var path = "/page";
-            $location.path(path);
-        }
+        NavService.setActive("page");
 
+        //page data schema from single-page PageService.get:
+        //        "page": {
+        //            "meta": {
+        //                "Volume": "1",
+        //                "Chapter": "1",
+        //                "title": "Natsume Sōseki, Sōseki’s Complete Collection, new edition (Iwanami Shoten)",
+        //                "status": "1"
+        //            },
+        //            "series": "57788d46456e6cf036dd1492",
+        //            "content": "## Chapter One: Natsume Sōseki, Sōseki’s Complete Collection, new edition ....",
+        //            "id": "57788e6b456e6cf036dd1493"
+        //        },
+
+
+
+        // Construct mock (empty) page data
+        $scope.pg = {
+            page: {
+                meta: {
+                    title: "",
+                    status: "3"
+                }
+            }
+        };
+        NavService.setPage($scope.pg);
+
+        // Model data for editing:
+        $scope.propsTitle = "";
+        $scope.propsStatus = "3"; // "NA" value: a string because that matches the result of the SELECT.
+        $scope.propsHr = [];
+
+        // old code: get this info via the NavService; the series for this new page should be the one currently active.
         // get configuration of hierarchy from series
-        $scope.data = SeriesService.get({'id': idSeries}, function(events){
-            hierarchy = events.config.hierarchy;
-            //console.log(events.config.hierarchy)
-        });
+        //SeriesService.get({ 'id': idSeries }, function (response) {
+        //    $scope.sr = response;
+        //    var hierarchy = $scope.sr.config.hierarchy;
+        //    for (var i = 0; i < hierarchy.length; i++) {
+        //        $scope.propsHr.push({
+        //            label: hierarchy[i],
+        //            value: ""
+        //        });
+        //    }
+        //});
+        $scope.sr = NavService.getSeries();
 
-        $scope.back = function(){
-            $scope.config = true;
-            $scope.main = false;
-        }
+        $scope.save = function () {
+            // Construct the page data that we'll save.
+            var newData = new Object();
+            newData.meta = angular.copy($scope.pg.meta);
+            newData.series = idSeries;
 
-        $scope.next = function(){
-            $scope.config = false;
-            $scope.main = true;
-        }
-        
-        /**
-        * This function is active when save button clicked
-        * POST the data into API server
-        */
-        $scope.save = function(){
-            var title = $('#title').val();
-            var content = simplemde.value();
-            var series = $('#idSeries').val();
-            var status = $('#status').val();
-            var meta = new Object();
-            var data = new Object();
-
-            angular.forEach(hierarchy, function(item){
-                var key = item;
-                meta[key] = $('#'+item).val();
+            // Save the page we created.
+            PageService.save(newData, function (status) {
+                // If the save (POST) succeeds, we've only created the page, not the content.  Navigate to
+                // the URL for editing the page we've just created.
+                $location.path("/page/" + idSeries + "/edit/" + status.id);
+            }, function (err) {
+                $nd.warn("Page Add: save failed for series " + sr.name + ", new page.");
+                // TODO: proper user notification of failure
+                alert("Page Add: save failed for new page.");
             });
-            meta.title = title;
-            meta.status = status
+        };
+        //$nd.warn("Running pageAddCtrl 3");
 
-            data.series = series;
-            data.content = content;
-            data.meta = meta
-            //console.log(data)
-            PageService.save(data, function(success){
-                //console.log(response)
-                alert("success")
-            }, function(error){
-                console.log(error)
-            });
+        $scope.cancelProps = function () {
+            // Just abandon the form and return to the series it's part of.
+            NavService.setPage(null);
+            $location.path("/series/" + idSeries);
         }
+
+        $scope.saveProps = function () {
+            // TODO: validate the page information
+
+            // put edited data into the model.
+            $scope.pg.meta = {};
+            $scope.pg.meta.title = $scope.propsTitle;
+            $scope.pg.meta.status = $scope.propsStatus;
+            for (var i = 0; i < $scope.propsHr.length; i++) {
+                $scope.pg.meta[$scope.propsHr[i].label] = $scope.propsHr[i].value;
+            }
+
+            $scope.save(); // does the actual save.
+        }
+
     });

@@ -4,6 +4,7 @@
  */
 
 /* Toggle Styles */
+/* TODO: are these styles needed any more? */
 
  #wrapper {
     padding-left: 0;
@@ -43,9 +44,9 @@
     width: 100%;  
     overflow-x: hidden; 
 }
-.xyz{
+/*.xyz{ -- unnecessary?
     min-width: 360px;
-}
+}*/
 #wrapper.toggled #page-content-wrapper {
     position: relative;
     margin-right: 0px; 

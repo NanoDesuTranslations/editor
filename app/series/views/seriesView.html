@@ -1,0 +1,93 @@
+<div class="page-header">
+    <h1>
+        Series: <span ng-class="{ small : propsOpen || !sr.name }">
+            {{propsOpen ? "editing" : (sr.name ? sr.name : "untitled")}}
+        </span>
+    </h1>
+</div>
+<div class="panel">
+    <div class="panel panel-body">
+        <div ng-show="propsOpen">
+            <!-- TODO: move contents of this form to a partial template -->
+            <!-- Begin (temp) series props form -->
+            <div class="controls">
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="name" class="control-label col-sm-2">Title</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="name" class="form-control" placeholder="Title" ng-model="sr.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h4 class="control-label col-sm-2">Hierarchy:</h4>
+                    </div>
+
+                    <!-- Dynamic fields from http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/ -->
+                    <div class="form-group" data-ng-repeat="tr in propsTiers">
+                        <label class="control-label col-sm-2" for="{{'level'+$index}}">level {{$index}}</label>
+                        <div class="col-sm-3">
+                            <div class="entry input-group" id="hierarchy">
+                                <input type="text" ng-model="tr.name" class="form-control" id="{{'level'+$index}}">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" aria-label="Remove" ng-click="removeTier($index)">
+                                        <span class="glyphicon glyphicon-remove text-danger"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3 col-sm-offset-2">
+                            <button type="button" class="btn btn-default" ng-click="addTier()">
+                                <span class="glyphicon glyphicon-plus text-primary"></span>&nbsp;
+                                Add hierarchy level
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- End (temp) series props form -->
+            <div class="pull-right">
+                <button type="button" class="btn btn-default" ng-click="cancelProps()">
+                    <i class="glyphicon glyphicon-remove text-danger"></i> Cancel
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="saveProps()">
+                    <i class="glyphicon glyphicon-save"></i> Save
+                </button>&nbsp;
+            </div>
+        </div>
+        <div ng-hide="propsOpen">
+            <button type="button" class="btn btn-default pull-right" ng-click="openProps()">
+                <i class="fa fa-gear text-primary"></i> Properties
+            </button>
+        </div>
+    </div>
+    <h3>Pages</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="dt in page | filter:{'series':sr.id}">
+                <td>{{ dt.meta.title }}</td>
+                <td>
+                    <button type="button" ng-click="redirect(sr.id,dt.id)" class="btn btn-default">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        Edit
+                    </button>
+                    <button type="button" class="btn btn-warning" ng-click="delete(dt.id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-default" ng-click="redirect(sr.id)">
+        <span class="glyphicon glyphicon-plus text-primary"></span>
+        Add page
+    </button>
+</div>

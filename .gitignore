@@ -6,3 +6,6 @@ bower_components/
 *.ipr
 *.iws
 .idea/
+/Web.config
+/jsconfig.json
+

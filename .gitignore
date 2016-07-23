@@ -1,5 +1,7 @@
 node_modules/
-bower_components/
+
+# Managed by bower
+assets/libs/
 
 #For IDE
 *.iml

@@ -11,7 +11,9 @@
 angular.module('nanodesuApp')
     .factory('AuthService', function($http,$cookies, $log){
         var auth = {}; // The object we're building.
+        // TODO: these local variables are lost of the page is refreshed.  Store the info in a cookie?
         var un = "";   // local variable, for remembering the user's name.
+        var fAdmin = false; // local variable for remembering user's permission level.
         // The other thing we store is a token in the 'token' cookie, which will actually be used for authentication.
 
         // auth.login = loginToken;
@@ -19,25 +21,27 @@ angular.module('nanodesuApp')
         auth.logout = logout;
         auth.isLogin = isLogin;
         auth.userName = userName;
-        //auth.register = register;
+        auth.isAdmin = isAdmin;
 
         // Login:
 
         // Example of a successful response:
         //{
         //    "permissions": {
-        //        "view": [],
-        //       "edit": [],
-        //        "admin": true
+        //        "view": [<list of IDs>],
+        //        "edit": [<list of IDs>],
+        //        "admin": true/false
         //    },
-        //    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJwZXJtaXNzaW9ucyI6eyJ2aWV3IjpbXSwiZWRpdCI6W10sImFkbWluIjp0cnVlfSwiY3JlYXRlZCI6MTQ2ODMxMDQ1OTQ3MH0.Gsn5x0mzrtZ4DTfcn1sXjzG1H3SJKneNvba5qOegv9U"
+        //    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJwZXJta..."
         //}
 
         //private functions
         function handleSuccess(res){
             $log.info("auth login handle Success");
+            $log.info("Auth info: " + JSON.stringify(res));
             $cookies.put("token", res.data.token);
             un = res.config.data.username;
+            fAdmin = res.data.permissions.admin;
             return res.data;
         }
 
@@ -70,6 +74,7 @@ angular.module('nanodesuApp')
             // 'token' cookie stores the token and is accessible only from this domain.
             $cookies.remove('token');
             un = "";
+            fAdmin = false;
         }
 
         // Reporting status for other components:
@@ -87,6 +92,10 @@ angular.module('nanodesuApp')
 
         function userName() {
             return un;
+        }
+
+        function isAdmin() {
+            return ! !fAdmin;
         }
 
         return auth;

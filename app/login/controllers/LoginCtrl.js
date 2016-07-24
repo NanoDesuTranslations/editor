@@ -44,6 +44,10 @@ angular.module('nanodesuApp')
             return status;
         };
 
+        $scope.isAdmin = function() {
+            return AuthService.isAdmin();
+        };
+
         $scope.loginName = function () {
             return AuthService.userName();
         };

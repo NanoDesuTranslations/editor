@@ -26,3 +26,4 @@ This project folder structure following style guide from
 ## Before building
 Install dependencies using Bower:
     $ bower install
+Bower also requires node, npm, and git.

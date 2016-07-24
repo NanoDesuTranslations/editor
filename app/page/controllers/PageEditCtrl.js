@@ -41,6 +41,19 @@ angular.module('nanodesuApp')
 }
         */
 
+        var oMDE = null;
+        function ensureMDE() {
+            // This function does two things.
+            // One: it breaks the rules by directly manipulating the DOM from an AngularJS controller.
+            //    Sorry, couldn't find a way to avoid that.
+            // Two: it allows delaying until the last possible moment the time when the SimpleMDE markdown
+            //    editor is initialized.
+            if (!oMDE) {
+                oMDE = new SimpleMDE(document.getElementById("content"));
+            }
+            return oMDE;
+        }
+
         //get page data
         PageService.get({ 'id': idPage },
             function (data) { // Success: we're passed the data that was received.
@@ -49,7 +62,7 @@ angular.module('nanodesuApp')
                 if (data.series && data.series.length > 0)
                     $scope.sr = data.series[0]; // First and only series in the array. Save it in the model.
                 NavService.setSeries($scope.sr);
-                simplemde.value($scope.pg.content);
+                ensureMDE().value($scope.pg.content);
 
                 // Assertions of data consistency.
                 // Assert that idSeries matches up with the series IDs from the page data and its series info.
@@ -78,7 +91,7 @@ angular.module('nanodesuApp')
             // Construct the page data that we'll save.
             var newData = new Object();
             newData.meta = angular.copy($scope.pg.meta);
-            newData.content = simplemde.value();
+            newData.content = ensureMDE().value();
 
             // (async) save it.
             PageService.update({ id: idPage }, newData, function (status) {

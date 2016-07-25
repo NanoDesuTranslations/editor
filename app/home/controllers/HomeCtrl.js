@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('HomeCtrl', function ($scope, $location, AuthService, SeriesService, NavService) {
+    .controller('HomeCtrl', function ($scope, $location, AuthService, SeriesService, PageService, NavService) {
         $scope.signIn = function () {
             // Nothing fancy; just navigate to the sign-in page.
             $location.path("/login");
@@ -23,17 +23,38 @@ angular.module('nanodesuApp')
             return AuthService.isLogin();
         }
 
-        //// local function refreshData - queries for the series list so that it can properly be displayed.
-        // TODO: for non-admins, need a way to get this list without the Series API, which is admin-only.
-        function refreshData() {
-            console.log("HomeCtrl refreshData running");
-            SeriesService.query(function (srs) {
-                $scope.data = srs;
-                console.log("HomeCtrl refreshData query success");
+        function refreshDataFromPages() {
+            console.log("HomeCtrl refreshDataFromPages running");
+            PageService.query(function (pages) {
+                $scope.data = []; // TODO: figure out how to fill this in from pages' series list
+                console.log("HomeCtrl refreshDataFromPages query success");
+                angular.forEach(pages.series, function(element) {
+                    $scope.data.push(element);
+                }, this);
                 // console.log(srs);
             }, function (error) {
                 // console.log(error);
             });
+        }
+
+        function refreshDataFromSeries() {
+            console.log("HomeCtrl refreshDataFromSeries running");
+            SeriesService.query(function (srs) {
+                $scope.data = srs;
+                console.log("HomeCtrl refreshDataFromSeries query success");
+                // console.log(srs);
+            }, function (error) {
+                // console.log(error);
+            });
+        }
+
+        //// local function refreshData - queries for the series list so that it can properly be displayed.
+        function refreshData() {
+            if (AuthService.isAdmin()) {
+                refreshDataFromSeries();
+            } else {
+                refreshDataFromPages();
+            }
         }
 
         $scope.$on('$viewContentLoaded', function () {

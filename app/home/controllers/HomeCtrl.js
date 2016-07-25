@@ -22,6 +22,9 @@ angular.module('nanodesuApp')
         $scope.isLogin = function () {
             return AuthService.isLogin();
         }
+        $scope.isAdmin = function() {
+            return AuthService.isAdmin();
+        }
 
         function refreshDataFromPages() {
             console.log("HomeCtrl refreshDataFromPages running");
@@ -29,9 +32,8 @@ angular.module('nanodesuApp')
                 $scope.data = []; // TODO: figure out how to fill this in from pages' series list
                 console.log("HomeCtrl refreshDataFromPages query success");
                 angular.forEach(pages.series, function(element) {
-                    $scope.data.push(element);
-                }, this);
-                // console.log(srs);
+                    this.push(element);
+                }, $scope.data);
             }, function (error) {
                 // console.log(error);
             });

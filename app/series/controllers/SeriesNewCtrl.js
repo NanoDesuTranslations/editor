@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesNewCtrl', function ($scope, $routeParams, $location, PageService, SeriesService, NavService) {
+    .controller('SeriesNewCtrl', function ($scope, $routeParams, $location, SeriesService, NavService) {
 
         NavService.setActive("series");
 

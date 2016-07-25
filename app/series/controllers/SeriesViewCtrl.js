@@ -9,19 +9,34 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesViewCtrl', function ($scope, $routeParams, $location, PageService, SeriesService, NavService) {
+    .controller('SeriesViewCtrl', function ($scope, $routeParams, $location, $log, AuthService, PageService, SeriesService, NavService) {
 
         var idSeries =  $routeParams.idSeries;
 
         NavService.setActive("series");
 
-        SeriesService.get({id: idSeries}, function(sr){
-            $scope.sr = sr;
-            NavService.setSeries(sr);
-            console.log("series get success for " + sr.name);
-        }, function (error) {
-            console.log("Series GET error"+error);
-        })
+        $scope.admin = AuthService.isAdmin();
+
+        if (AuthService.isAdmin()) {
+            SeriesService.get({ id: idSeries }, function (sr) {
+                $scope.sr = sr;
+                NavService.setSeries(sr);
+                console.log("series get success for " + sr.name);
+            }, function (error) {
+                console.log("Series GET error" + error);
+            })
+        } else {
+            PageService.get(function (data){
+                var sr = data.series[idSeries];
+                $log.info("Recieved data from PageService.get in SeriesViewCtrl");
+                $scope.sr = sr;
+                NavService.setSeries(sr);
+            }
+            ,function (err) {
+                // TODO: report error.
+                $log.warn("Error from PageService.get in SeriesViewCtrl")
+            } )
+        }
 
         //query json data from api -- gets page head data regardless of series.
         PageService.query(function (success) {

@@ -30,14 +30,14 @@
                         <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
                         Open
                     </button>
-                    <button type="button" class="btn btn-sm btn-danger" ng-click="delete(sr.id)">
+                    <button type="button" class="btn btn-sm btn-danger" ng-show="isAdmin()" ng-click="delete(sr.id)">
                         <span class="glyphicon glyphicon-trash"></span>&nbsp;
                         Delete
                     </button>
             </tr>
         </tbody>
     </table>
-    <button type="button" ng-click="openSeries()" class="btn btn-success">
+    <button type="button" ng-click="openSeries()" ng-show="isAdmin()" class="btn btn-success">
         <span class="glyphicon glyphicon-plus"></span>
         Add
     </button>

@@ -26,11 +26,14 @@ angular.module('nanodesuApp')
             return AuthService.isAdmin();
         }
 
+        // To get series info for non-admins, we get the list of pages from the PageService, throw away the pages,
+        // and use the series information that came with it.
         function refreshDataFromPages() {
             console.log("HomeCtrl refreshDataFromPages running");
             PageService.query(function (pages) {
-                $scope.data = []; // TODO: figure out how to fill this in from pages' series list
+                $scope.data = [];
                 console.log("HomeCtrl refreshDataFromPages query success");
+                // Fill in the series data from the list that was returned.
                 angular.forEach(pages.series, function(element) {
                     this.push(element);
                 }, $scope.data);

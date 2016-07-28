@@ -75,7 +75,7 @@ angular.module('nanodesuApp')
         // TODO: a method to cancel this series we were creating, e.g if the user hits a cancel button
 
         $scope.saveProps = function () {
-            // TODO: actually save the edited properties
+            // Actually save the edited properties
             var sr = $scope.sr;
             sr.config.hierarchy = [];
             for (var i = 0; i < $scope.propsTiers.length; i++) {

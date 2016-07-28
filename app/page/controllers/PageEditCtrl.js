@@ -110,6 +110,7 @@ angular.module('nanodesuApp')
             // initialize the page properties for editing--separate copy so the edits can be cancelled.
             $scope.propsTitle = $scope.pg.meta.title;
             $scope.propsStatus = $scope.pg.meta.status;
+            $scope.propsPath = $scope.pg.meta.path;
             $scope.propsHr = [];
             for (var i = 0; i < $scope.sr.config.hierarchy.length; i++) {
                 // Build a working copy of the hierarchy.
@@ -136,6 +137,7 @@ angular.module('nanodesuApp')
             $scope.pg.meta = {};
             $scope.pg.meta.title = $scope.propsTitle;
             $scope.pg.meta.status = $scope.propsStatus;
+            $scope.pg.meta.path = $scope.propsPath;
             for (var i = 0; i < $scope.propsHr.length; i++) {
                 $scope.pg.meta[$scope.propsHr[i].label] = $scope.propsHr[i].value;
             }

@@ -43,20 +43,23 @@ angular.module('nanodesuApp')
         $scope.propsTitle = "";
         $scope.propsStatus = "3"; // "NA" value: a string because that matches the result of the SELECT.
         $scope.propsHr = [];
+        $scope.propsPath = "";
 
         // old code: get this info via the NavService; the series for this new page should be the one currently active.
         // get configuration of hierarchy from series
         //SeriesService.get({ 'id': idSeries }, function (response) {
         //    $scope.sr = response;
-        //    var hierarchy = $scope.sr.config.hierarchy;
-        //    for (var i = 0; i < hierarchy.length; i++) {
-        //        $scope.propsHr.push({
-        //            label: hierarchy[i],
-        //            value: ""
-        //        });
-        //    }
         //});
         $scope.sr = NavService.getSeries();
+        {   // local block of code
+            var hierarchy = $scope.sr.config.hierarchy;
+            for (var i = 0; i < hierarchy.length; i++) {
+                $scope.propsHr.push({
+                    label: hierarchy[i],
+                    value: ""
+                });
+            }
+        }
 
         $scope.save = function () {
             // Construct the page data that we'll save.
@@ -89,6 +92,7 @@ angular.module('nanodesuApp')
             // put edited data into the model.
             $scope.pg.meta = {};
             $scope.pg.meta.title = $scope.propsTitle;
+            $scope.pg.meta.path = $scope.propsPath;
             $scope.pg.meta.status = $scope.propsStatus;
             for (var i = 0; i < $scope.propsHr.length; i++) {
                 $scope.pg.meta[$scope.propsHr[i].label] = $scope.propsHr[i].value;

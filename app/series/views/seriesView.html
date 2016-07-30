@@ -15,9 +15,19 @@
                     <div class="form-group">
                         <label for="name" class="control-label col-sm-2">Title</label>
                         <div class="col-sm-8">
-                            <input type="text" id="name" class="form-control" placeholder="Title" ng-disabled="!admin" ng-model="sr.name">
+                            <input type="text" id="name" class="form-control" placeholder="Title" 
+                                ng-disabled="!admin" ng-model="sr.name">
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="inputHeaderURL" class="col-sm-2 control-label">Header Image URL</label>
+                        <div class="col-sm-8">
+                            <input type="url" name="" id="inputHeaderURL" class="form-control" placeholder="URL for header image" title="Header Image URL" 
+                                ng-disabled="!admin" ng-model="propsHeaderURL">
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
                         <h4 class="control-label col-sm-2">Hierarchy:</h4>
                     </div>

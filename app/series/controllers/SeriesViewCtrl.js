@@ -84,6 +84,7 @@ angular.module('nanodesuApp')
 
         //// Series Properties
         $scope.propsOpen;
+        $scope.propsHeaderURL;
 
         $scope.openProps = function () {
             $scope.propsOpen = !$scope.propsOpen;
@@ -94,6 +95,7 @@ angular.module('nanodesuApp')
                 for (var i = 0; i < $scope.sr.config.hierarchy.length; i++) {
                     $scope.propsTiers.push({ id: i, name: $scope.sr.config.hierarchy[i] });
                 }
+                $scope.propsHeaderURL = $scope.sr.config["header-url"];
             }
         }
 
@@ -113,7 +115,8 @@ angular.module('nanodesuApp')
         }
 
         $scope.saveProps = function () {
-            var sr = $scope.sr;
+            var sr = $scope.sr;   // Becomes our working copy of series metadata until it's saved.
+            sr.config["header-url"] = $scope.propsHeaderURL;
             sr.config.hierarchy = [];
             for (var i = 0; i < $scope.propsTiers.length; i++) {
                 sr.config.hierarchy.push($scope.propsTiers[i].name);

@@ -46,8 +46,8 @@
                     <a href="#/login" class="dropdown-toggle" uib-dropdown-toggle>{{loginName()}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu >
                         <li><a href="#" ng-disabled="true">Profile</a></li>
-                        <!-- <li><span>Admin: {{isAdmin()}}</span></li> <!-- debug only -->
-                        <li><a href="#/login">Sign Out</a></li>
+                        <!-- <li><span>Admin: {{isAdmin()}}</span></li> --> <!-- debug only -->
+                        <li><a href="" ng-click="logOut()">Sign Out</a></li>
                     </ul>
                 </li>
                 <li ng-hide="isLogin()"><a href="#/login">Sign In</a></li>

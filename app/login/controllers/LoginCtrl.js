@@ -24,7 +24,7 @@ angular.module('nanodesuApp')
                     $scope.cred = {}; // get rid of this when we no longer need it.
                     $location.path("/");
                 },function(err) {
-                    // TODO: show error?
+                    // TODO: show error message
 
                     $nd.warn("AuthService login, failed response.")
                 });
@@ -35,6 +35,7 @@ angular.module('nanodesuApp')
         $scope.logOut = function () {
             AuthService.logout();
             $scope.token = null;
+            $location.path("/login");
         };
 
         $scope.token = AuthService.userName();

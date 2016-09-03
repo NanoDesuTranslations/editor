@@ -14,10 +14,16 @@ angular
         'ngRoute',
         'ngTouch',
         'ngResource',
-        'ngCookies',
         'ui.bootstrap'
         ])
-    .config(function ($routeProvider){
+    .config(function ($routeProvider, $compileProvider){
+        // just use this on production
+        /*
+        $compileProvider.debugInfoEnabled(false);
+        $compileProvider.commentDirectivesEnabled(false);
+        $compileProvider.cssClassDirectivesEnabled(false);
+        */
+        
         $routeProvider
             .when('/', {
                 templateUrl: 'app/home/views/main.html',

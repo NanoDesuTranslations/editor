@@ -70,12 +70,20 @@ angular.module('nanodesuApp')
         // refreshData();  // TODO: needs to be called on load.  Somehow it's not getting called on nav back to home.
 
         $scope.delete = function (idSeries) {
-            SeriesService.delete({ id: idSeries }, function (success) {
-                // TODO: use a MVC-friendly way to show result of the call.
-                alert("Info: Series "+idSeries+" deleted.");
-                refreshData();
-            }, function (error) {
-                alert("Info: error! No changes." + error.toString());
+            SeriesService.get({'id': idSeries}, function(success){
+                var deleted = 1;
+                var series = success;
+                series.config.deleted = deleted;
+
+                SeriesService.update({'id': idSeries}, series, function(success){
+                    // TODO: use a MVC-friendly way to show result of the call.
+                    alert("Info: Series "+idSeries+" deleted.");
+                    refreshData();
+                }, function(error){
+                    alert("Info: error! No changes." + error.toString());
+                });
+            }, function(error){
+            
             });
         };
 

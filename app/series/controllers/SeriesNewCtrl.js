@@ -77,8 +77,10 @@ angular.module('nanodesuApp')
         $scope.saveProps = function () {
             // Actually save the edited properties
             var sr = $scope.sr;
+            var deleted = 0;
             sr.config["header-url"] = $scope.propsHeaderURL;
             sr.config.hierarchy = [];
+            sr.config.deleted = deleted;
             for (var i = 0; i < $scope.propsTiers.length; i++) {
                 sr.config.hierarchy.push($scope.propsTiers[i].name);
             }

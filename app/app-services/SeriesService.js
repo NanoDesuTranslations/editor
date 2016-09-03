@@ -9,7 +9,7 @@
  */
 
  angular.module('nanodesuApp')
-    .factory('SeriesService', function($resource,$cookies) {
+    .factory('SeriesService', function($resource) {
         
         //use query parameter ({}) to avoid Error [$resource:badcfg]
         return $resource('series/:id',{},{
@@ -45,7 +45,7 @@
         });
         
         function auth() {
-            var token = $cookies.get('token');
+            var token = localStorage.getItem('token');
             return token;
         }
     });

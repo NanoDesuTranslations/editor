@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .factory('AuthService', function($http,$cookies, $log){
+    .factory('AuthService', function($http, $log){
         var auth = {}; // The object we're building.
 
         // auth.login = loginToken;
@@ -35,9 +35,9 @@ angular.module('nanodesuApp')
         function handleSuccess(res){
             $log.info("auth login handle Success");
             $log.info("Auth info: " + JSON.stringify(res));
-            $cookies.put("token", res.data.token);
-            $cookies.put('username', res.config.data.username);
-            $cookies.put('isAdmin', res.data.permissions.admin);
+            localStorage.setItem('username', res.config.data.username);
+            localStorage.setItem('isAdmin', res.data.permissions.admin);
+            localStorage.setItem('token', res.data.token);
             return res.data;
         }
 
@@ -68,9 +68,9 @@ angular.module('nanodesuApp')
 
         function logout(){
             // 'token' cookie stores the token and is accessible only from this domain.
-            $cookies.remove('token');
-            $cookies.remove('username');
-            $cookies.remove('isAdmin');
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('isAdmin');
         }
 
         // Reporting status for other components:
@@ -78,7 +78,7 @@ angular.module('nanodesuApp')
         function isLogin() {
             //  'token' cookie exists only while we're logged in.
             var status
-            if ($cookies.get('token')) {
+            if (localStorage.getItem('token')) {
                 status = true;
             } else {
                 status = false;
@@ -87,11 +87,19 @@ angular.module('nanodesuApp')
         }
 
         function userName() {
-            return $cookies.get('username');
+            var username = '';
+            if(localStorage.getItem('username') != null){
+                username = localStorage.getItem('username');
+            }
+            return username;
         }
 
         function isAdmin() {
-            return $cookies.get('isAdmin');
+            var isAdmin = false;
+            if(localStorage.getItem('isAdmin') != null){
+                isAdmin = localStorage.getItem('isAdmin');
+            }
+            return isAdmin;
         }
 
         return auth;

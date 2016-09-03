@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .factory('GenerateService', function($resource, $cookies){
+    .factory('GenerateService', function($resource){
         return $resource('build', null, {
             query: {
                 headers: {
@@ -24,7 +24,7 @@ angular.module('nanodesuApp')
         });    
 
         function auth(){
-            var token = $cookies.get('token');
+            var token = localStorage.getItem('token');
             return token;
         }
     });

@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .factory('PageService', function ($resource,$cookies){
+    .factory('PageService', function ($resource){
         //var site_url = 'http://127.0.0.1:3000/';
 
         return $resource('pages/:id',null,{
@@ -44,7 +44,7 @@ angular.module('nanodesuApp')
         });
         
         function auth(){
-            var token = $cookies.get('token');
+            var token = localStorage.getItem('token');
             return token;
         }
     });

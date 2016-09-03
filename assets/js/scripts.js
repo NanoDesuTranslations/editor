@@ -18,5 +18,16 @@ var $nd = (function () {
         // Enhancement? log to a debug DIV inside the page.
     }
 
+    NDebug.string2Int0 = function(s) {
+        if (typeof s == "number") return s;
+        if (typeof s == "string") {
+            var n = parseInt(s);
+            if (isNaN(n)) n=0;
+            return n;
+        } else {
+            return 0;
+        }
+    }
+
     return NDebug;
 })();

@@ -15,15 +15,17 @@ angular.module('nanodesuApp')
         NavService.setActive("page");
 
         //page data schema from single-page PageService.get (updated 7/17):
-        // TODO: add the path property, as below, to the page properties for editing.
+        // TODO: update for meta field changes: hierarchy and status as numbers; optional path and order fields.
         /*
         {
     "page": {
         "meta": {
-            "title": "Afterword",
-            "status": "2",
-            "path": "afterword",
-            "Volume": "1"
+            "title": "created first goes second",
+            "status": 2,
+            "order": 2,
+            "path": "",
+            "Chapter": 2,
+            "Part": 2
         },
         "series": "575bb13025598017708f8907",
         "content": "VOLUME 1\r\nAfterword\r\n... Actual Afterword continues on for a while",
@@ -110,6 +112,7 @@ angular.module('nanodesuApp')
             // initialize the page properties for editing--separate copy so the edits can be cancelled.
             $scope.propsTitle = $scope.pg.meta.title;
             $scope.propsStatus = $scope.pg.meta.status;
+            $scope.propsOrder = $scope.pg.meta.order;
             $scope.propsPath = $scope.pg.meta.path;
             $scope.propsHr = [];
             for (var i = 0; i < $scope.sr.config.hierarchy.length; i++) {
@@ -136,10 +139,11 @@ angular.module('nanodesuApp')
             // (the save() method does the actual save to DB.)
             $scope.pg.meta = {};
             $scope.pg.meta.title = $scope.propsTitle;
-            $scope.pg.meta.status = $scope.propsStatus;
+            $scope.pg.meta.status = $nd.string2Int0($scope.propsStatus); // Force convert propsStatus to an int. 
+            $scope.pg.meta.order = $nd.string2Int0($scope.propsOrder);
             $scope.pg.meta.path = $scope.propsPath;
             for (var i = 0; i < $scope.propsHr.length; i++) {
-                $scope.pg.meta[$scope.propsHr[i].label] = $scope.propsHr[i].value;
+                $scope.pg.meta[$scope.propsHr[i].label] = $nd.string2Int0($scope.propsHr[i].value);
             }
         };
 

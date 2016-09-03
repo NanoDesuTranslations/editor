@@ -13,13 +13,16 @@ angular.module('nanodesuApp')
 
         NavService.setActive("page");
 
+        // TODO: update for meta field changes: hierarchy and status as numbers; optional path and order fields.
         //page data schema from single-page PageService.get:
         //        "page": {
         //            "meta": {
-        //                "Volume": "1",
-        //                "Chapter": "1",
-        //                "title": "Natsume Sōseki, Sōseki’s Complete Collection, new edition (Iwanami Shoten)",
-        //                "status": "1"
+        //                "title": "created first goes second",
+        //                "status": 2,
+        //                "order": 2,
+        //                "path": "",
+        //                "Chapter": 2,
+        //                "Part": 2
         //            },
         //            "series": "57788d46456e6cf036dd1492",
         //            "content": "## Chapter One: Natsume Sōseki, Sōseki’s Complete Collection, new edition ....",
@@ -41,7 +44,8 @@ angular.module('nanodesuApp')
 
         // Model data for editing:
         $scope.propsTitle = "";
-        $scope.propsStatus = "3"; // "NA" value: a string because that matches the result of the SELECT.
+        $scope.propsStatus = 0; // Default to Draft for new pages.  Status >= 1 would be Publish.
+        // propsOrder is undefined for new page.
         $scope.propsHr = [];
         $scope.propsPath = "";
 
@@ -93,7 +97,8 @@ angular.module('nanodesuApp')
             $scope.pg.meta = {};
             $scope.pg.meta.title = $scope.propsTitle;
             $scope.pg.meta.path = $scope.propsPath;
-            $scope.pg.meta.status = $scope.propsStatus;
+            $scope.pg.meta.status = $nd.string2Int0($scope.propsStatus); // Force convert propsStatus to an int. 
+            $scope.pg.meta.order = $nd.string2Int0($scope.propsOrder);
             for (var i = 0; i < $scope.propsHr.length; i++) {
                 $scope.pg.meta[$scope.propsHr[i].label] = $scope.propsHr[i].value;
             }

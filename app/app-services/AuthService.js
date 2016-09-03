@@ -11,10 +11,6 @@
 angular.module('nanodesuApp')
     .factory('AuthService', function($http,$cookies, $log){
         var auth = {}; // The object we're building.
-        // TODO: these local variables are lost of the page is refreshed.  Store the info in a cookie?
-        var un = "";   // local variable, for remembering the user's name.
-        var fAdmin = false; // local variable for remembering user's permission level.
-        // The other thing we store is a token in the 'token' cookie, which will actually be used for authentication.
 
         // auth.login = loginToken;
         auth.login = login;
@@ -40,8 +36,8 @@ angular.module('nanodesuApp')
             $log.info("auth login handle Success");
             $log.info("Auth info: " + JSON.stringify(res));
             $cookies.put("token", res.data.token);
-            un = res.config.data.username;
-            fAdmin = res.data.permissions.admin;
+            $cookies.put('username', res.config.data.username);
+            $cookies.put('isAdmin', res.data.permissions.admin);
             return res.data;
         }
 
@@ -73,8 +69,8 @@ angular.module('nanodesuApp')
         function logout(){
             // 'token' cookie stores the token and is accessible only from this domain.
             $cookies.remove('token');
-            un = "";
-            fAdmin = false;
+            $cookies.remove('username');
+            $cookies.remove('isAdmin');
         }
 
         // Reporting status for other components:
@@ -91,11 +87,11 @@ angular.module('nanodesuApp')
         }
 
         function userName() {
-            return un;
+            return $cookies.get('username');
         }
 
         function isAdmin() {
-            return ! !fAdmin;
+            return $cookies.get('isAdmin');
         }
 
         return auth;

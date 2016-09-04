@@ -21,7 +21,9 @@ var $nd = (function () {
     objND.string2Int0 = function(s) {
         if (typeof s == "number") return s; // In the odd case that we already have a number, return that.
         if (typeof s == "string") {
-            var n = parseInt(s);
+            // See note in string2IntIfInt.  The result may be a floating point value,
+            //  which is a mismatch with this function's name.
+            var n = Number(s);
             if (isNaN(n)) n=0;
             return n;
         } else {
@@ -34,9 +36,9 @@ var $nd = (function () {
     objND.string2IntIfInt = function(s) {
         if (typeof s == "number") return s; // In the odd case that we already have a number, return that.
         if (typeof s == "string") {
-            // TODO BUG: Known issue. In the case of strings that begin with a number but aren't *entirely* a number,
-            //  The test below will return the wrong thing
-            var ret = parseInt(s);
+            // When used as a conversion function, Number() will convert the string only if
+            // the string is a number literal (+ surrounding whitespace).  The result  may be a floating point value.
+            var ret = Number(s); 
             if (isNaN(ret)) ret=s;
             return ret;
         } else {

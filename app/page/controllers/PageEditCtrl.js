@@ -140,10 +140,10 @@ angular.module('nanodesuApp')
             $scope.pg.meta = {};
             $scope.pg.meta.title = $scope.propsTitle;
             $scope.pg.meta.status = $nd.string2Int0($scope.propsStatus); // Force convert propsStatus to an int. 
-            $scope.pg.meta.order = $nd.string2Int0($scope.propsOrder);
+            $scope.pg.meta.order = ( null != $scope.propsOrder ? $nd.string2Int0($scope.propsOrder) : null );
             $scope.pg.meta.path = $scope.propsPath;
             for (var i = 0; i < $scope.propsHr.length; i++) {
-                $scope.pg.meta[$scope.propsHr[i].label] = $nd.string2Int0($scope.propsHr[i].value);
+                $scope.pg.meta[$scope.propsHr[i].label] = $nd.string2IntIfInt($scope.propsHr[i].value);
             }
         };
 

@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('HomeCtrl', function ($scope, $location, AuthService, SeriesService, PageService, NavService) {
+    .controller('HomeCtrl', function ($scope, $location, AuthService, alertify, SeriesService, PageService, NavService) {
         $scope.signIn = function () {
             // Nothing fancy; just navigate to the sign-in page.
             $location.path("/login");
@@ -70,13 +70,19 @@ angular.module('nanodesuApp')
         // refreshData();  // TODO: needs to be called on load.  Somehow it's not getting called on nav back to home.
 
         $scope.delete = function (idSeries) {
-            SeriesService.delete({ id: idSeries }, function (success) {
-                // TODO: use a MVC-friendly way to show result of the call.
-                alert("Info: Series "+idSeries+" deleted.");
-                refreshData();
-            }, function (error) {
-                alert("Info: error! No changes." + error.toString());
+            alertify.confirm('are you sure?', function(){
+                // user clicked 'ok'
+                SeriesService.delete({ id: idSeries }, function (success) {
+                    // TODO: use a MVC-friendly way to show result of the call.
+                    alert("Info: Series "+idSeries+" deleted.");
+                    refreshData();
+                }, function (error) {
+                    alert("Info: error! No changes." + error.toString());
+                });
+            }, function() {
+                //user clicked 'cancel'
             });
+
         };
 
         //// function openSeries - opens the Series page with the specified series ID.

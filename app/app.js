@@ -15,7 +15,8 @@ angular
         'ngTouch',
         'ngResource',
         'ngCookies',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'ngAlertify'
         ])
     .config(function ($routeProvider){
         $routeProvider

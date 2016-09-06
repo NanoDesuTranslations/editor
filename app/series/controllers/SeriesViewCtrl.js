@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesViewCtrl', function ($scope, $routeParams, $location, $log, AuthService, PageService, SeriesService, NavService) {
+    .controller('SeriesViewCtrl', function ($scope, $routeParams, $location, $log, alertify, AuthService, PageService, SeriesService, NavService) {
 
         var idSeries =  $routeParams.idSeries;
 
@@ -75,10 +75,15 @@ angular.module('nanodesuApp')
         //$scope.page = PageService.get_page('nano').get({'id': '4'});
 
         $scope.delete = function (idPage) {
-            PageService.delete({ id: idPage }, function (success) {
-                console.log('success')
-            }, function (error) {
-                console.log(error)
+            alertify.confirm('are you sure?', function(){
+                //user clicked 'ok'
+                PageService.delete({ id: idPage }, function (success) {
+                    console.log('success')
+                }, function (error) {
+                    console.log(error)
+                });
+            },function(){
+                //user clicked 'cancel'
             });
         }
 

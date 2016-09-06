@@ -75,11 +75,25 @@ angular.module('nanodesuApp')
         //$scope.page = PageService.get_page('nano').get({'id': '4'});
 
         $scope.delete = function (idPage) {
-            PageService.delete({ id: idPage }, function (success) {
+            PageService.get({'id': idPage}, function(success){
+                var deleted = 1;
+                var page = success.page;
+                page.meta.deleted = deleted;
+                console.log(page.meta);
+                
+                PageService.update({ id: idPage }, page, function (success) {
+                    console.log('success')
+                }, function (error) {
+                    console.log(error)
+                });
+            }, function(error){
+            
+            });
+            /*PageService.delete({ id: idPage }, function (success) {
                 console.log('success')
             }, function (error) {
                 console.log(error)
-            });
+            });*/
         }
 
         //// Series Properties

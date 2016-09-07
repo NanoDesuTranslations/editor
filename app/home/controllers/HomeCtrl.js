@@ -45,9 +45,14 @@ angular.module('nanodesuApp')
         function refreshDataFromSeries() {
             console.log("HomeCtrl refreshDataFromSeries running");
             SeriesService.query(function (srs) {
-                $scope.data = srs;
+                $scope.data = [];
                 console.log("HomeCtrl refreshDataFromSeries query success");
-                // console.log(srs);
+                angular.forEach(srs, function(param){
+                    if(param.config.deleted != 1){
+                        //console.log(param);
+                        this.push(param);
+                    }
+                }, $scope.data);
             }, function (error) {
                 // console.log(error);
             });

@@ -45,9 +45,16 @@ angular.module('nanodesuApp')
         function refreshDataFromSeries() {
             console.log("HomeCtrl refreshDataFromSeries running");
             SeriesService.query(function (srs) {
-                $scope.data = srs;
+                $scope.data = [];
                 console.log("HomeCtrl refreshDataFromSeries query success");
-                // console.log(srs);
+                // Prevent to showing deleted series in the ui
+                angular.forEach(srs, function(param){
+                    var deleted = param.config.deleted;
+                    if(deleted != 1){
+                        //console.log(param);
+                        this.push(param);
+                    }
+                }, $scope.data);
             }, function (error) {
                 // console.log(error);
             });
@@ -72,17 +79,21 @@ angular.module('nanodesuApp')
         $scope.delete = function (idSeries) {
             alertify.confirm('are you sure?', function(){
                 // user clicked 'ok'
-                SeriesService.delete({ id: idSeries }, function (success) {
-                    // TODO: use a MVC-friendly way to show result of the call.
-                    alert("Info: Series "+idSeries+" deleted.");
-                    refreshData();
-                }, function (error) {
-                    alert("Info: error! No changes." + error.toString());
+                SeriesService.get({'id': idSeries}, function(success){
+                    var deleted = 1;
+                    var series = success;
+                    series.config.deleted = deleted;
+    
+                    SeriesService.update({'id': idSeries}, series, function(success){
+                        // TODO: use a MVC-friendly way to show result of the call.
+                        alert("Info: Series "+idSeries+" deleted.");
+                        refreshData();
+                    }, function(error){
+                        alert("Info: error! No changes." + error.toString());
+                    });
+                }, function(error){
+                    //user clicked 'cancel'
                 });
-            }, function() {
-                //user clicked 'cancel'
-            });
-
         };
 
         //// function openSeries - opens the Series page with the specified series ID.

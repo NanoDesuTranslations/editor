@@ -40,7 +40,16 @@ angular.module('nanodesuApp')
 
         //query json data from api -- gets page head data regardless of series.
         PageService.query(function (success) {
-            $scope.page = success.pages;
+            var pages = success.pages;
+            $scope.page = [];
+            
+            // Prevent showing deleted page in ui
+            angular.forEach(pages, function(param) {
+                var deleted = param.meta.deleted;
+                if(deleted != 1){
+                    this.push(param);
+                }
+            }, $scope.page);
             //console.log(success)
         }, function (error) {
             //console.log(error)
@@ -77,10 +86,18 @@ angular.module('nanodesuApp')
         $scope.delete = function (idPage) {
             alertify.confirm('are you sure?', function(){
                 //user clicked 'ok'
-                PageService.delete({ id: idPage }, function (success) {
-                    console.log('success')
-                }, function (error) {
-                    console.log(error)
+                PageService.get({'id': idPage}, function(success){
+                    var deleted = 1;
+                    var page = success.page;
+                    page.meta.deleted = deleted;
+                    
+                    PageService.update({ id: idPage }, page, function (success) {
+                        console.log('Success Update Page with Id '+ idPage);
+                    }, function (error) {
+                        console.log('Error! '+error)
+                    });
+                }, function(error){
+                
                 });
             },function(){
                 //user clicked 'cancel'

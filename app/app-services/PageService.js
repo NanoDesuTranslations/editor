@@ -35,12 +35,12 @@ angular.module('nanodesuApp')
                     'Authorization': auth
                 }
             },
-            delete: {
+            /*delete: {
                 method: "DELETE",
                 headers:{
                     'Authorization': auth
                 }
-            }
+            }*/
         });
         
         function auth(){

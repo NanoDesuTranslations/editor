@@ -19,11 +19,9 @@ angular
         ])
     .config(function ($routeProvider, $compileProvider){
         // just use this on production
-        /*
         $compileProvider.debugInfoEnabled(false);
         $compileProvider.commentDirectivesEnabled(false);
         $compileProvider.cssClassDirectivesEnabled(false);
-        */
         
         $routeProvider
             .when('/', {

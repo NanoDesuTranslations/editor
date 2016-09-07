@@ -47,8 +47,10 @@ angular.module('nanodesuApp')
             SeriesService.query(function (srs) {
                 $scope.data = [];
                 console.log("HomeCtrl refreshDataFromSeries query success");
+                // Prevent to showing deleted series in the ui
                 angular.forEach(srs, function(param){
-                    if(param.config.deleted != 1){
+                    var deleted = param.config.deleted;
+                    if(deleted != 1){
                         //console.log(param);
                         this.push(param);
                     }

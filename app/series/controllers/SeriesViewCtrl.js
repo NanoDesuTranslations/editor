@@ -43,8 +43,10 @@ angular.module('nanodesuApp')
             var pages = success.pages;
             $scope.page = [];
             
+            // Prevent showing deleted page in ui
             angular.forEach(pages, function(param) {
-                if(param.meta.deleted != 1){
+                var deleted = param.meta.deleted;
+                if(deleted != 1){
                     this.push(param);
                 }
             }, $scope.page);
@@ -88,9 +90,9 @@ angular.module('nanodesuApp')
                 page.meta.deleted = deleted;
                 
                 PageService.update({ id: idPage }, page, function (success) {
-                    console.log('success')
+                    console.log('Success Update Page with Id '+ idPage);
                 }, function (error) {
-                    console.log(error)
+                    console.log('Error! '+error)
                 });
             }, function(error){
             

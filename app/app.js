@@ -14,7 +14,7 @@ angular
         'ngRoute',
         'ngTouch',
         'ngResource',
-        'ngAlertify'
+        'ngAlertify',
         'ui.bootstrap'
         ])
     .config(function ($routeProvider, $compileProvider){

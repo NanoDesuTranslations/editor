@@ -94,6 +94,7 @@ angular.module('nanodesuApp')
                 }, function(error){
                     //user clicked 'cancel'
                 });
+            });
         };
 
         //// function openSeries - opens the Series page with the specified series ID.

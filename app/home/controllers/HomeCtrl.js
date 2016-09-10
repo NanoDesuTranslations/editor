@@ -62,6 +62,7 @@ angular.module('nanodesuApp')
 
         //// local function refreshData - queries for the series list so that it can properly be displayed.
         function refreshData() {
+            console.log($nd.createEpochTime());
             if (AuthService.isAdmin()) {
                 refreshDataFromSeries();
             } else {

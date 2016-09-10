@@ -139,6 +139,7 @@ angular.module('nanodesuApp')
         $scope.saveProps = function () {
             var sr = $scope.sr;   // Becomes our working copy of series metadata until it's saved.
             sr.config["header-url"] = $scope.propsHeaderURL;
+            sr.config["updated"] = $nd.createEpochTime();
             sr.config.hierarchy = [];
             for (var i = 0; i < $scope.propsTiers.length; i++) {
                 sr.config.hierarchy.push($scope.propsTiers[i].name);

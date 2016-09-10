@@ -79,6 +79,8 @@ angular.module('nanodesuApp')
             var sr = $scope.sr;
             var deleted = 0;
             sr.config["header-url"] = $scope.propsHeaderURL;
+            sr.config.created = $nd.createEpochTime();
+            sr.config.updated = 0; 
             sr.config.hierarchy = [];
             sr.config.deleted = deleted;
             for (var i = 0; i < $scope.propsTiers.length; i++) {

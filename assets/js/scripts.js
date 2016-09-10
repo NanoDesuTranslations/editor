@@ -46,5 +46,10 @@ var $nd = (function () {
         }
     }
 
+    objND.createEpochTime = function(){
+        var epochTime = Math.floor(new Date() / 1000);
+        return epochTime;
+    }
+
     return objND;
 })();

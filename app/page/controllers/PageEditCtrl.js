@@ -92,6 +92,7 @@ angular.module('nanodesuApp')
 
             // Construct the page data that we'll save.
             var newData = new Object();
+            $scope.pg.meta.updated = $nd.createEpochTime();
             newData.meta = angular.copy($scope.pg.meta);
             newData.content = ensureMDE().value();
 
@@ -137,8 +138,8 @@ angular.module('nanodesuApp')
 
             // Actually save props back into the model. Reverse what openProps() did.
             // (the save() method does the actual save to DB.)
-            $scope.pg.meta = {};
             $scope.pg.meta.title = $scope.propsTitle;
+            $scope.pg.meta.created = $scope.pg.meta.created; //to prevent delete created field when updating data 
             $scope.pg.meta.status = $nd.string2Int0($scope.propsStatus); // Force convert propsStatus to an int. 
             $scope.pg.meta.order = ( null != $scope.propsOrder ? $nd.string2Int0($scope.propsOrder) : null );
             $scope.pg.meta.path = $scope.propsPath;

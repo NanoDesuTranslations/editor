@@ -92,6 +92,18 @@ angular
             //    controller: 'SeriesEditCtrl',
             //    //access: {requiredLogin: true}
             //})
+            .when('/blog/:idSeries', {
+                templateUrl: 'app/blog/views/blog.html',
+                controller: 'BlogCtrl',
+            })
+            .when('/blog/:idSeries/add', {
+                templateUrl: 'app/blog/views/blogAdd.html',
+                controller: 'BlogAddCtrl',
+            })
+            .when('/blog/:idSeries/edit/:idPage', {
+                templateUrl: 'app/blog/views/blogEdit.html',
+                controller: 'BlogEditCtrl',
+            })
             .otherwise({
                 redirectTo: '/'
             });

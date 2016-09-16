@@ -46,7 +46,8 @@ angular.module('nanodesuApp')
             // Prevent showing deleted page in ui
             angular.forEach(pages, function(param) {
                 var deleted = param.meta.deleted;
-                if(deleted != 1){
+                var blog = param.meta.blog;
+                if(deleted != 1 && typeof blog !== 'object'){
                     this.push(param);
                 }
             }, $scope.page);

@@ -1,0 +1,27 @@
+<div class="page-header">
+    <h1>Blog Post</h1>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="blog in blogs | filter:{'series': seriesId}">
+            <td>{{ blog.meta.title }}</td>
+            <td>
+                <button type="button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil">
+                    Edit
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="delete(blog.id)">
+                    <span class="glyphicon glyphicon-trash">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

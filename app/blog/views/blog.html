@@ -13,10 +13,10 @@
         <tr ng-repeat="blog in blogs | filter:{'series': seriesId}">
             <td>{{ blog.meta.title }}</td>
             <td>
-                <button type="button" class="btn btn-primary">
+                <a ng-href="#/blog/{{ seriesId }}/edit/{{ blog.id }}" class="btn btn-primary">
                     <span class="glyphicon glyphicon-pencil">
                     Edit
-                </button>
+                </a>
                 <button type="button" class="btn btn-danger" ng-click="delete(blog.id)">
                     <span class="glyphicon glyphicon-trash">
                     Delete

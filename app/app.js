@@ -100,7 +100,7 @@ angular
                 templateUrl: 'app/blog/views/blogAdd.html',
                 controller: 'BlogAddCtrl',
             })
-            .when('/blog/:idSeries/edit/:idPage', {
+            .when('/blog/:idSeries/edit/:idBlog', {
                 templateUrl: 'app/blog/views/blogEdit.html',
                 controller: 'BlogEditCtrl',
             })

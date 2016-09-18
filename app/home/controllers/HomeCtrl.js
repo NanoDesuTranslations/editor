@@ -80,7 +80,7 @@ angular.module('nanodesuApp')
             alertify.confirm('are you sure?', function(){
                 $log.debug("user click ok button");
                 SeriesService.get({'id': idSeries}, function(success){
-                    var deleted = 1;
+                    var deleted = true;
                     var series = success;
                     series.config.deleted = deleted;
     

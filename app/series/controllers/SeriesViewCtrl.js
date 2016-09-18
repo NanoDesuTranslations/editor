@@ -47,7 +47,7 @@ angular.module('nanodesuApp')
             angular.forEach(pages, function(param) {
                 var deleted = param.meta.deleted;
                 var blog = param.meta.blog;
-                if(deleted != 1 && typeof blog !== 'object'){
+                if(!deleted && typeof blog !== 'object'){
                     this.push(param);
                 }
             }, $scope.page);
@@ -87,7 +87,7 @@ angular.module('nanodesuApp')
             alertify.confirm('are you sure?', function(){
                 $log.debug("user click ok button");
                 PageService.get({'id': idPage}, function(success){
-                    var deleted = 1;
+                    var deleted = true;
                     var page = success.page;
                     page.meta.deleted = deleted;
                     

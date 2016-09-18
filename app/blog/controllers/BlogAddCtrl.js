@@ -38,7 +38,7 @@ angular.module('nanodesuApp')
             meta.status = published;
             meta.created = $nd.createEpochTime();
             meta.updated = 0;
-            meta.deleted = 0;
+            meta.deleted = false;
             
             request.meta = meta;
             request.series = seriesId;

@@ -92,7 +92,7 @@ angular.module('nanodesuApp')
 
         $scope.saveProps = function () {
             // TODO: validate the page information
-            var deleted = 0;
+            var deleted = false;
             // put edited data into the model.
             $scope.pg.meta = {};
             $scope.pg.meta.title = $scope.propsTitle;
@@ -100,7 +100,7 @@ angular.module('nanodesuApp')
             $scope.pg.meta.deleted = deleted;
             $scope.pg.meta.created = $nd.createEpochTime();
             $scope.pg.meta.updated = 0;
-            $scope.pg.meta.blog = 0;
+            $scope.pg.meta.blog = false;
             $scope.pg.meta.status = $nd.string2Int0($scope.propsStatus); // Force convert propsStatus to an int. 
             $scope.pg.meta.order = ( null != $scope.propsOrder ? $nd.string2Int0($scope.propsOrder) : null );
             for (var i = 0; i < $scope.propsHr.length; i++) {

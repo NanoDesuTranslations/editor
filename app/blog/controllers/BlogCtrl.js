@@ -22,7 +22,7 @@ angular.module('nanodesuApp')
                 var deleted = param.meta.deleted;
                 var blog = param.meta.blog;
 
-                if(deleted != 1 && typeof blog === 'object'){
+                if(!deleted && typeof blog === 'object'){
                     this.push(param);
                 }
             }, $scope.blogs);
@@ -38,7 +38,7 @@ angular.module('nanodesuApp')
 
                 PageService.get({'id': idBlog}, function(success){
                     $log.debug("retrieve data by id "+idBlog);
-                    var deleted = 1;
+                    var deleted = true;
                     var blog = success.page;
                     blog.meta.deleted = deleted;
 

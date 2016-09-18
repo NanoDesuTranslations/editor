@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('BlogAddCtrl', function ($scope, $routeParams, AuthService, PageService) {
+    .controller('BlogAddCtrl', function ($log, $location, $scope, $routeParams, AuthService, PageService) {
         var simpleMDE = new SimpleMDE(document.getElementById("content"));
         var seriesId = $routeParams.idSeries;
         $scope.blog = {};
@@ -23,6 +23,7 @@ angular.module('nanodesuApp')
         $scope.meta.published = '0';
 
         function createRequestData(){
+            $log.debug("creating object data");
             var request = {};
             var meta = {};
             var published = $scope.meta.published;
@@ -50,9 +51,11 @@ angular.module('nanodesuApp')
             var data = createRequestData();
 
             PageService.save(data, function(status){
-                // TODO: create success message
+                // TODO: give success message into user properly
+                $log.debug("success save data");
+                $location.path("/blog/"+seriesId);
             }, function(error){
-                alert('Error! Please try again');
+                // TODO: give error message into user properly
             });
         }
     });

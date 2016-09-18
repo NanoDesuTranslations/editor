@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('BlogEditCtrl', function ($scope, $routeParams, AuthService, PageService) {
+    .controller('BlogEditCtrl', function ($log, $location, $scope, $routeParams, AuthService, PageService) {
         var simpleMDE = new SimpleMDE(document.getElementById("content"));
         var seriesId = $routeParams.idSeries;
         var blogId = $routeParams.idBlog;
@@ -17,6 +17,7 @@ angular.module('nanodesuApp')
         $scope.meta = {}; 
 
         PageService.get({'id': blogId}, function(success){
+            $log.debug("start retrieve data by id "+blogId);
             var data = success.page;
             var meta = data.meta;
 
@@ -26,13 +27,15 @@ angular.module('nanodesuApp')
             simpleMDE.value(data.content);
 
         }, function(error){
-            console.log("error");
+            // TODO: give error message properly into user
         });
 
         $scope.editBlog = function(){
+            $log.debug("edit function");
             var data = {};
             var meta = {};
 
+            $scope.meta.author = AuthService.userName();
             meta.blog = $scope.meta.blog; 
             meta.created = $scope.meta.created;
             meta.status = $scope.meta.published;
@@ -41,11 +44,13 @@ angular.module('nanodesuApp')
 
             data.content = simpleMDE.value();
             data.meta = meta;
-            
+            $log.debug(data); 
             PageService.update({id: blogId}, data, function(success){
-                console.log("success edit data");
+                // TODO: give success message properly into user
+                $log.debug("success edit data by id "+blogId);
+                $location.path("/blog/"+seriesId);
             }, function(error){
-                console.log("error edit data");
+                // TODO: give error message properly into user
             });
         }
     });

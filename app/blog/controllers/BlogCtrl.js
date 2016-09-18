@@ -9,11 +9,12 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('BlogCtrl', function ($scope, $routeParams, alertify, PageService) {
+    .controller('BlogCtrl', function ($log, $route, $scope, $routeParams, alertify, PageService) {
         var seriesId = $routeParams.idSeries 
         $scope.seriesId = seriesId;
         
         PageService.query(function(success){
+            $log.debug("start retreive blog from pages");
             var data = success.pages;
             $scope.blogs = [];
 
@@ -26,27 +27,34 @@ angular.module('nanodesuApp')
                 }
             }, $scope.blogs);
 
-            }, function(error){
-            console.log('Error!');
+        }, function(error){
+            // TODO: give error message into user properly
+            //$log.error("Error "+error.status+"! "+error.statusText);
         });
 
         $scope.delete = function (idBlog) {
             alertify.confirm("are you sure?", function(){
+                $log.debug("user click yes button");
+
                 PageService.get({'id': idBlog}, function(success){
+                    $log.debug("retrieve data by id "+idBlog);
                     var deleted = 1;
                     var blog = success.page;
                     blog.meta.deleted = deleted;
 
                     PageService.update({id: idBlog}, blog, function(success){
-                        console.log("Success Delete Blog");
+                        // TODO: give success message into user properly
+                        $log.debug("success delete data by id "+idBlog);
+                        $route.reload();
                     }, function(error){
-                        console.log("Error! "+error);
+                        // TODO: give error message into user properly
                     });
                 }, function(error){
-                
+                    // TODO: give error message into user properly
                 });
             }, function(){
                 // user click cancel
+                $log.debug("user click cancel button");
             });
         } 
     });

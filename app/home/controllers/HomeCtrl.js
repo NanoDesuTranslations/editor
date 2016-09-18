@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('HomeCtrl', function ($scope, $location, AuthService, alertify, SeriesService, PageService, NavService) {
+    .controller('HomeCtrl', function ($log, $route, $scope, $location, AuthService, alertify, SeriesService, PageService, NavService) {
         $scope.signIn = function () {
             // Nothing fancy; just navigate to the sign-in page.
             $location.path("/login");
@@ -29,24 +29,24 @@ angular.module('nanodesuApp')
         // To get series info for non-admins, we get the list of pages from the PageService, throw away the pages,
         // and use the series information that came with it.
         function refreshDataFromPages() {
-            console.log("HomeCtrl refreshDataFromPages running");
+            $log.debug("HomeCtrl refreshDataFromPages running");
             PageService.query(function (pages) {
                 $scope.data = [];
-                console.log("HomeCtrl refreshDataFromPages query success");
+                $log.debug("HomeCtrl refreshDataFromPages query success");
                 // Fill in the series data from the list that was returned.
                 angular.forEach(pages.series, function(element) {
                     this.push(element);
                 }, $scope.data);
             }, function (error) {
-                // console.log(error);
+                // TODO: giver error message into user properly
             });
         }
 
         function refreshDataFromSeries() {
-            console.log("HomeCtrl refreshDataFromSeries running");
+            $log.debug("HomeCtrl refreshDataFromSeries running");
             SeriesService.query(function (srs) {
                 $scope.data = [];
-                console.log("HomeCtrl refreshDataFromSeries query success");
+                $log.debug("HomeCtrl refreshDataFromSeries query success");
                 // Prevent to showing deleted series in the ui
                 angular.forEach(srs, function(param){
                     var deleted = param.config.deleted;
@@ -56,13 +56,12 @@ angular.module('nanodesuApp')
                     }
                 }, $scope.data);
             }, function (error) {
-                // console.log(error);
+                // TODO: giver error message into user properly
             });
         }
 
         //// local function refreshData - queries for the series list so that it can properly be displayed.
         function refreshData() {
-            console.log($nd.createEpochTime());
             if (AuthService.isAdmin()) {
                 refreshDataFromSeries();
             } else {
@@ -71,7 +70,7 @@ angular.module('nanodesuApp')
         }
 
         $scope.$on('$viewContentLoaded', function () {
-            console.log("HomeCtrl received $viewContentLoaded");
+            $log.debug("HomeCtrl received $viewContentLoaded");
             refreshData();
         });
 
@@ -79,7 +78,7 @@ angular.module('nanodesuApp')
 
         $scope.delete = function (idSeries) {
             alertify.confirm('are you sure?', function(){
-                // user clicked 'ok'
+                $log.debug("user click ok button");
                 SeriesService.get({'id': idSeries}, function(success){
                     var deleted = 1;
                     var series = success;
@@ -93,8 +92,11 @@ angular.module('nanodesuApp')
                         alert("Info: error! No changes." + error.toString());
                     });
                 }, function(error){
+                    // TODO: giver error message into user properly
                     //user clicked 'cancel'
                 });
+            }, function(){
+                $log.debug("user click cancel button");
             });
         };
 

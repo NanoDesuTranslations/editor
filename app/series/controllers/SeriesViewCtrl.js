@@ -9,7 +9,7 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesViewCtrl', function ($scope, $routeParams, $location, $log, alertify, AuthService, PageService, SeriesService, NavService) {
+    .controller('SeriesViewCtrl', function ($route, $scope, $routeParams, $location, $log, alertify, AuthService, PageService, SeriesService, NavService) {
 
         var idSeries =  $routeParams.idSeries;
 
@@ -21,25 +21,25 @@ angular.module('nanodesuApp')
             SeriesService.get({ id: idSeries }, function (sr) {
                 $scope.sr = sr;
                 NavService.setSeries(sr);
-                console.log("series get success for " + sr.name);
+                $log.debug("success retreive series "+sr.name);
             }, function (error) {
-                console.log("Series GET error" + error);
+                // TODO: give error message properly into user
             })
         } else {
             PageService.get(function (data){
                 var sr = data.series[idSeries];
-                $log.info("Recieved data from PageService.get in SeriesViewCtrl");
+                $log.debug("Recieved data from PageService.get in SeriesViewCtrl");
                 $scope.sr = sr;
                 NavService.setSeries(sr);
             }
             ,function (err) {
-                // TODO: report error.
-                $log.warn("Error from PageService.get in SeriesViewCtrl")
+                // TODO: give error message properly into user
             } )
         }
 
         //query json data from api -- gets page head data regardless of series.
         PageService.query(function (success) {
+            $log.debug("retrieve data pages that not blog and deleted");
             var pages = success.pages;
             $scope.page = [];
             
@@ -51,9 +51,8 @@ angular.module('nanodesuApp')
                     this.push(param);
                 }
             }, $scope.page);
-            //console.log(success)
         }, function (error) {
-            //console.log(error)
+            // TODO: give error message properly into user
         });
 
         /**
@@ -86,22 +85,23 @@ angular.module('nanodesuApp')
 
         $scope.delete = function (idPage) {
             alertify.confirm('are you sure?', function(){
-                //user clicked 'ok'
+                $log.debug("user click ok button");
                 PageService.get({'id': idPage}, function(success){
                     var deleted = 1;
                     var page = success.page;
                     page.meta.deleted = deleted;
                     
                     PageService.update({ id: idPage }, page, function (success) {
-                        console.log('Success Update Page with Id '+ idPage);
+                        $log.debug('Success Update Page with Id '+ idPage);
+                        $route.reload();
                     }, function (error) {
-                        console.log('Error! '+error)
+                        // TODO: give error message properly into user
                     });
                 }, function(error){
-                
+                    // TODO: give error message properly into user
                 });
             },function(){
-                //user clicked 'cancel'
+                $log.debug("user click cancel button");
             });
         }
 
@@ -134,7 +134,7 @@ angular.module('nanodesuApp')
             if (idx < 0 || idx >= $scope.propsTiers.length)
                 return;
             var o = $scope.propsTiers.splice(idx, 1);
-            console.log("Removed element " + idx + " from tiers.  " + o.length + " gone, "+$scope.propsTiers.length+" left.");
+            $log.debug("Removed element " + idx + " from tiers.  " + o.length + " gone, "+$scope.propsTiers.length+" left.");
         }
 
         $scope.saveProps = function () {

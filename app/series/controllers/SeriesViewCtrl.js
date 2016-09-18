@@ -92,7 +92,7 @@ angular.module('nanodesuApp')
                     page.meta.deleted = deleted;
                     
                     PageService.update({ id: idPage }, page, function (success) {
-                        $log.debug('Success Update Page with Id '+ idPage);
+                        $log.debug('Success Delete Page with Id '+ idPage);
                         $route.reload();
                     }, function (error) {
                         // TODO: give error message properly into user

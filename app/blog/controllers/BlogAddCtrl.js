@@ -35,7 +35,7 @@ angular.module('nanodesuApp')
 
             meta.blog = $scope.blog;
             meta.title = $scope.meta.title;
-            meta.status = published;
+            meta.status = $nd.string2Int0(published);
             meta.created = $nd.createEpochTime();
             meta.updated = 0;
             meta.deleted = false;

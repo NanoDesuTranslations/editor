@@ -38,7 +38,7 @@ angular.module('nanodesuApp')
             $scope.meta.author = AuthService.userName();
             meta.blog = $scope.meta.blog; 
             meta.created = $scope.meta.created;
-            meta.status = $scope.meta.published;
+            meta.status = $nd.string2Int0($scope.meta.published);
             meta.title = $scope.meta.title;
             meta.updated = $nd.createEpochTime();
 

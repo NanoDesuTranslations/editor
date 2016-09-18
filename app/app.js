@@ -20,7 +20,7 @@ angular
     .config(function ($routeProvider, $compileProvider, $logProvider){
         // just use this on production
         $compileProvider.debugInfoEnabled(false);
-        $logProvider.debugEnabled(true); // change to false in production
+        $logProvider.debugEnabled(false); // change to false in production
         
         $routeProvider
             .when('/', {

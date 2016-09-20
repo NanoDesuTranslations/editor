@@ -111,8 +111,10 @@ angular.module('nanodesuApp')
         $scope.openProps = function () { // Set up for editing the page's title etc.
             $scope.propsOpen = true;
             // initialize the page properties for editing--separate copy so the edits can be cancelled.
+            var status = $scope.pg.meta.status;
+
             $scope.propsTitle = $scope.pg.meta.title;
-            $scope.propsStatus = $scope.pg.meta.status;
+            $scope.propsStatus = status.toString();
             $scope.propsOrder = $scope.pg.meta.order;
             $scope.propsPath = $scope.pg.meta.path;
             $scope.propsHr = [];

@@ -44,7 +44,7 @@ angular.module('nanodesuApp')
 
         // Model data for editing:
         $scope.propsTitle = "";
-        $scope.propsStatus = 0; // Default to Draft for new pages.  Status >= 1 would be Publish.
+        $scope.propsStatus = "5"; // Default to Draft for new pages.  Status >= 1 would be Publish.
         // propsOrder is undefined for new page.
         $scope.propsHr = [];
         $scope.propsPath = "";

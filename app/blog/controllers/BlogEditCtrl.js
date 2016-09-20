@@ -20,9 +20,10 @@ angular.module('nanodesuApp')
             $log.debug("start retrieve data by id "+blogId);
             var data = success.page;
             var meta = data.meta;
+            var status = meta.status;
 
             $scope.meta = meta;
-            $scope.meta.published = meta.status;
+            $scope.meta.published = status.toString(); // need convert int to string for select option html
             $scope.blog = meta.blog;
             simpleMDE.value(data.content);
 

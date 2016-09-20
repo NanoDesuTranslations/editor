@@ -19,7 +19,7 @@
     <tbody>
         <tr ng-repeat="blog in blogs | filter:{'series': seriesId}">
             <td>{{ blog.meta.title }}</td>
-            <td>{{ blog.meta.status == 1 ? 'Published' : 'Draft'}}</td>
+            <td>{{ blog.meta.status == 9 ? 'Published' : 'Draft'}}</td>
             <td>{{ blog.meta.blog.pinned == 1 ? 'Yes' : 'No'}}</td>
             <td>{{ blog.meta.blog.author }}</td>
             <td>

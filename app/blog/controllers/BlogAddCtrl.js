@@ -20,7 +20,7 @@ angular.module('nanodesuApp')
         $scope.blog.published_date = 0;
         // it's needed to avoid when pinned and published field is empty
         $scope.blog.pinned = 0;
-        $scope.meta.published = '0';
+        $scope.meta.published = '5';
 
         function createRequestData(){
             $log.debug("creating object data");

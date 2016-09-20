@@ -17,7 +17,8 @@ angular.module('nanodesuApp')
         $scope.sr = {
             name: "",
             config: {
-                hierarchy: []
+                hierarchy: [],
+                status: "5",
             }
         };
         $scope.propsTiers = [];
@@ -83,9 +84,11 @@ angular.module('nanodesuApp')
             sr.config.updated = 0; 
             sr.config.hierarchy = [];
             sr.config.deleted = deleted;
+            sr.config.status = $nd.string2Int0($scope.sr.config.status); 
             for (var i = 0; i < $scope.propsTiers.length; i++) {
                 sr.config.hierarchy.push($scope.propsTiers[i].name);
             }
+            console.log(sr);
             // TODO: message that we're saving?
             SeriesService.save(sr, function (success) {
                 // sr is the _new_ metadata.  Save it into the model when we know it's been written to the database.

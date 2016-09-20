@@ -19,6 +19,16 @@
                                 ng-disabled="!admin" ng-model="sr.name">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="status" class="control-label col-sm-2">Status</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" ng-model="sr.status">
+                                <option disabled>--Please Select...--</option>
+                                <option value="9">Published</option>
+                                <option value="5">Draft</option>
+                            </select>
+                        </div>
+                    </div>
                     
                     <div class="form-group">
                         <label for="inputHeaderURL" class="col-sm-2 control-label">Header Image URL</label>

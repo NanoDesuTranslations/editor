@@ -110,15 +110,20 @@ angular.module('nanodesuApp')
         $scope.propsHeaderURL;
 
         $scope.openProps = function () {
+            $log.debug("open form for properties of series");
             $scope.propsOpen = !$scope.propsOpen;
+            $log.debug("is properties field already opened "+$scope.propsOpen);
+            $log.debug($scope.sr);
             if ($scope.propsOpen) {
                 $scope.propsTiers = [];
                 // Note: propsTiers holds objects, each with a name and id.  It's not that we actually use the ID,
                 // but databinding wasn't accurate when I simplified this array to just strings.
+                var status = $scope.sr.config["status"];
                 for (var i = 0; i < $scope.sr.config.hierarchy.length; i++) {
                     $scope.propsTiers.push({ id: i, name: $scope.sr.config.hierarchy[i] });
                 }
                 $scope.propsHeaderURL = $scope.sr.config["header-url"];
+                $scope.status = status.toString(); 
             }
         }
 
@@ -138,10 +143,12 @@ angular.module('nanodesuApp')
         }
 
         $scope.saveProps = function () {
+            $log.debug("edit series properties");
             var sr = $scope.sr;   // Becomes our working copy of series metadata until it's saved.
             sr.config["header-url"] = $scope.propsHeaderURL;
             sr.config["updated"] = $nd.createEpochTime();
             sr.config.hierarchy = [];
+            sr.config.status = $nd.string2Int0($scope.status);
             for (var i = 0; i < $scope.propsTiers.length; i++) {
                 sr.config.hierarchy.push($scope.propsTiers[i].name);
             }

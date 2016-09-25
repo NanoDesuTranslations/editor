@@ -9,7 +9,9 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('BlogAddCtrl', function ($log, $location, $scope, $routeParams, AuthService, PageService) {
+    .controller('BlogAddCtrl', function ($log, $location, $scope, $routeParams, alertify, AuthService, PageService) {
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
         var simpleMDE = new SimpleMDE(document.getElementById("content"));
         var seriesId = $routeParams.idSeries;
         $scope.blog = {};
@@ -48,14 +50,16 @@ angular.module('nanodesuApp')
         }
 
         $scope.saveBlog = function(){
+            $scope.loader = true; 
             var data = createRequestData();
 
             PageService.save(data, function(status){
-                // TODO: give success message into user properly
+                $scope.loader = false; 
+                alertify.success("Succes Save Post");
                 $log.debug("success save data");
                 $location.path("/blog/"+seriesId);
             }, function(error){
-                // TODO: give error message into user properly
+                alertify.error("Error! Please Contact Admin");
             });
         }
     });

@@ -9,15 +9,19 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('GenerateCtrl', function ($scope, GenerateService, NavService) {
+    .controller('GenerateCtrl', function ($scope, alertify, GenerateService, NavService) {
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
 
         NavService.setActive("build");
 
         $scope.build = function(){
+            $scope.loader = true; 
             GenerateService.query(function(success){
-                console.log(success);
+                $scope.loader = false; 
+                alertify.success("Success Generate the Blog")
             }, function(error){
-                console.log(error);
+                alertify.error("Error! Please Contact the Admin");
             });
         }
     });

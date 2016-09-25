@@ -9,7 +9,9 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('BlogEditCtrl', function ($log, $location, $scope, $routeParams, AuthService, PageService) {
+    .controller('BlogEditCtrl', function ($log, $location, $scope, $routeParams, alertify, AuthService, PageService) {
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
         var simpleMDE = new SimpleMDE(document.getElementById("content"));
         var seriesId = $routeParams.idSeries;
         var blogId = $routeParams.idBlog;
@@ -32,6 +34,7 @@ angular.module('nanodesuApp')
         });
 
         $scope.editBlog = function(){
+            $scope.loader = true; 
             $log.debug("edit function");
             var data = {};
             var meta = {};
@@ -47,11 +50,12 @@ angular.module('nanodesuApp')
             data.meta = meta;
             $log.debug(data); 
             PageService.update({id: blogId}, data, function(success){
-                // TODO: give success message properly into user
+                $scope.loader = false; 
+                alertify.success("Success Edit Post");
                 $log.debug("success edit data by id "+blogId);
                 $location.path("/blog/"+seriesId);
             }, function(error){
-                // TODO: give error message properly into user
+                alertify.error("Error! Please Contact Admin");
             });
         }
     });

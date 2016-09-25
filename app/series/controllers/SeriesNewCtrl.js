@@ -9,7 +9,9 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('SeriesNewCtrl', function ($scope, $routeParams, $location, SeriesService, NavService) {
+    .controller('SeriesNewCtrl', function ($log, $scope, $routeParams, $location, alertify, SeriesService, NavService) {
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
 
         NavService.setActive("series");
 
@@ -70,12 +72,13 @@ angular.module('nanodesuApp')
             if (idx < 0 || idx >= $scope.propsTiers.length)
                 return;
             var o = $scope.propsTiers.splice(idx, 1);
-            console.log("Removed element " + idx + " from tiers.  " + o.length + " gone, " + $scope.propsTiers.length + " left.");
+            $log.debug("Removed element " + idx + " from tiers.  " + o.length + " gone, " + $scope.propsTiers.length + " left.");
         }
 
         // TODO: a method to cancel this series we were creating, e.g if the user hits a cancel button
 
         $scope.saveProps = function () {
+            $scope.loader = true; 
             // Actually save the edited properties
             var sr = $scope.sr;
             var deleted = false;
@@ -88,19 +91,17 @@ angular.module('nanodesuApp')
             for (var i = 0; i < $scope.propsTiers.length; i++) {
                 sr.config.hierarchy.push($scope.propsTiers[i].name);
             }
-            console.log(sr);
             // TODO: message that we're saving?
             SeriesService.save(sr, function (success) {
                 // sr is the _new_ metadata.  Save it into the model when we know it's been written to the database.
                 $scope.sr = sr;
                 $scope.propsOpen = false; // Close the series properties.
-                // TODO: an MVC-friendly way of displaying this message
-                alert("Success save data");
+                alertify.success("Success Save Data");
+                $scope.loader = false; 
                 $location.path("/");
             }, function (error) {
                 // properties stay open in case there's something the user can fix.  They can cancel changes if necessary.
-                // TODO: an MVC-friendly way of displaying this message
-                alert("error, please try again");
+                alertify.error("Error! Please Contact Admin");
             });
         }
     });

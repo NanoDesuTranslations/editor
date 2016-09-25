@@ -10,10 +10,13 @@
 
 angular.module('nanodesuApp')
     .controller('BlogCtrl', function ($log, $route, $scope, $routeParams, alertify, PageService) {
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
         var seriesId = $routeParams.idSeries 
         $scope.seriesId = seriesId;
         
         PageService.query(function(success){
+            $scope.loader = true; 
             $log.debug("start retreive blog from pages");
             var data = success.pages;
             $scope.blogs = [];
@@ -26,7 +29,7 @@ angular.module('nanodesuApp')
                     this.push(param);
                 }
             }, $scope.blogs);
-
+            $scope.loader = false; 
         }, function(error){
             // TODO: give error message into user properly
             //$log.error("Error "+error.status+"! "+error.statusText);
@@ -34,6 +37,7 @@ angular.module('nanodesuApp')
 
         $scope.delete = function (idBlog) {
             alertify.confirm("are you sure?", function(){
+                $scope.loader = true; 
                 $log.debug("user click yes button");
 
                 PageService.get({'id': idBlog}, function(success){
@@ -49,6 +53,7 @@ angular.module('nanodesuApp')
                     }, function(error){
                         // TODO: give error message into user properly
                     });
+                    $scope.loader = false; 
                 }, function(error){
                     // TODO: give error message into user properly
                 });

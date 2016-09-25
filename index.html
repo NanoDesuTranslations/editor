@@ -14,6 +14,7 @@
 </head>
 
 <body ng-app="nanodesuApp">
+    <nd-loading ng-show="loader"></nd-loading>
     <nav class="navbar navbar-default no-margin">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header fixed-brand">
@@ -102,5 +103,6 @@
     <script src="app/app-services/AuthService.js"></script>
     <script src="app/app-services/NavService.js"></script>
     <script src="app/app-services/GenerateService.js"></script>
+    <script src="app/app-directives/LoaderDirective.js"></script>
 </body>
 </html>

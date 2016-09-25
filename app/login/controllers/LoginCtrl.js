@@ -10,12 +10,15 @@
 
 angular.module('nanodesuApp')
     .controller('LoginCtrl', function($scope, $location, AuthService, NavService){
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
          // short-term storage for credentials that really should exist only while view is live.
         $scope.cred = {} ;
         $scope.cred.sName = "";
         $scope.cred.sPW = "";
 
         $scope.logIn = function () {
+            $scope.loader = true; 
             // The service call below is for the shortened, temp auth systen. Real args will be username + password.
             AuthService.login($scope.cred.sName, $scope.cred.sPW)
                 .then(function(res) {
@@ -23,6 +26,7 @@ angular.module('nanodesuApp')
                     // Route to main page on success.
                     $scope.cred = {}; // get rid of this when we no longer need it.
                     $location.path("/");
+                    $scope.loader = false; 
                 },function(err) {
                     // TODO: show error message
 

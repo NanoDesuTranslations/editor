@@ -10,6 +10,8 @@
 
 angular.module('nanodesuApp')
     .controller('SeriesViewCtrl', function ($route, $scope, $routeParams, $location, $log, alertify, AuthService, PageService, SeriesService, NavService) {
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
 
         var idSeries =  $routeParams.idSeries;
 
@@ -18,19 +20,23 @@ angular.module('nanodesuApp')
         $scope.admin = AuthService.isAdmin();
 
         if (AuthService.isAdmin()) {
+            $scope.loader = true; 
             SeriesService.get({ id: idSeries }, function (sr) {
                 $scope.sr = sr;
                 NavService.setSeries(sr);
                 $log.debug("success retreive series "+sr.name);
+                $scope.loader = false; 
             }, function (error) {
                 // TODO: give error message properly into user
             })
         } else {
+            $scope.loader = true; 
             PageService.get(function (data){
                 var sr = data.series[idSeries];
                 $log.debug("Recieved data from PageService.get in SeriesViewCtrl");
                 $scope.sr = sr;
                 NavService.setSeries(sr);
+                $scope.loader = false; 
             }
             ,function (err) {
                 // TODO: give error message properly into user
@@ -39,6 +45,7 @@ angular.module('nanodesuApp')
 
         //query json data from api -- gets page head data regardless of series.
         PageService.query(function (success) {
+            $scope.loader = true; 
             $log.debug("retrieve data pages that not blog and deleted");
             var pages = success.pages;
             $scope.page = [];
@@ -51,8 +58,9 @@ angular.module('nanodesuApp')
                     this.push(param);
                 }
             }, $scope.page);
+            $scope.loader = false; 
         }, function (error) {
-            // TODO: give error message properly into user
+            alertify.error("Error! Please Contact Admin");
         });
 
         /**
@@ -85,6 +93,7 @@ angular.module('nanodesuApp')
 
         $scope.delete = function (idPage) {
             alertify.confirm('are you sure?', function(){
+                $scope.loader = true; 
                 $log.debug("user click ok button");
                 PageService.get({'id': idPage}, function(success){
                     var deleted = true;
@@ -93,12 +102,14 @@ angular.module('nanodesuApp')
                     
                     PageService.update({ id: idPage }, page, function (success) {
                         $log.debug('Success Delete Page with Id '+ idPage);
+                        alertify.success("Success Delete Data");
                         $route.reload();
                     }, function (error) {
-                        // TODO: give error message properly into user
+                        alertify.error("Error! Please Contact Admin");
                     });
+                $scope.loader = false; 
                 }, function(error){
-                    // TODO: give error message properly into user
+                    alertify.error("Error! Please Contact Admin");
                 });
             },function(){
                 $log.debug("user click cancel button");
@@ -143,6 +154,7 @@ angular.module('nanodesuApp')
         }
 
         $scope.saveProps = function () {
+            $scope.loader = true; 
             $log.debug("edit series properties");
             var sr = $scope.sr;   // Becomes our working copy of series metadata until it's saved.
             sr.config["header-url"] = $scope.propsHeaderURL;
@@ -159,6 +171,7 @@ angular.module('nanodesuApp')
                 $scope.propsOpen = false; // Close the series properties.
                 // TODO: an MVC-friendly way of displaying this message
                 alert("Success save data");
+                $scope.loader = false; 
             }, function (error) {
                 // properties stay open in case there's something the user can fix.  They can cancel changes if necessary.
                 // TODO: an MVC-friendly way of displaying this message

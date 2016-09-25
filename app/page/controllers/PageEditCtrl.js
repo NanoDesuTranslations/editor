@@ -8,7 +8,10 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageEditCtrl', function($scope, $routeParams, $location, PageService, NavService){
+    .controller('PageEditCtrl', function($scope, $routeParams, $location, alertify, PageService, NavService){
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
+
         var idSeries = $routeParams.idSeries;
         var idPage = $routeParams.idPage;
 
@@ -74,7 +77,7 @@ angular.module('nanodesuApp')
                 $nd.assert($scope.pg.id && $scope.pg.id === idPage, "$scope.pg.id && $scope.pg.id === idPage");
             }, function (error) {
                 $nd.warn("PageService error on load! " + error.toString());
-                // TODO: error handling for the applciation
+                alertify.error("Error! Please Contact Admin");
             });
 
         /**
@@ -103,7 +106,7 @@ angular.module('nanodesuApp')
             }, function (err) {
                 $nd.warn("Page Edit: update failed for series " + sr.name + ", page " + idPage);
                 // TODO: proper user notification of failure
-                alert("Page Edit: update failed for page data");
+                alertify.error("Error! Please Contact Admin");
             });
         };
         

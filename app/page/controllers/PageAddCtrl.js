@@ -8,7 +8,9 @@
  */
 
 angular.module('nanodesuApp')
-    .controller('PageAddCtrl', function($scope, $routeParams, $location,  SeriesService, PageService, NavService){
+    .controller('PageAddCtrl', function($log, $scope, $routeParams, $location, alertify, SeriesService, PageService, NavService){
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
         var idSeries = $routeParams.idSeries;
 
         NavService.setActive("page");
@@ -78,8 +80,7 @@ angular.module('nanodesuApp')
                 $location.path("/page/" + idSeries + "/edit/" + status.id);
             }, function (err) {
                 $nd.warn("Page Add: save failed for series " + sr.name + ", new page.");
-                // TODO: proper user notification of failure
-                alert("Page Add: save failed for new page.");
+                alertify.error("Error! Please Contact Admin");
             });
         };
         //$nd.warn("Running pageAddCtrl 3");

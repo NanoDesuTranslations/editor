@@ -10,6 +10,8 @@
 
 angular.module('nanodesuApp')
     .controller('HomeCtrl', function ($log, $route, $scope, $location, AuthService, alertify, SeriesService, PageService, NavService) {
+        // TODO: Since this is a must in every controller need better way to avoid this
+        $scope.loader = false; 
         $scope.signIn = function () {
             // Nothing fancy; just navigate to the sign-in page.
             $location.path("/login");
@@ -29,6 +31,7 @@ angular.module('nanodesuApp')
         // To get series info for non-admins, we get the list of pages from the PageService, throw away the pages,
         // and use the series information that came with it.
         function refreshDataFromPages() {
+            $scope.loader = true;
             $log.debug("HomeCtrl refreshDataFromPages running");
             PageService.query(function (pages) {
                 $scope.data = [];
@@ -37,12 +40,14 @@ angular.module('nanodesuApp')
                 angular.forEach(pages.series, function(element) {
                     this.push(element);
                 }, $scope.data);
+            $scope.loader = false;
             }, function (error) {
-                // TODO: giver error message into user properly
+                alertify.error("Error! Please Contact Admin");
             });
         }
 
         function refreshDataFromSeries() {
+            $scope.loader = true;
             $log.debug("HomeCtrl refreshDataFromSeries running");
             SeriesService.query(function (srs) {
                 $scope.data = [];
@@ -55,8 +60,9 @@ angular.module('nanodesuApp')
                         this.push(param);
                     }
                 }, $scope.data);
+            $scope.loader = false;
             }, function (error) {
-                // TODO: giver error message into user properly
+                alertify.error("Error! Please Contact Admin");
             });
         }
 
@@ -78,6 +84,7 @@ angular.module('nanodesuApp')
 
         $scope.delete = function (idSeries) {
             alertify.confirm('are you sure?', function(){
+                $scope.loader = true;
                 $log.debug("user click ok button");
                 SeriesService.get({'id': idSeries}, function(success){
                     var deleted = true;
@@ -85,15 +92,14 @@ angular.module('nanodesuApp')
                     series.config.deleted = deleted;
     
                     SeriesService.update({'id': idSeries}, series, function(success){
-                        // TODO: use a MVC-friendly way to show result of the call.
-                        alert("Info: Series "+idSeries+" deleted.");
+                        alertify.success("Succes Delete Data");
                         refreshData();
                     }, function(error){
-                        alert("Info: error! No changes." + error.toString());
+                        alertify.error("Error! Please Contact Admin");
                     });
+                $scope.loader = false;
                 }, function(error){
-                    // TODO: giver error message into user properly
-                    //user clicked 'cancel'
+                    alertify.error("Error! Please Contact Admin");
                 });
             }, function(){
                 $log.debug("user click cancel button");

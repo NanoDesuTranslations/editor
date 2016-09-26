@@ -62,6 +62,7 @@ angular.module('nanodesuApp')
         $scope.cancelProps = function () {
             $scope.propsOpen = false;
             // TODO: if we're using this to create a series we'll need to do more.
+            $location.path('/');
         }
 
         $scope.addTier = function () {

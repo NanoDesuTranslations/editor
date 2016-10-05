@@ -53,7 +53,6 @@ angular.module('nanodesuApp')
                 $scope.loader = false; 
                 alertify.success("Success Edit Post");
                 $log.debug("success edit data by id "+blogId);
-                $location.path("/blog/"+seriesId);
             }, function(error){
                 alertify.error("Error! Please Contact Admin");
             });

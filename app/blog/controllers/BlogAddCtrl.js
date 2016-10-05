@@ -57,7 +57,6 @@ angular.module('nanodesuApp')
                 $scope.loader = false; 
                 alertify.success("Succes Save Post");
                 $log.debug("success save data");
-                $location.path("/blog/"+seriesId);
             }, function(error){
                 alertify.error("Error! Please Contact Admin");
             });

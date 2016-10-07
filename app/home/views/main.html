@@ -12,15 +12,25 @@
     <table class="table table-bordered table-striped table-condensed">
         <thead>
             <tr style="table-layout:fixed">
-                <th style="width: 10%">Index</th>
-                <th style="width: 60%">Name</th>
-                <th style="width: 30%">Action</th>
+                <th>#</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="sr in data">
-                <td>{{ $index }}</td>
+                <td>{{ $index + 1 }}</td>
                 <td>{{ sr.name }}</td>
+                <td>
+                    <span ng-if="sr.config.status === 0">Hidden</span>
+                    <span ng-if="sr.config.status === 5">Draft</span>
+                    <span ng-if="sr.config.status === 9">Published</span>
+                </td>
+                <td>{{ sr.config.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td><span ng-if="sr.config.updated !== 0">{{ sr.config.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
                 <td>
                     <!--<button type="button" class="btn btn-default" ng-click="redirect(sr.id)" >
                         <span class="glyphicon glyphicon-pencil"></span>&nbsp;

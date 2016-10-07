@@ -99,7 +99,6 @@ angular.module('nanodesuApp')
                 $scope.propsOpen = false; // Close the series properties.
                 alertify.success("Success Save Data");
                 $scope.loader = false; 
-                $location.path("/");
             }, function (error) {
                 // properties stay open in case there's something the user can fix.  They can cancel changes if necessary.
                 alertify.error("Error! Please Contact Admin");

@@ -77,6 +77,7 @@ angular.module('nanodesuApp')
             PageService.save(newData, function (status) {
                 // If the save (POST) succeeds, we've only created the page, not the content.  Navigate to
                 // the URL for editing the page we've just created.
+                //alertify.success('Success Save Data');
                 $location.path("/page/" + idSeries + "/edit/" + status.id);
             }, function (err) {
                 $nd.warn("Page Add: save failed for series " + sr.name + ", new page.");
@@ -88,7 +89,6 @@ angular.module('nanodesuApp')
         $scope.cancelProps = function () {
             // Just abandon the form and return to the series it's part of.
             NavService.setPage(null);
-            $location.path("/series/" + idSeries);
         }
 
         $scope.saveProps = function () {

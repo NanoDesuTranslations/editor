@@ -11,6 +11,7 @@ angular.module('nanodesuApp')
     .controller('PageEditCtrl', function($scope, $routeParams, $location, alertify, PageService, NavService){
         // TODO: Since this is a must in every controller need better way to avoid this
         $scope.loader = false; 
+        $scope.seriesId = $routeParams.idSeries;
 
         var idSeries = $routeParams.idSeries;
         var idPage = $routeParams.idPage;
@@ -101,8 +102,8 @@ angular.module('nanodesuApp')
 
             // (async) save it.
             PageService.update({ id: idPage }, newData, function (status) {
+                alertify.success("Success Edit Data");
                 // If the save (PUT) succeeds, we're done.  Navigate to the containing series' page.
-                $location.path("/series/" + idSeries);
             }, function (err) {
                 $nd.warn("Page Edit: update failed for series " + sr.name + ", page " + idPage);
                 // TODO: proper user notification of failure

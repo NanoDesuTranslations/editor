@@ -149,7 +149,11 @@ angular.module('nanodesuApp')
             $scope.pg.meta.order = ( null != $scope.propsOrder ? $nd.string2Int0($scope.propsOrder) : null );
             $scope.pg.meta.path = $scope.propsPath;
             for (var i = 0; i < $scope.propsHr.length; i++) {
-                $scope.pg.meta[$scope.propsHr[i].label] = $nd.string2IntIfInt($scope.propsHr[i].value);
+                if($scope.propsHr[i].value === null || $scope.propsHr[i].value === ""){
+                    $scope.pg.meta[$scope.propsHr[i].label] = null;
+                } else {
+                    $scope.pg.meta[$scope.propsHr[i].label] = $nd.string2IntIfInt($scope.propsHr[i].value);
+                }
             }
         };
 

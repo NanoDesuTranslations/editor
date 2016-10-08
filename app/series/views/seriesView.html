@@ -91,13 +91,33 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Title</th>
+                <th>Status</th>
+                <th>Hierarchy</th>
+                <th>Created</th>
+                <th>Updated</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="dt in page | filter:{'series':sr.id}">
+                <td>{{ $index + 1 }}</td>
                 <td>{{ dt.meta.title }}</td>
+                <td>
+                    <span ng-if="dt.meta.status === 0">Hidden</span>
+                    <span ng-if="dt.meta.status === 5">Draft</span>
+                    <span ng-if="dt.meta.status === 9">Published</span>
+                </td>
+                <td>
+                    <span ng-repeat="series in sr.config.hierarchy">
+                        <b>{{ series }}:</b> 
+                        <span ng-if="dt.meta[series] === null"><i>null;</i></span>
+                        <span ng-if="dt.meta[series] !== null">{{ dt.meta[series] }};</span>
+                    </span>
+                </td>
+                <td>{{ dt.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td><span ng-if="dt.meta.updated !== 0">{{ dt.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
                 <td>
                     <button type="button" ng-click="redirect(sr.id,dt.id)" class="btn btn-default">
                         <span class="glyphicon glyphicon-pencil"></span>

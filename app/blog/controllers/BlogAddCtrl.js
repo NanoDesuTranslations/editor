@@ -14,6 +14,7 @@ angular.module('nanodesuApp')
         $scope.loader = false; 
         var simpleMDE = new SimpleMDE(document.getElementById("content"));
         var seriesId = $routeParams.idSeries;
+        $scope.seriesId = seriesId;
         $scope.blog = {};
         $scope.meta = {};
         // TODO: @yarn said to make null blog_id field for the future

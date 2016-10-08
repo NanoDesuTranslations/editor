@@ -15,6 +15,7 @@ angular.module('nanodesuApp')
         var simpleMDE = new SimpleMDE(document.getElementById("content"));
         var seriesId = $routeParams.idSeries;
         var blogId = $routeParams.idBlog;
+        $scope.seriesId = seriesId;
         $scope.blog = {};
         $scope.meta = {}; 
 

@@ -9,19 +9,29 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
+            <th>#</th>
             <th>Name</th>
             <th>Status</th>
             <th>Pinned</th>
             <th>Created by</th>
+            <th>Created</th>
+            <th>Updated</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="blog in blogs | filter:{'series': seriesId}">
+            <td>{{ $index+1 }}</td>
             <td>{{ blog.meta.title }}</td>
-            <td>{{ blog.meta.status == 9 ? 'Published' : 'Draft'}}</td>
+            <td>
+                <span ng-if="blog.meta.status === 0">Hidden</span>
+                <span ng-if="blog.meta.status === 5">Draft</span>
+                <span ng-if="blog.meta.status === 9">Published</span>
+            </td>
             <td>{{ blog.meta.blog.pinned == 1 ? 'Yes' : 'No'}}</td>
             <td>{{ blog.meta.blog.author }}</td>
+            <td>{{ blog.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td><span ng-if="blog.meta.updated !== 0">{{ dt.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
             <td>
                 <a ng-href="#/blog/{{ seriesId }}/edit/{{ blog.id }}" class="btn btn-primary">
                     <span class="glyphicon glyphicon-pencil">

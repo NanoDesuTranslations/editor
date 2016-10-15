@@ -130,6 +130,7 @@ angular.module('nanodesuApp')
                 // Note: propsTiers holds objects, each with a name and id.  It's not that we actually use the ID,
                 // but databinding wasn't accurate when I simplified this array to just strings.
                 var status = $scope.sr.config["status"];
+                $log.debug(status);
                 for (var i = 0; i < $scope.sr.config.hierarchy.length; i++) {
                     $scope.propsTiers.push({ id: i, name: $scope.sr.config.hierarchy[i] });
                 }

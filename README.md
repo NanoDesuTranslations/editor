@@ -27,14 +27,3 @@ This project folder structure following style guide from
 Install dependencies using Bower:
     $ bower install
 Bower also requires node, npm, and git.
-
-## Notes
-### Meta Field in Page Endpoint
-
-* __status__: this field is determine is the page published or not, 0 for not published and 1 as published.
-* __header-url__: this field is for image header.
-* __deleted__: this field is determine is the page was deleted or not, 0 for not deleted and 1 as deleted.
-
-## Config Field in Series Endpoint
-
-* __deleted__: this field is determine is the page was deleted or not, 0 for not deleted and 1 as deleted.

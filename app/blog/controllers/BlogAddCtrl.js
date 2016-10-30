@@ -62,5 +62,20 @@ angular.module('nanodesuApp')
                 alertify.error("Error! Please Contact Admin");
             });
         }
+
+        /**
+         * Related to Angular Bootstrap Datepicker
+         */
+        $scope.today = function() {
+            $scope.dt = new Date();
+        };
+
+        $scope.popup = {
+            opened: false
+        };
+        
+        $scope.openDate = function() {
+            $scope.popup.opened = true;
+        }; 
     });
 

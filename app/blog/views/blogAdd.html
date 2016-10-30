@@ -19,6 +19,18 @@
             </div>
         </div>
         <div class="form-group">
+            <label for"pinned">Published Date</label>
+            <div class="input-group col-md-2 col-sm-4">
+                <input type="text" class="form-control" ng-model="dt"
+                    uib-datepicker-popup is-open="popup.opened" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="openDate()">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="published">Status</label>
             <select class="form-control" ng-model="meta.published">
                 <option disabled>--Please Select...--</option>

@@ -31,10 +31,12 @@ angular.module('nanodesuApp')
             var meta = {};
             var published = $scope.meta.published;
             var publishedDate = $nd.createEpochTime();
+            var editablePublishDate = $nd.convertToEpochTime($scope.dt);
 
-            if(published === '1'){
+            $log.debug(editablePublishDate);
+            /*if(published === '1'){
                 $scope.blog.published_date = publishedDate;
-            }
+            }*/
 
             meta.blog = $scope.blog;
             meta.title = $scope.meta.title;
@@ -53,14 +55,14 @@ angular.module('nanodesuApp')
         $scope.saveBlog = function(){
             $scope.loader = true; 
             var data = createRequestData();
-
+            /*
             PageService.save(data, function(status){
                 $scope.loader = false; 
                 alertify.success("Succes Save Post");
                 $log.debug("success save data");
             }, function(error){
                 alertify.error("Error! Please Contact Admin");
-            });
+            });*/
         }
 
         /**

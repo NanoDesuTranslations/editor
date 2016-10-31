@@ -52,7 +52,9 @@ var $nd = (function () {
     }
 
     objND.convertToEpochTime = function(date) {
-        var epochTime = Math.floor( date.getTime() / 1000 );
+        //console.log(date);
+        //console.log(date.getTime());
+        var epochTime = date.getTime() / 1000;
         return epochTime;
     }
 

@@ -58,5 +58,10 @@ var $nd = (function () {
         return epochTime;
     }
 
+    objND.convertToUtc = function(date) {
+        var utcTime = new Date(date * 1000);
+        return utcTime;
+    }
+
     return objND;
 })();

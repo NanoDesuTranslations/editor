@@ -28,6 +28,13 @@ angular.module('nanodesuApp')
             $scope.meta = meta;
             $scope.meta.published = status.toString(); // need convert int to string for select option html
             $scope.blog = meta.blog;
+            
+            var unixTime = meta.blog.published_date;
+            var utcTime = $nd.convertToUtc(unixTime);
+            $log.debug('epochTime ' + unixTime);
+            $log.debug('UTC Time ' + utcTime);
+            
+            $scope.dt = utcTime;
             simpleMDE.value(data.content);
 
         }, function(error){
@@ -41,7 +48,8 @@ angular.module('nanodesuApp')
             var meta = {};
 
             $scope.meta.author = AuthService.userName();
-            meta.blog = $scope.meta.blog; 
+            meta.blog = $scope.meta.blog;
+            meta.blog.published_date = $nd.convertToEpochTime($scope.dt); 
             meta.created = $scope.meta.created;
             meta.status = $nd.string2Int0($scope.meta.published);
             meta.title = $scope.meta.title;
@@ -58,5 +66,20 @@ angular.module('nanodesuApp')
                 alertify.error("Error! Please Contact Admin");
             });
         }
+        
+        /**
+         * Related to Angular Bootstrap Datepicker
+         */
+        $scope.today = function() {
+            $scope.dt = new Date();
+        };
+
+        $scope.popup = {
+            opened: false
+        };
+        
+        $scope.openDate = function() {
+            $scope.popup.opened = true;
+        }; 
     });
 

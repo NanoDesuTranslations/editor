@@ -31,7 +31,7 @@
             <td>{{ blog.meta.blog.pinned == 1 ? 'Yes' : 'No'}}</td>
             <td>{{ blog.meta.blog.author }}</td>
             <td>{{ blog.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td><span ng-if="blog.meta.updated !== 0">{{ dt.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
+            <td><span ng-if="blog.meta.updated !== 0">{{ blog.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
             <td>
                 <a ng-href="#/blog/{{ seriesId }}/edit/{{ blog.id }}" class="btn btn-primary">
                     <span class="glyphicon glyphicon-pencil">

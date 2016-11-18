@@ -15,7 +15,8 @@ angular
         'ngTouch',
         'ngResource',
         'ngAlertify',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'datatables'
         ])
     .config(function ($routeProvider, $compileProvider, $logProvider){
         // just use this on production

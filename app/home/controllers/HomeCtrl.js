@@ -10,6 +10,10 @@
 
 angular.module('nanodesuApp')
     .controller('HomeCtrl', function ($log, $route, $scope, $location, AuthService, alertify, SeriesService, PageService, NavService) {
+        /* variable for pagination */
+        $scope.currentPage = 0;
+        $scope.pageSize = 2;
+
         // TODO: Since this is a must in every controller need better way to avoid this
         $scope.loader = false; 
         $scope.signIn = function () {
@@ -117,4 +121,10 @@ angular.module('nanodesuApp')
             }
             $location.path(path);
         }
+
+        /* pagination purpose */
+        $scope.sort = function(keyname){
+            $scope.sortKey = keyname;   //set the sortKey to the param passed
+            $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+        } 
     });

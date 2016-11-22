@@ -9,11 +9,20 @@
     <h2>
         Available series
     </h2>
-    <table datatable="" class="table table-bordered table-striped table-condensed">
+    <form class="form-inline">
+        <div class="form-group">
+            <label >Search</label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form> 
+    <table class="table table-bordered table-striped table-condensed">
         <thead>
             <tr style="table-layout:fixed">
                 <th>#</th>
-                <th>Name</th>
+                <th ng-click="sort('name')">
+                    Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span> 
+                </th>
                 <th>Status</th>
                 <th>Created</th>
                 <th>Updated</th>
@@ -21,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="sr in data">
+            <tr dir-paginate="sr in data | orderBy:sortKey:reverse | filter: search | itemsPerPage: 5">
                 <td>{{ $index + 1 }}</td>
                 <td>{{ sr.name }}</td>
                 <td>
@@ -47,6 +56,11 @@
             </tr>
         </tbody>
     </table>
+    <dir-pagination-controls
+       max-size="5"
+       direction-links="true"
+       boundary-links="true" >
+    </dir-pagination-controls> 
     <button type="button" ng-click="openSeries()" ng-show="isAdmin()" class="btn btn-success">
         <span class="glyphicon glyphicon-plus"></span>
         Add

@@ -16,7 +16,7 @@ angular
         'ngResource',
         'ngAlertify',
         'ui.bootstrap',
-        'datatables'
+        'angularUtils.directives.dirPagination'
         ])
     .config(function ($routeProvider, $compileProvider, $logProvider){
         // just use this on production

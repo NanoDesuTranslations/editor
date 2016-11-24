@@ -6,6 +6,12 @@
     Create Post
 </a>
 <hr />
+<form class="form-inline">
+    <div class="form-group">
+        <label >Search</label>
+        <input type="text" ng-model="search" class="form-control" placeholder="Search">
+    </div>
+</form> 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -20,7 +26,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="blog in blogs | filter:{'series': seriesId}">
+        <tr ng-repeat="blog in blogs | filter:{'series': seriesId} | orderBy:sortKey: reverse | filter: search | itemsPerPage: 5">
             <td>{{ $index+1 }}</td>
             <td>{{ blog.meta.title }}</td>
             <td>
@@ -45,3 +51,8 @@
         </tr>
     </tbody>
 </table>
+<dir-pagination-controls
+    max-size="5"
+    direction-links="true"
+    boundary-links="true">
+</dir-pagination-controls> 

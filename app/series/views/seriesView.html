@@ -88,6 +88,12 @@
         Create Blog Post
     </a>
     <h3>Pages</h3>
+    <form class="form-inline">
+        <div class="form-group">
+            <label >Search</label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form> 
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -101,7 +107,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="dt in page | filter:{'series':sr.id}">
+            <tr dir-paginate="dt in page | filter:{'series':sr.id} | filter: search | itemsPerPage: 10">
                 <td>{{ $index + 1 }}</td>
                 <td>{{ dt.meta.title }}</td>
                 <td>
@@ -131,6 +137,12 @@
             </tr>
         </tbody>
     </table>
+    <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true">
+    </dir-pagination-controls> 
+    <br />
     <button type="button" class="btn btn-default" ng-click="redirect(sr.id)">
         <span class="glyphicon glyphicon-plus text-primary"></span>
         Add page

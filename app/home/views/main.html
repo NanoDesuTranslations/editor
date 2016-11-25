@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr dir-paginate="sr in data | orderBy:sortKey:reverse | filter: search | itemsPerPage: 5">
+            <tr dir-paginate="sr in data | orderBy:sortKey:reverse | filter: search | itemsPerPage: 10">
                 <td>{{ $index + 1 }}</td>
                 <td>{{ sr.name }}</td>
                 <td>

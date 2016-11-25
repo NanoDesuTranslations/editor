@@ -26,7 +26,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="blog in blogs | filter:{'series': seriesId} | orderBy:sortKey: reverse | filter: search | itemsPerPage: 5">
+        <tr dir-paginate="blog in blogs | filter:{'series': seriesId} | filter: search | itemsPerPage: 10">
             <td>{{ $index+1 }}</td>
             <td>{{ blog.meta.title }}</td>
             <td>

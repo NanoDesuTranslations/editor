@@ -1,7 +1,15 @@
-node_modules/
+# OS Files
+.DS_Store
+Thumbs.db
 
-# Managed by bower
-assets/libs/
+# Language and Frameworks Files
+.sass-cache
+npm-debug.log
+
+# Files Downloaded with Package Managers
+bower_components
+node_modules
+dist
 
 #For IDE
 *.iml
@@ -10,4 +18,3 @@ assets/libs/
 .idea/
 /Web.config
 /jsconfig.json
-

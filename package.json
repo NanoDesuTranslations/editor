@@ -1,0 +1,37 @@
+{
+  "name": "nd-editor",
+  "version": "1.0.0",
+  "description": "Nanodesu Website Project",
+  "dependencies": {
+    "bower": "^1.7.9"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^2.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NanoDesuTranslations/editor.git"
+  },
+  "keywords": [
+    "nanodesu",
+    "translations",
+    "editor",
+    "CMS"
+  ],
+  "author": "NanodesuTranslations",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NanoDesuTranslations/editor/issues"
+  },
+  "homepage": "http://nanodesutranslations.org",
+  "scripts": {
+    "postinstall": "bower install"
+  } 
+}

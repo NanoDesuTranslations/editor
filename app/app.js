@@ -1,14 +1,13 @@
-'use strict'
+(function() {
+'use strict';
 
 /**
  * @ngdoc overview
  * @name nanodesuApp
+ * 
  * @description
- * # nanodesu translation editor
- *
- * Main module of the application
+ * Nanodesu main routing
  */
-
 angular
     .module('nanodesuApp', [
         'ngRoute',
@@ -119,3 +118,4 @@ angular
         });
     });
     */
+})();

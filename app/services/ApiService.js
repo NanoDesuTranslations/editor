@@ -2,7 +2,7 @@
 'use strict';
 
 /**
- * @ngdoc controller
+ * @ngdoc factory
  * @name nanodesuApp.service:ApiService
  * 
  * @description

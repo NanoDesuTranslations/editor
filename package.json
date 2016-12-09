@@ -9,11 +9,13 @@
     "grunt": "^1.0.1",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.2",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^2.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
@@ -30,8 +32,5 @@
   "bugs": {
     "url": "https://github.com/NanoDesuTranslations/editor/issues"
   },
-  "homepage": "http://nanodesutranslations.org",
-  "scripts": {
-    "postinstall": "bower install"
-  } 
+  "homepage": "http://nanodesutranslations.org"
 }

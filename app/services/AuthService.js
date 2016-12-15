@@ -47,6 +47,7 @@ angular.module('nanodesuApp')
                 function(success){
                     $log.debug('Success Login');
                     $log.debug(success);
+                    setUsername(username);
                     storeCredentials(success);
                     $location.path('/');
                 },
@@ -70,7 +71,19 @@ angular.module('nanodesuApp')
         this.logout = function() {
             $log.debug('AuthService: logout function')
             removeCredentials();
-            $location.path('/login');
+        }
+
+        /**
+         * @ngdoc method
+         * @name setUsername
+         * @methodOf nanodesuApp.service:AuthService
+         * @description
+         * set username into localStorage
+         *
+         * @param {string} username
+         */
+        function setUsername(username) {
+            localStorage.setItem('username', username);
         }
 
         /**
@@ -195,11 +208,10 @@ angular.module('nanodesuApp')
         function storeCredentials(param) {
             $log.debug('AuthService: storeCredentials function');
             $log.debug('Authorization Info: '+JSON.stringify(param));
-            localStorage.setItem('username', param.config.data.username);
-            localStorage.setItem('isAdmin', param, data.permissions.admin);
-            localStorage.setItem('token', param.data.token);
-            localStorage.setItem('view', param.data.permissions.view);
-            localStorage.setItem('edit', param.data.permissions.edit);
+            localStorage.setItem('isAdmin', param.permissions.admin);
+            localStorage.setItem('token', param.token);
+            localStorage.setItem('view', param.permissions.view);
+            localStorage.setItem('edit', param.permissions.edit);
         }
 
         /**

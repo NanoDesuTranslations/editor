@@ -22,8 +22,14 @@
                 Nanodesu
             </a>
         </div>
-
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="LoginCtrl">
+            <ul class="nav navbar-nav navbar-right nav-pills">
+                <li><a href="" ng-click="logout()">Sign Out</a></li>
+                <li><a href="#/login">Sign In</a></li>
+            </ul>
+        </div>
+
+        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="LoginCtrl">
             <ul class="nav navbar-nav nav-pills">
                 <li ng-class="{active: curActive() == 'main'}"><a href="#/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
                 <li ng-class="{active: curActive() == 'series'}" ng-show="isLogin() && hasSeries()">
@@ -47,14 +53,14 @@
                     <a href="#/login" class="dropdown-toggle" uib-dropdown-toggle>{{loginName()}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu >
                         <li><a href="#" ng-disabled="true">Profile</a></li>
-                        <!-- <li><span>Admin: {{isAdmin()}}</span></li> --> <!-- debug only -->
+                        <li><span>Admin: {{isAdmin()}}</span></li> 
                         <li><a href="" ng-click="logOut()">Sign Out</a></li>
                     </ul>
                 </li>
                 <li ng-hide="isLogin()"><a href="#/login">Sign In</a></li>
 
             </ul>
-        </div>
+        </div>-->
     </nav>
 
 
@@ -83,27 +89,9 @@
     <script src="assets/js/scripts.js"></script>
 
     <script src="app/app.js"></script>
-    <script src="app/login/controllers/LoginCtrl.js"></script>
-    <script src="app/home/controllers/HomeCtrl.js"></script>
-    <script src="app/about/controllers/AboutCtrl.js"></script>
-    <script src="app/page/controllers/PageCtrl.js"></script>
-    <script src="app/page/controllers/PageAddCtrl.js"></script>
-    <script src="app/page/controllers/PageEditCtrl.js"></script>
-    <script src="app/series/controllers/SeriesCtrl.js"></script>
-    <script src="app/series/controllers/SeriesAddCtrl.js"></script>
-    <script src="app/series/controllers/SeriesEditCtrl.js"></script>
-    <script src="app/series/controllers/SeriesViewCtrl.js"></script>
-    <script src="app/series/controllers/SeriesNewCtrl.js"></script>
-    <script src="app/generate/controllers/GenerateCtrl.js"></script>
-    <script src="app/blog/controllers/BlogCtrl.js"></script>
-    <script src="app/blog/controllers/BlogAddCtrl.js"></script>
-    <script src="app/blog/controllers/BlogEditCtrl.js"></script>
-    <script src="app/app-services/PageService.js"></script>
-    <script src="app/app-services/SeriesService.js"></script>
-    <script src="app/app-services/AuthService.js"></script>
-    <script src="app/app-services/NavService.js"></script>
-    <script src="app/app-services/GenerateService.js"></script>
-    <script src="app/app-services/DeployService.js"></script>
-    <script src="app/app-directives/LoaderDirective.js"></script>
+    <script src="app/controllers/MainCtrl.js"></script>
+    <script src="app/controllers/LoginCtrl.js"></script>
+    <script src="app/services/ApiService.js"></script>
+    <script src="app/services/AuthService.js"></script>
 </body>
 </html>

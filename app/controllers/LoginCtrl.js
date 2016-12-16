@@ -9,6 +9,7 @@
  */
 angular.module('nanodesuApp')
     .controller('LoginCtrl', function($log, $scope, $location, AuthService){
+        $scope.isNavCollapsed = true; // for responsive navigation in index.html
 
         /**
          * @ngdoc method

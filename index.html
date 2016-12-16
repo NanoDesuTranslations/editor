@@ -30,9 +30,17 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="" ng-click="logout()">Log Out</a></li>
-                    <li><a href="/login">Sign in</a></li>
+                <ul class="nav navbar-nav navbar-right nav-pills">
+                    <li class="dropdown" uib-dropdown ng-show="isLogin()">
+                        <a class="dropdown-toggle" uib-dropdown-toggle>
+                            {{ getUsername() }} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li><a href="#" ng-disabled="true">Profile</a></li>
+                            <li><a href="" ng-click="logout()">Sign Out</a></li>
+                        </ul>
+                    </li>
+                    <li ng-hide="isLogin()"><a href="/login">Sign In</a></li>
                 </ul>
             </div>
         </div>

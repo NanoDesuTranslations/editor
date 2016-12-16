@@ -26,9 +26,40 @@ angular.module('nanodesuApp')
             AuthService.login(username, password);
         }
 
+        /**
+         * @ngdoc method
+         * @name logout
+         * @methodOf nanodesuApp.controller.LoginCtrl
+         * @description
+         * remove all credentials and redirect into login page
+         */
         $scope.logout = function() {
             AuthService.logout();
-            $location.path('/login');
+            $location.path('login');
+        }
+
+        /**
+         * @ngdoc method
+         * @name isLogin
+         * @methodOf nanodesuApp.controller.LoginCtrl
+         * @description
+         * check if the current user is already login or not
+         * @return {boolean} login or not
+         */
+        $scope.isLogin = function() {
+            return AuthService.isLogin();
+        }
+
+        /**
+         * @ngdoc method
+         * @name getUsername
+         * @methodOf nanodesuApp.controller.LoginCtrl
+         * @description
+         * get username
+         * @return {string} username
+         */
+        $scope.getUsername = function() {
+            return AuthService.getUsername();
         }
     });
 })();

@@ -10,6 +10,9 @@
 angular.module('nanodesuApp')
     .controller('LoginCtrl', function($log, $scope, $location, AuthService){
         $scope.isNavCollapsed = true; // for responsive navigation in index.html
+        $scope.isLogin = AuthService.isLogin();
+        $scope.isAdmin = AuthService.isAdmin();
+        $scope.getUsername = AuthService.getUsername();
 
         /**
          * @ngdoc method
@@ -35,31 +38,8 @@ angular.module('nanodesuApp')
          */
         $scope.logout = function() {
             AuthService.logout();
-            $location.path('login');
+            $location.path('/login');
         }
 
-        /**
-         * @ngdoc method
-         * @name isLogin
-         * @methodOf nanodesuApp.controller.LoginCtrl
-         * @description
-         * check if the current user is already login or not
-         * @return {boolean} login or not
-         */
-        $scope.isLogin = function() {
-            return AuthService.isLogin();
-        }
-
-        /**
-         * @ngdoc method
-         * @name getUsername
-         * @methodOf nanodesuApp.controller.LoginCtrl
-         * @description
-         * get username
-         * @return {string} username
-         */
-        $scope.getUsername = function() {
-            return AuthService.getUsername();
-        }
     });
 })();

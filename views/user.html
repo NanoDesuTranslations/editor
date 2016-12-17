@@ -1,0 +1,36 @@
+<h2>User Management</h2>
+<hr />
+<a href="#/users/add" class="btn btn-success">
+    <i class="fa fa-plus"></i>
+    Create New User
+</a>
+<nd-search></nd-search>
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Admin</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr dir-paginate="user in users | filter: search | itemsPerPage: 10">
+            <td>{{ $index+1 }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.perms.admin == true ? 'Yes' : 'No' }}</td>
+            <td>
+                <a ng-href="#/users/edit/{{ user.username }}" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                </a>
+                <button type="button" class="btn btn-danger" ng-click="delete()">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>

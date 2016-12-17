@@ -20,7 +20,6 @@
 angular.module('nanodesuApp')
     .service('AuthService', function($log, $location, ApiService){
         var uri = '/user/login';
-        ApiService.setUrl(uri);
 
         /**
          * @ngdoc method
@@ -36,6 +35,8 @@ angular.module('nanodesuApp')
          */
         this.login = function(username, password){
             $log.debug('AuthService: login function');
+            // TODO: always put setUrl before, to avoid using old url from another Ctrl or Service
+            ApiService.setUrl(uri);
             
             var data = {
                 'username': username,
@@ -171,8 +172,10 @@ angular.module('nanodesuApp')
             $log.debug('AuthService: isAdmin function');
             var isAdmin = '';
             if(localStorage.getItem('isAdmin') != null){
-                isAdmin = localStorage.getItem('isAdmin');
+                // JSON.parse is use to convert from String into boolean http://stackoverflow.com/a/21285901/5852226 
+                isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
             }
+            $log.debug(isAdmin);
             return isAdmin;
         }
 

@@ -16,6 +16,7 @@ angular.module('nanodesuApp')
 
         ApiService.setUrl = setUrl;
         ApiService.http = http;
+        ApiService.httpCustom = httpCustom;
 
         return ApiService;
 
@@ -90,5 +91,48 @@ angular.module('nanodesuApp')
             });
         }
 
+        /**
+         * @ngdoc method
+         * @name httpCustom
+         * @methodOf nanodesuApp.service:ApiService
+         * @description 
+         * create object from $resource with uri parameter
+         *
+         * @param {string} custom uri
+         * @return {Object} $resource Object
+         */
+        function httpCustom(uri) {
+            $log.debug('ApiService:http start');
+            return $resource(uri, null, {
+                query: {
+                    headers: {
+                        'Authorization': authentication
+                    }
+                },
+                get: {
+                    headers: {
+                        'Authorization': authentication
+                    }
+                },
+                save: {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': authentication
+                    }
+                },
+                update: {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': authentication
+                    }
+                },
+                delete: {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': authentication
+                    }
+                }
+            });
+        }
     });
 })();

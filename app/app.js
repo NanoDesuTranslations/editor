@@ -59,7 +59,7 @@ angular
                 templateUrl: 'views/project_form.html',
                 controller: 'ProjectAddCtrl'
             })
-            .when('/project/edit/:id', {
+            .when('/projects/edit/:id', {
                 templateUrl: 'views/project_form.html',
                 controller: 'ProjectAddCtrl'
             })

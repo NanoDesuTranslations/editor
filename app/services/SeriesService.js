@@ -42,6 +42,34 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
+         * @name update
+         * @methodOf nanodesuApp.service:SeriesService
+         * @description
+         * perform update for series
+         *
+         * @param {string} id
+         * @param {Object} series
+         */
+        this.update = function(id, series){
+            $log.debug('SeriesService: save function');
+            $log.debug(series);
+            ApiService.setUrl(uri);
+
+            ApiService.http().update(
+                {'id': id}, series,
+                function(success){
+                    $log.debug(success);
+                    alertify.success('Success! Project has been updated');
+                },
+                function(error){
+                    $log.debug(error);
+                    alertify.error('Error! Please Contact Admin');
+                }
+            );
+        }
+
+        /**
+         * @ngdoc method
          * @name delete
          * @methodOf nanodesuApp.service:SeriesService
          * @description

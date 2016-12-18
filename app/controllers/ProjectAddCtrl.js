@@ -9,9 +9,9 @@
  */
 angular.module('nanodesuApp')
     .controller('ProjectAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, SeriesService){
-        var uri = '/seris';
+        var uri = '/series';
         var seriesId = $routeParams.id;
-        $scope.series = getSeries();
+        $scope.series = getSeries(seriesId);
         $scope.level = []; // used in dynamic field for hierarchy
 
         $log.debug('is id exist: '+$routeParams.id);
@@ -22,19 +22,19 @@ angular.module('nanodesuApp')
          * @methodOf nanodesuApp.controller.ProjectAddCtrl
          * @description
          * add new input field for hierarchy
-         */ 
+         */
         $scope.addLevel = function(){
             $log.debug('ProjectAddCtrl: addLevel function');
             $scope.level.push({id: $scope.level.length });
         };
-    
+
         /**
          * @ngdoc method
          * @name removeLevel
          * @methodOf nanodesuApp.controller.ProjectAddCtrl
          * @description
          * remove specific input field in hierarchy
-         */ 
+         */
         $scope.removeLevel = function(id){
             if(id < 0 || id > $scope.level.length){
                 return;
@@ -47,7 +47,8 @@ angular.module('nanodesuApp')
             $log.debug('ProjectAddCtrl: submit function');
             $log.debug(reformatData($scope.series));
             var series = reformatData($scope.series);
-            if(seriesId != null) {
+            if(!seriesId || seriesId != null){
+                SeriesService.update(seriesId, series);
             } else {
                 SeriesService.save(series);
             }
@@ -59,14 +60,32 @@ angular.module('nanodesuApp')
          * @methodOf nanodesuApp.controller.ProjectAddCtrl
          * @description
          * create series object depend it's new or existing
-         * 
+         *
          * @param {string} seriesId
          * @return {Object} series
          */
-        function getSeries(seriesId){
+        function getSeries(id){
+            $log.debug('ProjectAddCtrl: getSeries function');
+            $log.debug(id);
             var series = {};
-            if(seriesId != null){
+            if(!id || id != null){
+                $log.debug('id exist');
+                ApiService.setUrl(uri);
+
+                // since using callback I decide to put the value into scope directly
+                ApiService.http().get(
+                    {'id': id},
+                    function(success){
+                        $log.debug(success);
+                        $scope.series = reverseData(success);
+                    },
+                    function(error){
+                        $log.debug(error);
+                        alertify.error('Error! Please Contact Admin');
+                    }
+                );
             } else {
+                $log.debug('id not exist');
                 series = {
                     'name': null,
                     'config': {
@@ -78,6 +97,8 @@ angular.module('nanodesuApp')
                     }
                 };
             }
+            $log.debug('series object from getSeries()');
+            $log.debug(series);
             return series;
         }
 
@@ -89,7 +110,7 @@ angular.module('nanodesuApp')
          * private function to convert hierarchy from ng-model
          *
          * @return {Array} hierarchy
-         */ 
+         */
         function addHierarchy(){
             var hierarchy = [];
             for(var i=0; i < $scope.level.length; i++){
@@ -100,6 +121,21 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
+         * @name reverseHierarchy
+         * @methodOf nanodesuApp.controller.ProjectAddCtrl
+         * @description
+         * private function to convert hierarchy from api into ng-model
+         * 
+         * @param {Array} hierarchy from API
+         * @return {Array} hierarchy
+         */
+        function reverseHierarchy(param){
+            for(var i=0; i<param.length; i++){
+                $scope.level.push({id: i, name: param[i]});
+            }
+        }
+        /**
+         * @ngdoc method
          * @name reformatData
          * @methodOf nanodesuApp.controller.ProjectAddCtrl
          * @description
@@ -108,7 +144,7 @@ angular.module('nanodesuApp')
          *
          * @param {Object} $scope.series
          * @return {Object} series
-         */ 
+         */
         function reformatData(series){
             var series = series;
             series.config['header-url'] = $scope.headerUrl;
@@ -117,6 +153,34 @@ angular.module('nanodesuApp')
             return series;
         }
 
+        /**
+         * @ngdoc method
+         * @name reverseData
+         * @methodOf nanodesuApp.controller.ProjectAddCtrl
+         * @description
+         * private method to reverse data from endpoint into scope
+         * to shown in html
+         *
+         * @param {Object} object from api
+         * @return {Object} series
+         */
+        function reverseData(series){
+            $log.debug('ProjectAddCtrl: reverseData function');
+            var status = series.config.status;
+            var temp = {};
+            temp.config = {};
+            temp.name = series.name;
+            temp.config.created = series.config.created;
+            temp.config.updated = series.config.updated;
+            temp.config.status = status.toString(); 
+            temp.config.deleted = series.config.deleted;
+
+            $scope.headerUrl = series.config['header-url'];
+            reverseHierarchy(series.config.hierarchy);
+
+            $log.debug(temp);
+            return temp;
+        }
     });
 })();
- 
+

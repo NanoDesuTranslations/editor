@@ -1,0 +1,47 @@
+<h2>Project Management</h2>
+<hr />
+<a href="#/projects/add" class="btn btn-success">
+    <i class="fa fa-plus"></i>
+    Create New Project
+</a>
+<nd-search></nd-search>
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Project Name</th>
+            <th>Status</th>
+            <th>Deleted</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr dir-paginate="project in projects | filter: search | itemsPerPage: 10">
+            <td>{{ $index+1 }}</td>
+            <td>{{ project.name }}</td>
+            <td>
+                <span ng-if="project.config.status === 0">Hidden</span>
+                <span ng-if="project.config.status === 5">Draft</span>
+                <span ng-if="project.config.status === 9">Published</span>
+            </td>
+            <td>{{ project.config.deleted }}</td>
+            <td>{{ project.config.created * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td><span ng-if="project.config.updated !== 0">{{ project.config.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</span></td>
+            <td>
+                <a ng-href="#/projects/edit/{{ project.id }}" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                </a>
+                <button type="button" class="btn btn-danger" ng-click="delete(project.id)">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+ 

@@ -1,0 +1,57 @@
+<nd-title title="Project Management Form" url="#/projects"></nd-title>
+<hr />
+<div class="controls">
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="form-group">
+            <label for="title" class="control-label col-sm-2">Title</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" ng-model="series.name" id="title" name="title" placeholder="title..." />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="headerUrl" class="control-label col-sm-2">Header Image</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" ng-model="headerUrl" id="headerUrl" name="headerUrl" placeholder="header image url..." />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="status" class="control-label col-sm-2">Status</label>
+            <div class="col-sm-8">
+                <select class="form-control" ng-model="series.config.status">
+                    <option disabled>--Please Select--</option>
+                    <option value="0">Hidden</option>
+                    <option value="5">Draft</option>
+                    <option value="9">Published</option>
+                </select>
+            </div>
+        </div>
+        <!-- Dynamic fields from http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/ --> 
+        <div class="form-group">
+            <h4 class="control-label col-sm-2">Hierarchy:</h4>
+        </div>
+        <div class="form-group" data-ng-repeat="l in level">
+            <label class="control-label col-sm-2" for="level {{ $index }}">Level {{ $index }}</label>
+            <div class="col-sm-3">
+                <div class="entry input-group" id="hierarchy">
+                    <input type="text" ng-model="l.name" class="form-control" id="level{{ $index }}" name="level{{ $index }}" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" aria-label="Remove" ng-click="removeLevel($index)">
+                            <span class="glyphicon glyphicon-remove text-danger"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 col-sm-offset-2">
+                <button type="button" class="btn btn-default" ng-click="addLevel()">
+                    <span class="glyphicon glyphicon-plus text-primary"></span>
+                    &nbsp; Add Hierarchy Level
+                </button>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+</div>

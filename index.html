@@ -31,7 +31,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
                 <ul class="nav navbar-nav" ng-show="isAdmin">
-                    <li><a href="#/users">User</a></li>
+                    <li><a href="#/users">Users</a></li>
+                    <li><a href="#/projects">Projects</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right nav-pills">
                     <li class="dropdown" uib-dropdown ng-show="isLogin">
@@ -78,8 +79,12 @@
     <script src="app/controllers/LoginCtrl.js"></script>
     <script src="app/controllers/UserCtrl.js"></script>
     <script src="app/controllers/UserAddCtrl.js"></script>
+    <script src="app/controllers/ProjectCtrl.js"></script>
+    <script src="app/controllers/ProjectAddCtrl.js"></script>
     <script src="app/services/ApiService.js"></script>
     <script src="app/services/AuthService.js"></script>
+    <script src="app/services/SeriesService.js"></script>
+    <script src="app/services/PageService.js"></script>
     <script src="app/directives/SearchDirective.js"></script>
     <script src="app/directives/FormTitleDirective.js"></script>
 </body>

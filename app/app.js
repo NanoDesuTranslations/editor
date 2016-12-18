@@ -51,6 +51,18 @@ angular
                 templateUrl: 'views/user_form.html',
                 controller: 'UserAddCtrl'
             })
+            .when('/projects', {
+                templateUrl: 'views/project.html',
+                controller: 'ProjectCtrl'
+            })
+            .when('/projects/add', {
+                templateUrl: 'views/project_form.html',
+                controller: 'ProjectAddCtrl'
+            })
+            .when('/project/edit/:id', {
+                templateUrl: 'views/project_form.html',
+                controller: 'ProjectAddCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

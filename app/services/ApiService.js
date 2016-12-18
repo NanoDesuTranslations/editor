@@ -63,7 +63,8 @@ angular.module('nanodesuApp')
                 query: {
                     headers: {
                         'Authorization': authentication
-                    }
+                    },
+                    isArray: true
                 },
                 get: {
                     headers: {
@@ -107,7 +108,8 @@ angular.module('nanodesuApp')
                 query: {
                     headers: {
                         'Authorization': authentication
-                    }
+                    },
+                    isArray: true
                 },
                 get: {
                     headers: {

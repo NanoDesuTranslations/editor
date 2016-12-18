@@ -12,7 +12,7 @@ angular.module('nanodesuApp')
         var uri = '/admin/users';
         ApiService.setUrl(uri);
 
-        ApiService.http().query(
+        ApiService.http().get(
             function(success){
                 $log.debug('Success Retrieve Users Data');
                 $scope.users = success.users;
@@ -26,7 +26,7 @@ angular.module('nanodesuApp')
 
         $scope.delete = function(userId) {
             alertify.confirm('Are You Sure?', function(){
-                $log.debug('Yes BUtton was choosen');
+                $log.debug('Yes Button was choosen');
                 ApiService.setUrl(uri);
 
                 ApiService.http().delete(

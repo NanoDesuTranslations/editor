@@ -2,22 +2,72 @@
 <hr />
 <div class="controls">
     <form role="form" ng-submit="submit()">
-        <input type="text" id="userId" name="userId" ng-hide="true">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" ng-model="user.username" id="username" name="username" placeholder="username..." />
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" ng-model="user.password" id="password" name="password" placeholder="password..." />
-        </div>
-        <div class="form-group">
-            <label for="admin">As Admin</label>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="user.permissions.admin" ng-true-value="true" ng-false-value="false" />
-                    Yes
-                </label>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="pane panel-danger">
+                    <div class="panel-heading">
+                        User Information
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" ng-model="user.username" id="username" name="username" placeholder="username..." />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div ng-show="passwd">
+                                <input type="password" class="form-control" ng-model="user.password" id="password" name="password" placeholder="password..." />
+                            </div>
+                            <div ng-hide="passwd">
+                                <button type="button" ng-click="pass(true)" class="btn btn-danger">
+                                    Change Password
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin">As Admin</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="user.permissions.admin" ng-true-value="true" ng-false-value="false" />
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        List of Permissions
+                    </div>
+                    <div class="panel-body">
+                        <nd-search></nd-search>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Project Name</th>
+                                    <th>Views</th>
+                                    <th>Edits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="s in series | filter: search | itemsPerPage: 4">
+                                    <td>{{ $index + 1}}</td>
+                                    <td>{{ s.name }}</td>
+                                    <td>
+                                        <input type="checkbox" name="view[]" ng-model="view[s.id]" />
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="edit[]" ng-model="edit[s.id]" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">

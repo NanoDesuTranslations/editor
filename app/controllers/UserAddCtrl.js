@@ -11,42 +11,45 @@ angular.module('nanodesuApp')
     .controller('UserAddCtrl', function($log, $scope, $routeParams, alertify, ApiService){
         var uri = '/admin/users';
         var username = $routeParams.username;
-
+        $scope.passwd = true; // model to hide password field when edit user
         $scope.user = getUser(username);
-        $log.debug('user object: '+$scope.user);
+        // hold permission view and edit
+        $scope.view = {};
+        $scope.edit = {};
+
+        ApiService.setUrl('/series');
+        ApiService.http().query(
+            function(success){
+                $log.debug('retrieve series data');
+                $log.debug(success);
+                $scope.series = success;
+            }
+        );
+
+        /**
+         * @ngdoc method
+         * @name pass
+         * @methodOf nanodesuApp.controller.MainCtrl
+         * @description
+         * change value for $scope.passwd
+         * 
+         * @param {boolean} true
+         */
+        $scope.pass = function(param){
+            $scope.passwd = param;
+        }
 
         $scope.submit = function() {
             $log.debug('UserAddCtrl: submit function');
             $log.debug($scope.user);
             ApiService.setUrl(uri);
-            var data = $scope.user;
-            ApiService.http().save(
-                data,
-                function(success){
-                    $log.debug(success);
-                    alertify.success('Success! Save User Data');
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
-                }
-            );
-        }
-
-        function getUser(username) {
-            var user = {};
-            if(username != null){
-                $log.debug('username: '+username);
-                ApiService.httpCustom('/admin/users/:username').get(
-                    {'username': username},
+            var data = reformatData($scope.user);
+            if(!username || username != null){
+                ApiService.http().update(
+                    data,
                     function(success){
                         $log.debug(success);
-                        var param = success.users;
-                        $log.debug(param.permissions);
-                        user.username = param.username;
-                        user.permissions.admin = param.perms.admin;
-                        user.permissions.view = param.perms.view;
-                        user.permissions.edit = param.perms.edit;
+                        alertify.success('Success! Update User Data');
                     },
                     function(error){
                         $log.debug(error);
@@ -54,7 +57,52 @@ angular.module('nanodesuApp')
                     }
                 );
             } else {
-                $log.debug('username: '+username);
+                ApiService.http().save(
+                    data,
+                    function(success){
+                        $log.debug(success);
+                        alertify.success('Success! Save User Data');
+                    },
+                    function(error){
+                        $log.debug(error);
+                        alertify.error('Error! Please Contact Admin');
+                    }
+                );
+            }
+        }
+
+        /**
+         * @ngdoc method
+         * @name getUser
+         * @methodOf nanodesuApp.controller.MainCtrl
+         * @description
+         * create new user object or retrieve from API
+         * 
+         * @param {string} username
+         * @return {Object} User
+         */
+        function getUser(userName) {
+            $log.debug('UserAddCtrl: getUser function');
+            $log.debug('username: '+userName);
+            var user = {};
+            if(!userName || userName != null){
+                $log.debug('username exist');
+                ApiService.setUrl(uri);
+                ApiService.http().get(
+                    function(success){
+                        // convert from api into ng-model
+                        var temp = findUser(success.users);
+                        $scope.user = reverseData(temp);
+                        // hide password field
+                        $scope.passwd = false;
+                    },
+                    function(error){
+                        $log.debug(error);
+                        alertify.error('Error! Please Contact Admin');
+                    }
+                );
+            } else {
+                $log.debug('username not exist');
                 user = {
                     'username': '',
                     'password': '',
@@ -67,6 +115,122 @@ angular.module('nanodesuApp')
             }
             return user;
         }
+
+        /**
+         * @ngdoc method
+         * @name findUser
+         * @methodOf nanodesuApp.controller.MainCtrl
+         * @description
+         * private function to distinct user in user list by username
+         * use for edit user
+         * 
+         * @param {array} list of users
+         * @return {array} single users
+         */
+        function findUser(data){
+            $log.debug('UserAddCtrl: findUser function');
+            $log.debug(data);
+            var result = []
+            angular.forEach(
+                data,
+                function(param){
+                    $log.debug('param: '+ param.username);
+                    $log.debug('username: '+ username);
+                    if(param.username === username){
+                        this.push(param);
+                    }
+                },
+                result
+            );
+            $log.debug(result);
+            return result;
+        }
+
+        /**
+         * @ngdoc method
+         * @name reformatData
+         * @methodOf nanodesuApp.controller.MainCtrl
+         * @description
+         * private function in use to convert object view and edit
+         * into array in order save permissions
+         *
+         * @param {Object} seriesId: true
+         * @return {Object} users
+         */
+        function reformatData(data){
+            $log.debug('UserAddCtrl: reformatData function');
+            $log.debug($scope.view[0]);
+            $log.debug($scope.edit);
+            var result = data;
+            var tempView = [];
+            var tempEdit = [];
+            // view permissions
+            angular.forEach(
+                $scope.view, 
+                function(value, key){
+                    this.push(key);
+                }, 
+                tempView);
+            // edit permissions
+            angular.forEach(
+                $scope.edit, 
+                function(value, key){
+                    this.push(key);
+                }, 
+                tempEdit);
+
+            result.permissions.view = tempView;
+            result.permissions.edit = tempEdit;
+
+            return result;
+        }
+
+        /**
+         * @ngdoc method
+         * @name reverseData
+         * @methodOf nanodesuApp.controller.MainCtrl
+         * @description
+         * convert data from API into ng-model for html
+         * 
+         * @param {array} single array
+         * @return {object} ng-model for users
+         */
+        function reverseData(param){
+            $log.debug('UserAddCtrl: reverseData function');
+            $log.debug(param[0].perms);
+            var result = {};
+            result.permissions = {};
+
+            result.username = param[0].username;
+            result.permissions.admin = param[0].perms.admin;
+            $scope.view = arrayToObject(param[0].perms.view);
+            $scope.edit = arrayToObject(param[0].perms.edit);
+
+            return result;
+        }
+
+        /**
+         * @ngdoc method
+         * @name arrayToObject
+         * @methodOf nanodesuApp.controller.MainCtrl
+         * @description
+         * private function in use to convert array view and edit
+         * into model for shown in html list permission
+         *
+         * @param {array} view/edit permissions
+         * @return {object} seriesId: true
+         */
+        function arrayToObject(param){
+            $log.debug('UserAddCtrl: arrayToObject function');
+            $log.debug(param);
+            var result = {};
+            for(var i = 0; i < param.length; i++){
+                var name = param[i];
+                result[name] = true;
+            }
+            $log.debug(result);
+            return result;
+        }
     });
 })();
- 
+

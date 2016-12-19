@@ -5,7 +5,7 @@
     <p>Please check the manual documentation for how to use this website: <a href="#">[Coming Soon]</a>
 </div>
 <div class="center-block text-center">
-    <a href="/project" class="btn btn-lg btn-success">
+    <a href="#/projects/list" class="btn btn-lg btn-success">
         Let's Get Started
     </a>
     <button type="button" ng-click="panelAction(true)" class="btn btn-lg btn-danger">
@@ -25,7 +25,7 @@
             <button type="button" class="btn btn-warning" ng-click="preview()">
                 Preview
             </button>
-            <button type="button" class="btn btn-danger" ng-click="deploy()">
+            <button type="button" class="btn btn-danger" ng-click="deploy()" ng-show="isAdmin">
                 Post
             </button>
         </div>

@@ -8,9 +8,10 @@
  * Controller for Main Page
  */
 angular.module('nanodesuApp')
-    .controller('MainCtrl', function($log, $scope, alertify, ApiService){
+    .controller('MainCtrl', function($log, $scope, alertify, ApiService, AuthService){
         var preview = '/build';
         var deploy = '/build/deploy';
+        $scope.isAdmin = AuthService.isAdmin();
         $scope.panel = false; //in purpose to hide or shown panel deploy and preview button
 
         /**

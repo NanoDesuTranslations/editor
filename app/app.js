@@ -63,6 +63,10 @@ angular
                 templateUrl: 'views/project_form.html',
                 controller: 'ProjectAddCtrl'
             })
+            .when('/projects/list', {
+                templateUrl: 'views/project_list.html',
+                controller: 'ProjectListCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

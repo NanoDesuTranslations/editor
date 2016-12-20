@@ -39,12 +39,20 @@ angular.module('nanodesuApp')
             $scope.passwd = param;
         }
 
+        /**
+         * TODO:
+         * Currently if we update the permissions we need user 
+         * to logout and then login again to recreate the localStorage.
+         * Need to find out the better solutions
+         */
         $scope.submit = function() {
             $log.debug('UserAddCtrl: submit function');
             $log.debug($scope.user);
             ApiService.setUrl(uri);
             var data = reformatData($scope.user);
+            $log.debug(data);
             if(!username || username != null){
+                $log.debug('update');
                 ApiService.http().update(
                     data,
                     function(success){
@@ -57,6 +65,7 @@ angular.module('nanodesuApp')
                     }
                 );
             } else {
+                $log.debug('insert');
                 ApiService.http().save(
                     data,
                     function(success){
@@ -159,7 +168,7 @@ angular.module('nanodesuApp')
          */
         function reformatData(data){
             $log.debug('UserAddCtrl: reformatData function');
-            $log.debug($scope.view[0]);
+            $log.debug($scope.view);
             $log.debug($scope.edit);
             var result = data;
             var tempView = [];
@@ -168,14 +177,18 @@ angular.module('nanodesuApp')
             angular.forEach(
                 $scope.view, 
                 function(value, key){
-                    this.push(key);
+                    if(value === true){
+                        this.push(key);
+                    }
                 }, 
                 tempView);
             // edit permissions
             angular.forEach(
                 $scope.edit, 
                 function(value, key){
-                    this.push(key);
+                    if(value === true){
+                        this.push(key);
+                    }
                 }, 
                 tempEdit);
 

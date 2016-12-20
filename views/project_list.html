@@ -1,3 +1,31 @@
 <nd-title title="Project List" url="#/"></nd-title>
 <hr />
- 
+<nd-search></nd-search>
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr dir-paginate="srs in series | filter:search | itemsPerPage: 10">
+            <td>{{ $index + 1}}</td>
+            <td>{{ srs.name }}</td>
+            <td>
+                <span ng-if="srs.status === 0">Hidden</span>
+                <span ng-if="srs.status === 5">Draft</span>
+                <span ng-if="srs.status === 9">Published</span>
+            </td>
+            <td>{{ srs.created * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td><span ng-if="srs.updated !== 0">{{ srs.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</span></td>
+            <td>Translations | Blog</td>
+        </tr>
+    </tbody>
+</table>
+<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>

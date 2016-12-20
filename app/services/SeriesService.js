@@ -38,7 +38,7 @@ angular.module('nanodesuApp')
                     alertify.error('Error! Please Contact Admin');
                 }
             );
-        }
+        };
 
         /**
          * @ngdoc method
@@ -66,7 +66,7 @@ angular.module('nanodesuApp')
                     alertify.error('Error! Please Contact Admin');
                 }
             );
-        }
+        };
 
         /**
          * @ngdoc method
@@ -106,6 +106,6 @@ angular.module('nanodesuApp')
                     alertify.error('Error! Please Contact Admin');
                 }
             );
-        }
+        };
     });
 })();

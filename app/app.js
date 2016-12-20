@@ -73,7 +73,7 @@ angular
     })
     .run(function($rootScope, $location, AuthService){
         $rootScope.$on('$routeChangeStart', function(event, next, current){
-            if(AuthService.isLogin() == false) {
+            if(AuthService.isLogin() === false) {
                 $location.path('/login');
             }
         });

@@ -37,7 +37,7 @@ angular.module('nanodesuApp')
          */
         $scope.pass = function(param){
             $scope.passwd = param;
-        }
+        };
 
         /**
          * TODO:
@@ -51,7 +51,7 @@ angular.module('nanodesuApp')
             ApiService.setUrl(uri);
             var data = reformatData($scope.user);
             $log.debug(data);
-            if(!username || username != null){
+            if(!username || username !== null){
                 $log.debug('update');
                 ApiService.http().update(
                     data,
@@ -78,7 +78,7 @@ angular.module('nanodesuApp')
                     }
                 );
             }
-        }
+        };
 
         /**
          * @ngdoc method
@@ -94,7 +94,7 @@ angular.module('nanodesuApp')
             $log.debug('UserAddCtrl: getUser function');
             $log.debug('username: '+userName);
             var user = {};
-            if(!userName || userName != null){
+            if(!userName || userName !== null){
                 $log.debug('username exist');
                 ApiService.setUrl(uri);
                 ApiService.http().get(
@@ -139,7 +139,7 @@ angular.module('nanodesuApp')
         function findUser(data){
             $log.debug('UserAddCtrl: findUser function');
             $log.debug(data);
-            var result = []
+            var result = [];
             angular.forEach(
                 data,
                 function(param){

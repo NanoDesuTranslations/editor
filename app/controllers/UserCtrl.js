@@ -43,6 +43,6 @@ angular.module('nanodesuApp')
             }, function(){
                 $log.debug('Cancel Button was choosen');
             });
-        }
+        };
     });
 })();

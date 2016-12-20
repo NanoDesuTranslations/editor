@@ -27,7 +27,7 @@ angular.module('nanodesuApp')
             var password = $scope.password;
             $log.debug(username+' '+password);
             AuthService.login(username, password);
-        }
+        };
 
         /**
          * @ngdoc method
@@ -39,7 +39,7 @@ angular.module('nanodesuApp')
         $scope.logout = function() {
             AuthService.logout();
             $location.path('/login');
-        }
+        };
 
     });
 })();

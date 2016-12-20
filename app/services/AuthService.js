@@ -57,7 +57,7 @@ angular.module('nanodesuApp')
                     $log.debug(error);
                 }
             );
-        }
+        };
 
         /**
          * @ngdoc method
@@ -70,9 +70,9 @@ angular.module('nanodesuApp')
          * @return {boolean} true
          */
         this.logout = function() {
-            $log.debug('AuthService: logout function')
+            $log.debug('AuthService: logout function');
             removeCredentials();
-        }
+        };
 
         /**
          * @ngdoc method
@@ -99,11 +99,11 @@ angular.module('nanodesuApp')
         this.getUsername = function() {
             $log.debug('AuthService: getUsername function');
             var username = '';
-            if(localStorage.getItem('username') != null){
+            if(localStorage.getItem('username') !== null){
                 username = localStorage.getItem('username');
             }
             return username;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -117,11 +117,11 @@ angular.module('nanodesuApp')
         this.getToken = function() {
             $log.debug('AuthService: getToken function');
             var token = '';
-            if(localStorage.getItem('token') != null){
+            if(localStorage.getItem('token') !== null){
                 token = localStorage.getItem('token');
             }
             return token;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -135,11 +135,11 @@ angular.module('nanodesuApp')
         this.getView = function() {
             $log.debug('AuthService: getView function');
             var view = [];
-            if(localStorage.getItem('view') != null){
+            if(localStorage.getItem('view') !== null){
                 view = localStorage.getItem('view');
             }
             return view;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -153,11 +153,11 @@ angular.module('nanodesuApp')
         this.getEdit = function() {
             $log.debug('AuthService: getEdit function');
             var edit = [];
-            if(localStorage.getItem('edit') != null){
+            if(localStorage.getItem('edit') !== null){
                 edit = localStorage.getItem('edit');
             }
             return edit;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -171,13 +171,13 @@ angular.module('nanodesuApp')
         this.isAdmin = function() {
             $log.debug('AuthService: isAdmin function');
             var isAdmin = '';
-            if(localStorage.getItem('isAdmin') != null){
+            if(localStorage.getItem('isAdmin') !== null){
                 // JSON.parse is use to convert from String into boolean http://stackoverflow.com/a/21285901/5852226 
                 isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
             }
             $log.debug(isAdmin);
             return isAdmin;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -197,7 +197,7 @@ angular.module('nanodesuApp')
                 status = false;
             }
             return status;
-        }
+        };
 
         /**
          * @ngdoc method

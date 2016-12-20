@@ -28,7 +28,7 @@ angular.module('nanodesuApp')
             $log.debug('PageService: initProjectList function');
             var result = seriesInit(param.series);
             return result;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -49,7 +49,7 @@ angular.module('nanodesuApp')
                 data,
                 function(param){
                     $log.debug('param: '+param.id+' name: '+param.name);
-                    $log.debug('for: '+param.name+'status: '+inArray(getViewPermissions(),param.id))
+                    $log.debug('for: '+param.name+'status: '+inArray(getViewPermissions(),param.id));
                     if(inArray(getViewPermissions(), param.id)){
                         var series = {};
                         series.name = param.name;

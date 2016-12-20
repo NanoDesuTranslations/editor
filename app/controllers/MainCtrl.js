@@ -25,7 +25,7 @@ angular.module('nanodesuApp')
          */
         $scope.panelAction = function(param){
             $scope.panel = param;
-        }
+        };
 
         $scope.preview = function(){
             ApiService.setUrl(preview);
@@ -39,7 +39,7 @@ angular.module('nanodesuApp')
                     alertify.error('Error! Please Contact Admin');
                 }
             );
-        }
+        };
 
         $scope.deploy = function(){
             ApiService.setUrl(deploy);
@@ -53,6 +53,6 @@ angular.module('nanodesuApp')
                     alertify.error('Error! Please Contact Admin');
                 }
             );
-        }
+        };
     });
 })();

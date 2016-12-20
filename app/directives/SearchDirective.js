@@ -13,6 +13,6 @@ angular.module('nanodesuApp')
             restrict: 'E',
             replace: true,
             templateUrl: 'views/templates/search.html'
-        }
+        };
     });
 })();

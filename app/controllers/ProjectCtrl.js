@@ -35,7 +35,7 @@ angular.module('nanodesuApp')
                     $log.debug('Cancel Button was choosen');
                 }
             );
-        }
+        };
     });
 })();
  

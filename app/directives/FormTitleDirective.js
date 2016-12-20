@@ -17,7 +17,7 @@ angular.module('nanodesuApp')
                 backUrl: '@url'
             },
             templateUrl: 'views/templates/form_title.html'
-        }
+        };
     });
 })();
  

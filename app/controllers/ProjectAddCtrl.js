@@ -47,12 +47,12 @@ angular.module('nanodesuApp')
             $log.debug('ProjectAddCtrl: submit function');
             $log.debug(reformatData($scope.series));
             var series = reformatData($scope.series);
-            if(!seriesId || seriesId != null){
+            if(!seriesId || seriesId !== null){
                 SeriesService.update(seriesId, series);
             } else {
                 SeriesService.save(series);
             }
-        }
+        };
 
         /**
          * @ngdoc method
@@ -68,7 +68,7 @@ angular.module('nanodesuApp')
             $log.debug('ProjectAddCtrl: getSeries function');
             $log.debug(id);
             var series = {};
-            if(!id || id != null){
+            if(!id || id !== null){
                 $log.debug('id exist');
                 ApiService.setUrl(uri);
 
@@ -146,11 +146,11 @@ angular.module('nanodesuApp')
          * @return {Object} series
          */
         function reformatData(series){
-            var series = series;
-            series.config['header-url'] = $scope.headerUrl;
-            series.config.hierarchy = addHierarchy();
-            series.config.status = $nd.string2Int0(series.config.status);
-            return series;
+            var data = series;
+            data.config['header-url'] = $scope.headerUrl;
+            data.config.hierarchy = addHierarchy();
+            data.config.status = $nd.string2Int0(data.config.status);
+            return data;
         }
 
         /**

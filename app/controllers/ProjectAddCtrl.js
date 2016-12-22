@@ -47,7 +47,7 @@ angular.module('nanodesuApp')
             $log.debug('ProjectAddCtrl: submit function');
             $log.debug(reformatData($scope.series));
             var series = reformatData($scope.series);
-            if(!seriesId || seriesId !== null){
+            if(seriesId){
                 SeriesService.update(seriesId, series);
             } else {
                 SeriesService.save(series);
@@ -68,7 +68,7 @@ angular.module('nanodesuApp')
             $log.debug('ProjectAddCtrl: getSeries function');
             $log.debug(id);
             var series = {};
-            if(!id || id !== null){
+            if(id){
                 $log.debug('id exist');
                 ApiService.setUrl(uri);
 
@@ -171,7 +171,7 @@ angular.module('nanodesuApp')
             temp.config = {};
             temp.name = series.name;
             temp.config.created = series.config.created;
-            temp.config.updated = series.config.updated;
+            temp.config.updated = $nd.createEpochTime();
             temp.config.status = status.toString(); 
             temp.config.deleted = series.config.deleted;
 

@@ -18,8 +18,8 @@ angular.module('nanodesuApp')
                 $scope.series = PageService.init(success);
             },
             function(error){
-                $log.debug('Error Login');
                 $log.debug(error);
+                alertify.error('Error! Please Contact Admin');
             }
         );
     });

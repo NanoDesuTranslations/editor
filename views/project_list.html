@@ -24,7 +24,16 @@
             </td>
             <td>{{ srs.created * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
             <td><span ng-if="srs.updated !== 0">{{ srs.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</span></td>
-            <td>Translations | Blog</td>
+            <td>
+                <a ng-href="#/translations/{{ srs.id }}" class="btn btn-success">
+                    <i class="fa fa-folder-open"></i>
+                    Translations
+                </a>
+                <a ng-href="#/blog" class="btn btn-info">
+                    <i class="fa fa-book"></i>
+                    Blog Post
+                </a>
+            </td>
         </tr>
     </tbody>
 </table>

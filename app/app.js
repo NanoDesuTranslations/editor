@@ -67,6 +67,10 @@ angular
                 templateUrl: 'views/project_list.html',
                 controller: 'ProjectListCtrl'
             })
+            .when('/translations/:id', {
+                templateUrl: 'views/translation.html',
+                controller: 'TranslationCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

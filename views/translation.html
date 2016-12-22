@@ -1,0 +1,51 @@
+<nd-title title="Translations List of {{ series.name }}" url="#/projects/list"></nd-title>
+<hr />
+<a ng-show="isGranted" href="#/translationss/{{ series.id }}/add" class="btn btn-success">
+    <i class="fa fa-plus"></i>
+    Create New Translations
+</a>
+<nd-search></nd-search>
+<br />
+<table class="table tables-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Hierarchy</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th ng-show="isGranted">Action</th>
+        </tr>
+    </thead>
+    <tbody> 
+        <tr dir-paginate="page in pages | filter: search | itemsPerPage: 10">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ page.meta.title }}</td>
+            <td>
+                <span ng-if="page.meta.status === 0">Hidden</span>
+                <span ng-if="page.meta.status === 5">Draft</span>
+                <span ng-if="page.meta.status === 9">Published</span>
+            </td>
+            <td>
+                <span ng-repeat="h in page.hierarchy">
+                    <b ng-if="page.meta[h] !== null">{{ h }}:</b>
+                    <span ng-if="page.meta[h] === null">&nbsp;&nbsp;</span>
+                    <span ng-if="page.meta[h] !== null">|&nbsp;{{ page.meta[h] }}&nbsp;|</span>
+                </span>
+            </td>
+            <td>{{ page.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td><span ng-if="page.updated !== 0">{{ page.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</span></td>
+            <td ng-show="page.isGranted">
+                <a ng-href="#/translations/{{ page.series }}/edit/{{ page.id }}" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                </a>
+                <button type="button" class="btn btn-danger" ng-click="delete(page.id)">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</tbody>

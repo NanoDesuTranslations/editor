@@ -22,13 +22,27 @@ angular.module('nanodesuApp')
          * initial method to create list of series based on user permissions
          *
          * @param {Object} object from pages endpoint
+         * @param {string} seriesId
          * @return {array} list of object consist series id and series name
          */
-        this.init = function(param){
+        this.init = function(param, seriesId){
             $log.debug('PageService: initProjectList function');
-            var result = seriesInit(param.series);
+            if(seriesId){
+                $log.debug('Create Page List');
+                var result = pageInit(param, seriesId);
+            } else {
+                $log.debug('Create Series List');
+                var result = seriesInit(param.series);
+            }
             return result;
         };
+
+        this.getUserPermissions = function(seriesId){
+            if(inArray(getEditPermissions(), seriesId)){
+                return true;
+            }
+            return false;
+        }
 
         /**
          * @ngdoc method
@@ -42,7 +56,7 @@ angular.module('nanodesuApp')
          * user permissions and the series is not deleted
          */
         function seriesInit(param){
-            $log.debug('PageService: checkPages function');
+            $log.debug('PageService: seriesInit function');
             var data = param;
             var tempResult = [];
             angular.forEach(
@@ -66,6 +80,42 @@ angular.module('nanodesuApp')
             var result = removeDeletedSeries(tempResult);
             $log.debug(result);
             return result;
+        }
+
+        /**
+         * @ngdoc method
+         * @name pageInit
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * create list of page based on users and
+         * add new field for editable or not from
+         * edit permissions and remove deleted Page.
+         * This method just add those two field, the
+         * object is handled by controller
+         *
+         * @param {array} array object from page
+         * @param {string} seriesId
+         * @return {array} list of new object that
+         * consist of not deleted pages
+         */
+        function pageInit(param, id){
+            $log.debug('PageService: pageInit function');
+            $log.debug(param);
+            var data = param;
+            var result = [];
+            angular.forEach(
+                data,
+                function(param){
+                    param.isGranted = false;
+                    if(inArray(getEditPermissions(), param.series)){
+                        param.isGranted = true;
+                    }
+                    this.push(param);
+                },
+                result
+            );
+            $log.debug(removeDeletedPage(result));
+            return removeDeletedPage(result);
         }
 
         /**
@@ -128,6 +178,34 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
+         * @name removeDeletedPage
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * compile list of page object just consist not deleted
+         * series
+         *
+         * @param {array} list of page object
+         * @return {array} list of page object that not deleted
+         */
+        function removeDeletedPage(page){
+            $log.debug('PageService: removeDeletedSeries function');
+            var data = page;
+            var result = [];
+            angular.forEach(
+                data,
+                function(param){
+                    if(!param.deleted){
+                        this.push(param);
+                    }
+                },
+                result
+            );
+            $log.debug(result);
+            return result;
+        }
+
+        /**
+         * @ngdoc method
          * @name inArray
          * @methodOf nanodesuApp.service:PageService
          * @description
@@ -147,4 +225,4 @@ angular.module('nanodesuApp')
             return false;
         }
     });
-})(); 
+})();

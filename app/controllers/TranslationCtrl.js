@@ -16,7 +16,7 @@ angular.module('nanodesuApp')
             function(success){
                 $log.debug(success);
                 var data = init(success);
-                $log.debug('TranslationCtrl init')
+                $log.debug('TranslationCtrl init');
                 $log.debug(data);
                 $scope.pages = PageService.init(data, seriesId);
                 $scope.isGranted = PageService.getUserPermissions(seriesId);
@@ -28,6 +28,21 @@ angular.module('nanodesuApp')
                 alertify.error('Error! Please Contact Admin');
             }
         );
+
+        $scope.delete = function(pageId){
+            $log.debug('TranslationCtrl: delete function');
+            $log.debug(pageId);
+            alertify.confirm(
+                'Are You Sure?',
+                function(){
+                    $log.debug('Yes Button was choosen');
+                    PageService.delete(pageId);
+                },
+                function(){
+                    $log.debug('Cancel Button was choosen');
+                }
+            );
+        };
         
         /**
          * @ngdoc method
@@ -132,7 +147,7 @@ angular.module('nanodesuApp')
         function getSeriesNameAndId(param){
             $log.debug('TranslationCtrl: getSeriesName function');
             $log.debug(param[seriesId].name);
-            var result = {}
+            var result = {};
             result.name = param[seriesId].name;
             result.id = seriesId;
             return result;

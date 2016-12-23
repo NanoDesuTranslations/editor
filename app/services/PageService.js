@@ -10,7 +10,7 @@
  *
  */
 angular.module('nanodesuApp')
-    .service('PageService', function($log, alertify, ApiService, AuthService){
+    .service('PageService', function($log, $window, alertify, ApiService, AuthService){
         var uriPage = '/pages';
         var uriSeries = '/series';
 
@@ -27,22 +27,78 @@ angular.module('nanodesuApp')
          */
         this.init = function(param, seriesId){
             $log.debug('PageService: initProjectList function');
+            var result = '';
             if(seriesId){
                 $log.debug('Create Page List');
-                var result = pageInit(param, seriesId);
+                result = pageInit(param, seriesId);
             } else {
                 $log.debug('Create Series List');
-                var result = seriesInit(param.series);
+                result = seriesInit(param.series);
             }
             return result;
         };
 
+        /**
+         * @ngdoc method
+         * @name getUserPermissions
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * Check user permission for editing the pages
+         *
+         * @param {string} seriesId
+         * @return {boolean}
+         */
         this.getUserPermissions = function(seriesId){
+            $log.debug('PageService: getUserPermissions function');
             if(inArray(getEditPermissions(), seriesId)){
                 return true;
             }
             return false;
-        }
+        };
+
+        /**
+         * @ngdoc method
+         * @name delete
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * perform soft delete for pages
+         *
+         * @param {string} pageId
+         */
+        this.delete = function(id){
+            $log.debug('PageService: delete function');
+            $log.debug(id);
+            var deleted = true;
+            ApiService.setUrl(uriPage);
+
+            ApiService.http().get(
+                {'id': id},
+                function(success){
+                    var page = success.page;
+                    $log.debug(page);
+                    page.meta.deleted = deleted;
+
+                    ApiService.http().update(
+                        {'id': id},
+                        page,
+                        function(success){
+                            $log.debug(success);
+                            alertify.success('Success! Pages with id: '+id+'already deleted');
+                            // currently we need to reload the page in order update the data
+                            $window.location.reload();
+                        },
+                        function(error){
+                            $log.debug(error);
+                            alertify.error('Error! Please Contact Admin');
+                        }
+                    );
+                },
+                function(error){
+                    $log.debug(error);
+                    alertify.error('Error! Please Contact Admin');
+                }
+            );
+        };
 
         /**
          * @ngdoc method
@@ -188,13 +244,16 @@ angular.module('nanodesuApp')
          * @return {array} list of page object that not deleted
          */
         function removeDeletedPage(page){
-            $log.debug('PageService: removeDeletedSeries function');
+            $log.debug('PageService: removeDeletedPage function');
+            $log.debug(page);
             var data = page;
             var result = [];
             angular.forEach(
                 data,
                 function(param){
-                    if(!param.deleted){
+                    $log.debug(param);
+                    $log.debug(param.meta.deleted);
+                    if(!param.meta.deleted){
                         this.push(param);
                     }
                 },

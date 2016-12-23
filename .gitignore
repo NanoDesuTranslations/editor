@@ -9,7 +9,7 @@ npm-debug.log
 # Files Downloaded with Package Managers
 bower_components
 node_modules
-dist
+public
 
 #For IDE
 *.iml

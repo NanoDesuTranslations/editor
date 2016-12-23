@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         'concat': {
             'dist': {
                 'src': ['app/**/*.js'],
-                'dest': 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
+                'dest': 'public/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
         'cssmin': {
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             'dist': {
                 'files': {
                     // minify from concatenation js
-                    'dist/<%= pkg.name %>-<%= pkg.version %>.min.js': ['dist/<%= pkg.name %>-<%= pkg.version %>.js']
+                    'public/<%= pkg.name %>-<%= pkg.version %>.min.js': ['dist/<%= pkg.name %>-<%= pkg.version %>.js']
                 }
             }
         },

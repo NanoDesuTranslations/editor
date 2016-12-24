@@ -19,8 +19,8 @@ angular
         ])
     .config(function ($routeProvider, $compileProvider, $logProvider, $locationProvider){
         // just use this on production
-        //$compileProvider.debugInfoEnabled(false);
-        //$logProvider.debugEnabled(false); // change to false in production
+        $compileProvider.debugInfoEnabled(false);
+        $logProvider.debugEnabled(false); // change to false in production
 
         //$locationProvider.html5Mode(true); need server side re-writing to avoid token invalid when refresh the page
         $routeProvider

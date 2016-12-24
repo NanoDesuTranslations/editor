@@ -13,23 +13,40 @@ module.exports = function(grunt) {
             'beforeconcat': ['app/**/*.js'],
         },
         'copy': {
-            'dist': {
+            'public': {
                 'files': [
                     // copy index.html
-                    {'expand': true, 'src': ['index.html'], 'dest': 'dist/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['index.html'], 'dest': 'public/', 'filter': 'isFile'},
                     // copy html template in views
-                    {'expand': true, 'src': ['views/*'], 'dest': 'dist/'}
+                    {'expand': true, 'src': ['views/**'], 'dest': 'public/'},
+                    {'expand': true, 'src': ['assets/js/*'], 'dest': 'public/', 'filter': 'isFile'},
+                ]
+            },
+            'libs': {
+                'files': [
+                    {'expand': true, 'src': ['bower_components/alertifyjs/dist/**'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/bootstrap/dist/**'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/jquery/dist/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/simplemde/dist/**'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/font-awesome-bower/**'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/angular/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/angular-animate/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/angular-bootstrap/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/angular-resource/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/angular-route/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/angular-touch/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/angularUtils-pagination/*.js'], 'dest': 'public/', 'filter': 'isFile'},
                 ]
             }
         },
         'concat': {
-            'dist': {
+            'project': {
                 'src': ['app/**/*.js'],
-                'dest': 'public/<%= pkg.name %>-<%= pkg.version %>.js'
+                'dest': 'public/assets/js/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
         'cssmin': {
-            'dist': {
+            'public': {
                 'files': []
             }
         },
@@ -37,12 +54,12 @@ module.exports = function(grunt) {
             'options': {
                 'mangle': false,
             },
-            'dist': {
+            'project': {
                 'files': {
                     // minify from concatenation js
-                    'public/<%= pkg.name %>-<%= pkg.version %>.min.js': ['dist/<%= pkg.name %>-<%= pkg.version %>.js']
+                    'public/assets/js/<%= pkg.name %>-<%= pkg.version %>.min.js': ['public/assets/js/<%= pkg.name %>-<%= pkg.version %>.js']
                 }
-            }
+            },
         },
         'connect': {
             'server': {
@@ -58,9 +75,9 @@ module.exports = function(grunt) {
     grunt.registerTask('build',
         [
             'jshint',
+            'copy',
             'concat',
             'uglify',
             //'connect',
-            'copy'
         ]);
 };

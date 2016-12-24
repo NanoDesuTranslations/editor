@@ -118,7 +118,8 @@ angular.module('nanodesuApp')
         function reformatData(param){
             $log.debug('BlogAddCtrl: reformatData function');
             var data = param;
-            data.meta.blog.published_date = $nd.createEpochTime(data.meta.blog.published_date);
+            $log.debug(data.meta.blog.published_date);
+            data.meta.blog.published_date = $nd.convertToEpochTime(data.meta.blog.published_date);
             data.content = simpleMde.value();
             data.meta.status = $nd.string2Int0(data.meta.status);
             return data;

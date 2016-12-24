@@ -58,6 +58,56 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
+         * @name save
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * perform save for page
+         *
+         * @param {Object} page
+         */
+        this.save = function(page){
+            $log.debug('PageService: save function');
+            ApiService.setUrl(uriPage);
+            ApiService.http().save(
+                page,
+                function(succes){
+                    $log.debug(succes);
+                    alertify.success('Success! New Translations has been saved');
+                },
+                function(error){
+                    $log.debug(error);
+                    alertify.error('Error! Please Contact Admin');
+                }
+            );
+        };
+
+        /**
+         * @ngdoc method
+         * @name edit
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * perform update for page
+         *
+         * @param {Object} page
+         */
+        this.update = function(page, pageId){
+            $log.debug('PageService: update function');
+            ApiService.setUrl(uriPage);
+            ApiService.http().update(
+                {'id': pageId}, page,
+                function(succes){
+                    $log.debug(succes);
+                    alertify.success('Success! Translations with id '+pageId+' has been updated');
+                },
+                function(error){
+                    $log.debug(error);
+                    alertify.error('Error! Please Contact Admin');
+                }
+            );
+        };
+
+        /**
+         * @ngdoc method
          * @name delete
          * @methodOf nanodesuApp.service:PageService
          * @description
@@ -98,6 +148,75 @@ angular.module('nanodesuApp')
                     alertify.error('Error! Please Contact Admin');
                 }
             );
+        };
+
+        /**
+         * @ngdoc method
+         * @name getSeriesHierarchy
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * Return list of object that consist of 
+         * series hierarchy
+         *
+         * @param {Object} single series object
+         * @param {string} seriesId
+         * @return {array} list of object that consist
+         * series hierarchy
+         */
+        this.getSeriesHierarchy = function(series, seriesId){
+            $log.debug('PageService: getHierarchy function');
+            var temp = getSeriesData(series, seriesId);
+            var result = [];
+            $log.debug(temp);
+            var seriesHierarchy = getSeriesHierarchy(temp);
+            $log.debug(seriesHierarchy);
+            angular.forEach(
+                seriesHierarchy,
+                function(data){
+                    var param = {
+                        'label': data,
+                        'value': null
+                    };
+                    this.push(param);
+                },
+                result
+            );
+            return result;
+        };
+
+        /**
+         * @ngdoc method
+         * @name getExistingHierarchy
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * Return list of object that consist of 
+         * series hierarchy and the value
+         *
+         * @param {Object} object from /pages/:id endpoint
+         * @return {array} list of object that consist
+         * series hierarchy and the value
+         */
+        this.getExistingHierarchy = function(param){
+            $log.debug('PageService: getExistingHierarchy function');
+            var page = param.page;
+            var series = param.series;
+            var seriesHierarchy = series[0].config.hierarchy;
+            var result = [];
+            angular.forEach(
+                seriesHierarchy,
+                function(param){
+                    $log.debug(param);
+                    $log.debug(page.meta[param]);
+                    var hierarchy = {
+                        'label': param,
+                        'value': page.meta[param] ? page.meta[param] : null
+                    };
+                    this.push(hierarchy);
+                },
+                result
+            );
+            $log.debug(result);
+            return result;
         };
 
         /**
@@ -260,6 +379,50 @@ angular.module('nanodesuApp')
                 result
             );
             $log.debug(result);
+            return result;
+        }
+
+        /**
+         * @ngdoc method
+         * @name getSeriesData
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * get series object by id from /pages endpoint
+         *
+         * @param {Object} Object from /pages
+         * @param {string} seriesId
+         * @return {Object} single object of series
+         */
+        function getSeriesData(param, id){
+            $log.debug('PageService: getSeriesData function');
+            $log.debug(id);
+            var result = {};
+            angular.forEach(
+                param,
+                function(key, value){
+                    $log.debug(value+' '+id);
+                    if(value === id){
+                        $log.debug('match');
+                        result = key;
+                    }
+                }
+            );
+            return result;
+        }
+
+        /**
+         * @ngdoc method
+         * @name getSeriesHierarchy
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * get hierarchy from series config
+         *
+         * @param {Object} series Object from /pages
+         * @return {array} list of hierarchy label from series config
+         */
+        function getSeriesHierarchy(param){
+            $log.debug('PageService: getSeriesHierarchy function');
+            var result = param.config.hierarchy;
             return result;
         }
 

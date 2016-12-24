@@ -1,6 +1,6 @@
 <nd-title title="Translations List of {{ series.name }}" url="#/projects/list"></nd-title>
 <hr />
-<a ng-show="isGranted" href="#/translationss/{{ series.id }}/add" class="btn btn-success">
+<a ng-show="isGranted" href="#/translations/{{ series.id }}/add" class="btn btn-success">
     <i class="fa fa-plus"></i>
     Create New Translations
 </a>
@@ -29,9 +29,8 @@
             </td>
             <td>
                 <span ng-repeat="h in page.hierarchy">
-                    <b ng-if="page.meta[h] !== null">{{ h }}:</b>
-                    <span ng-if="page.meta[h] === null">&nbsp;&nbsp;</span>
-                    <span ng-if="page.meta[h] !== null">|&nbsp;{{ page.meta[h] }}&nbsp;|</span>
+                    <b ng-if="page.meta[h]">{{ h }}:</b>
+                    <span ng-if="page.meta[h]">|&nbsp;{{ page.meta[h] }}&nbsp;|</span>
                 </span>
             </td>
             <td>{{ page.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>

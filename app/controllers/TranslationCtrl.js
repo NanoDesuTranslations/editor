@@ -145,7 +145,7 @@ angular.module('nanodesuApp')
          * @return {Object} consist series name and id
          */
         function getSeriesNameAndId(param){
-            $log.debug('TranslationCtrl: getSeriesName function');
+            $log.debug('TranslationCtrl: getSeriesNameAndId function');
             $log.debug(param[seriesId].name);
             var result = {};
             result.name = param[seriesId].name;

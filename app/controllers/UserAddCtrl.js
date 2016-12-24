@@ -51,7 +51,7 @@ angular.module('nanodesuApp')
             ApiService.setUrl(uri);
             var data = reformatData($scope.user);
             $log.debug(data);
-            if(!username || username !== null){
+            if(username){
                 $log.debug('update');
                 ApiService.http().update(
                     data,
@@ -94,7 +94,7 @@ angular.module('nanodesuApp')
             $log.debug('UserAddCtrl: getUser function');
             $log.debug('username: '+userName);
             var user = {};
-            if(!userName || userName !== null){
+            if(userName){
                 $log.debug('username exist');
                 ApiService.setUrl(uri);
                 ApiService.http().get(
@@ -168,6 +168,7 @@ angular.module('nanodesuApp')
          */
         function reformatData(data){
             $log.debug('UserAddCtrl: reformatData function');
+            $log.debug(data);
             $log.debug($scope.view);
             $log.debug($scope.edit);
             var result = data;

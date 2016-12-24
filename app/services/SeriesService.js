@@ -10,7 +10,7 @@
  *
  */
 angular.module('nanodesuApp')
-    .service('SeriesService', function($log, alertify, ApiService){
+    .service('SeriesService', function($log, $window, alertify, ApiService){
         var uri = '/series';
 
         /**
@@ -94,6 +94,7 @@ angular.module('nanodesuApp')
                         function(success){
                             $log.debug(success);
                             alertify.success('Success! Series with id: '+seriesId+'already deleted');
+                            $window.location.reload();
                         },
                         function(error){
                             $log.debug(error);

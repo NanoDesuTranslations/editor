@@ -11,7 +11,7 @@ angular.module('nanodesuApp')
     .controller('ProjectAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, SeriesService){
         var uri = '/series';
         var seriesId = $routeParams.id;
-        $scope.series = getSeries(seriesId);
+        $scope.series = getSeries();
         $scope.level = []; // used in dynamic field for hierarchy
 
         $log.debug('is id exist: '+$routeParams.id);
@@ -47,7 +47,7 @@ angular.module('nanodesuApp')
             $log.debug('ProjectAddCtrl: submit function');
             $log.debug(reformatData($scope.series));
             var series = reformatData($scope.series);
-            if(!seriesId || seriesId !== null){
+            if(seriesId){
                 SeriesService.update(seriesId, series);
             } else {
                 SeriesService.save(series);
@@ -64,17 +64,16 @@ angular.module('nanodesuApp')
          * @param {string} seriesId
          * @return {Object} series
          */
-        function getSeries(id){
+        function getSeries(){
             $log.debug('ProjectAddCtrl: getSeries function');
-            $log.debug(id);
             var series = {};
-            if(!id || id !== null){
+            if(seriesId){
                 $log.debug('id exist');
                 ApiService.setUrl(uri);
 
                 // since using callback I decide to put the value into scope directly
                 ApiService.http().get(
-                    {'id': id},
+                    {'id': seriesId},
                     function(success){
                         $log.debug(success);
                         $scope.series = reverseData(success);

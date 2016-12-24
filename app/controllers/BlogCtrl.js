@@ -18,6 +18,7 @@ angular.module('nanodesuApp')
             function(success){
                 $log.debug(success);
                 var data = success.pages;
+                $scope.isGranted = PageService.getUserPermissions(seriesId);
                 $scope.series = PageService.getSeriesNameAndId(success.series, seriesId); 
                 $scope.blogs = getBlogs(data);
             },

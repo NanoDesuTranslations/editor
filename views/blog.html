@@ -1,6 +1,6 @@
 <nd-title title="Blog List of {{ series.name }}" url="#/blogs/{{ series.id }}"></nd-title>
 <hr />
-<a href="#/blogs/{{ series.id }}/add" class="btn btn-success">
+<a ng-show="isGranted" href="#/blogs/{{ series.id }}/add" class="btn btn-success">
     <i class="fa fa-plus"></i>
     Create New Post
 </a>
@@ -33,14 +33,16 @@
             <td>{{ blog.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td><span ng-if="blog.meta.updated">{{ blog.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td> 
             <td>
-                <a ng-href="#/blogs/{{ blog.series }}/edit/{{ blog.id }}" class="btn btn-warning">
-                    <i class="fa fa-pencil"></i>
-                    Edit
-                </a>
-                <button type="button" class="btn btn-danger" ng-click="delete(blog.id)">
-                    <i class="fa fa-trash"></i>
-                    Delete
-                </button>
+                <div ng-show="isGranted">
+                    <a ng-href="#/blogs/{{ blog.series }}/edit/{{ blog.id }}" class="btn btn-warning">
+                        <i class="fa fa-pencil"></i>
+                        Edit
+                    </a>
+                    <button type="button" class="btn btn-danger" ng-click="delete(blog.id)">
+                        <i class="fa fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
             </td>
         </tr>
     </tbody>

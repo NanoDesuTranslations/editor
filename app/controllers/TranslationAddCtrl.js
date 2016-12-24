@@ -40,7 +40,7 @@ angular.module('nanodesuApp')
         ApiService.http().get(
             function(success){
                 $log.debug(success);
-                $scope.series = getSeriesNameAndId(success.series);
+                $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
                 // to separate when create or edit page
                 if(!pageId){ 
                     $scope.hierarchy = PageService.getSeriesHierarchy(success.series, seriesId);
@@ -184,24 +184,6 @@ angular.module('nanodesuApp')
             return mde;
         }
 
-        /**
-         * @ngdoc method
-         * @name getSeriesNameAndId
-         * @methodOf nanodesuApp.controller:TranslationAddCtrl
-         * @description
-         * Return Series Name and Id
-         *
-         * @param {Object} Object Series from /pages endpoint
-         * @return {Object} consist series name and id
-         */
-        function getSeriesNameAndId(param){
-            $log.debug('TranslationCtrl: getSeriesNameAndId function');
-            $log.debug(param[seriesId].name);
-            var result = {};
-            result.name = param[seriesId].name;
-            result.id = seriesId;
-            return result;
-        }
     });
 })();
  

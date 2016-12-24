@@ -83,6 +83,18 @@ angular
                 templateUrl: 'views/translation_form.html',
                 controller: 'TranslationAddCtrl'
             })
+            .when('/blogs/:id', {
+                templateUrl: 'views/blog.html',
+                controller: 'BlogCtrl'
+            })
+            .when('/blogs/:seriesId/add', {
+                templateUrl: 'views/blog_form.html',
+                controller: 'BlogAddCtrl'
+            })
+            .when('/blogs/:seriesId/edit/:pageId', {
+                templateUrl: 'views/blog_form.html',
+                controller: 'BlogAddCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

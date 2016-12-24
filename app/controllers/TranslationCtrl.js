@@ -20,7 +20,7 @@ angular.module('nanodesuApp')
                 $log.debug(data);
                 $scope.pages = PageService.init(data, seriesId);
                 $scope.isGranted = PageService.getUserPermissions(seriesId);
-                $scope.series = getSeriesNameAndId(success.series);
+                $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
                 $log.debug($scope.isGranted);
             },
             function(error){
@@ -134,23 +134,5 @@ angular.module('nanodesuApp')
             return result;
         }
 
-        /**
-         * @ngdoc method
-         * @name getSeriesNameAndId
-         * @methodOf nanodesuApp.controller:TranslationCtrl
-         * @description
-         * Return Series Name and Id
-         *
-         * @param {Object} Object Series from /pages endpoint
-         * @return {Object} consist series name and id
-         */
-        function getSeriesNameAndId(param){
-            $log.debug('TranslationCtrl: getSeriesNameAndId function');
-            $log.debug(param[seriesId].name);
-            var result = {};
-            result.name = param[seriesId].name;
-            result.id = seriesId;
-            return result;
-        }
     });
 })(); 

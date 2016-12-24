@@ -221,6 +221,26 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
+         * @name getSeriesNameAndId
+         * @methodOf nanodesuApp.service:PageService
+         * @description
+         * Return Series Name and Id
+         *
+         * @param {Object} Object Series from /pages endpoint
+         * @param {string} seriesId
+         * @return {Object} consist series name and id
+         */
+        this.getSeriesNameAndId = function(param, seriesId){
+            $log.debug('PageService: getSeriesNameAndId function');
+            $log.debug(param[seriesId].name);
+            var result = {};
+            result.name = param[seriesId].name;
+            result.id = seriesId;
+            return result;
+        };
+
+        /**
+         * @ngdoc method
          * @name seriesInit
          * @methodOf nanodesuApp.service:PageService
          * @description

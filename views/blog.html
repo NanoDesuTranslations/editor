@@ -1,0 +1,48 @@
+<nd-title title="Blog List of {{ series.name }}" url="#/blogs/{{ series.id }}"></nd-title>
+<hr />
+<a href="#/blogs/{{ series.id }}/add" class="btn btn-success">
+    <i class="fa fa-plus"></i>
+    Create New Post
+</a>
+<nd-search></nd-search>
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Pinned</th>
+            <th>Created By</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr dir-paginate="blog in blogs | filter: search | itemsPerPage: 10">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ blog.meta.title }}</td>
+            <td>
+                <span ng-if="blog.meta.status === 0">Hidden</span>
+                <span ng-if="blog.meta.status === 5">Draft</span>
+                <span ng-if="blog.meta.status === 9">Published</span>
+            </td>
+            <td>{{ blog.meta.blog.pinned === 1 ? 'Yes' : 'No' }}</td>
+            <td>{{ blog.meta.blog.author }}</td>
+            <td>{{ blog.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td><span ng-if="blog.meta.updated">{{ blog.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td> 
+            <td>
+                <a ng-href="#/blogs/{{ blog.series }}/edit/{{ blog.id }}" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                </a>
+                <button type="button" class="btn btn-danger" ng-click="delete(blog.id)">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table> 
+<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>

@@ -1,29 +1,16 @@
 ## Nanodesu Translation Editor
-Nanodesu translation editor website project
+Official Admin / Back-End Website of Nanodesu Translations build with AngularJS Framework version 1.5.8 and many other Libraries.
 
-## Frameworks and Libraries
-* [bootstrap 3.3.5](http://getbootstrap.com)
-* [angularjs 1.5.8](http://angularjs.org)
-* [font-awesome 4.3.0](https://fortawesome.github.io/Font-Awesome/)
-* angular-route
-* angular-touch
-* angular-resource
-* angular-cookies
-* [angular UI Bootstrap](http://angular-ui.github.io/bootstrap/)
-* [jquery 2.1.4](http://jquery.com/) (To be used only by/for simplemde component)
-* [simplemde 1.9.0](https://github.com/NextStepWebs/simplemde-markdown-editor)
+### Tools
+1. Node Package Manager (NPM)
+2. Bower
+3. Grunt
 
-## Tools used
-* [Bower](https://bower.io/)
+### How to Build
+1. Make sure to install all dependencies, execute: `npm install`.
+2. Run Grunt Task: `grunt build`.
+3. The Final file was in `public/`.
 
-## Folder Structure ##
-This project folder structure following style guide from 
-
-1. [Mgechev](https://github.com/mgechev/angularjs-style-guide)
-2. [John Papa](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md)
-3. [Adnan Kukic](https://scotch.io/tutorials/angularjs-best-practices-directory-structure)
-
-## Before building
-Install dependencies using Bower:
-    $ bower install
-Bower also requires node, npm, and git.
+### How to Develop
+* Because the Gruntfile is still _sucks_ yes we have to inde.html file. So, make sure to change `index_dev.html` into `index.html` and change `index.html` into `index_prod.html` as backup (Yes need to think better solutions).
+* Don't forget to activate `compileProvider` & `logProvider` in `app/app.js` before build the source to make sure is ready for production

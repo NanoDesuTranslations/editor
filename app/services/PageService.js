@@ -50,7 +50,7 @@ angular.module('nanodesuApp')
          */
         this.getUserPermissions = function(seriesId){
             $log.debug('PageService: getUserPermissions function');
-            if(inArray(getEditPermissions(), seriesId)){
+            if(inArray(getEditPermissions(), seriesId) || AuthService.isAdmin()){
                 return true;
             }
             return false;
@@ -300,7 +300,7 @@ angular.module('nanodesuApp')
                 data,
                 function(param){
                     param.isGranted = false;
-                    if(inArray(getEditPermissions(), param.series)){
+                    if(inArray(getEditPermissions(), param.series) || AuthService.isAdmin()){
                         param.isGranted = true;
                     }
                     this.push(param);

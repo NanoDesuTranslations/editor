@@ -29,6 +29,7 @@ angular.module('nanodesuApp')
         var uri = '/pages';
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
+        $scope.title = false; // before the data save, don't show back button
 
         /**
          * angular-ui bootstrap for collapse
@@ -59,9 +60,11 @@ angular.module('nanodesuApp')
             if(pageId){
                 $log.debug('edit');
                 PageService.update(data, pageId);
+                $scope.title = true;
             } else {
                 $log.debug('save');
                 PageService.save(data);
+                $scope.title = true;
             }
         };
 

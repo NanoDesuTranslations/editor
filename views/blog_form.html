@@ -1,4 +1,7 @@
-<nd-title title="Blog Management Form for {{ series.name }}" url="#/blogs/{{ series.id }}"></nd-title>
+<div ng-if="title === true">
+    <nd-title title="Blog Management Form for {{ series.name }}" url="#/blogs/{{ series.id }}"></nd-title>
+</div>
+<div ng-if="title === false"><h2>Blog Management Form for {{ series.name }}</h2></div>
 <hr />
 <div class="controls">
     <form role="form" class="form-horizontal" ng-submit="submit()">

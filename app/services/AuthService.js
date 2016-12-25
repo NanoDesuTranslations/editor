@@ -181,6 +181,22 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
+         * @name renewPermissions
+         * @methodOf nanodesuApp.service:AuthService
+         * @description
+         * renew localStorage data for view and edit permissions
+         *
+         * @param {Object} data that already put in the server
+         */
+        this.newPermissions = function(data){
+            $log.debug('AuthService: renewPermissions function');
+            $log.debug(data.permissions.view);
+            removePermission();
+            renewPermissions(data);
+        };
+
+        /**
+         * @ngdoc method
          * @name isLogin
          * @methodOf nanodesuApp.service:AuthService
          * @description
@@ -233,5 +249,32 @@ angular.module('nanodesuApp')
             localStorage.removeItem('edit');
         }
 
+        /**
+         * @ngdoc method
+         * @name removePermission
+         * @methodOf nanodesuApp.service:AuthService
+         * @description
+         * private function to delete view and edit permissions
+         * in localStorage
+         */
+        function removePermission(){
+            localStorage.removeItem('view');
+            localStorage.removeItem('edit');
+        }
+
+        /**
+         * @ngdoc method
+         * @name renewPermissions
+         * @methodOf nanodesuApp.service:AuthService
+         * @description
+         * private function to delete view and edit permissions
+         * in localStorage
+         *
+         * @param {Object} user
+         */
+        function renewPermissions(data){
+            localStorage.setItem('view', data.permissions.view);
+            localStorage.setItem('edit', data.permissions.edit);
+        }
     });
 })();

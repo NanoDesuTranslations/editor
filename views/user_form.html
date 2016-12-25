@@ -33,6 +33,9 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,7 +56,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr dir-paginate="s in series | filter: search | itemsPerPage: 4">
+                                <tr dir-paginate="s in series | filter: search | itemsPerPage: 10">
                                     <td>{{ $index + 1}}</td>
                                     <td>{{ s.name }}</td>
                                     <td>
@@ -69,9 +72,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">Submit</button>
         </div>
     </form>
 </div>

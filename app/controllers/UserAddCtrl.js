@@ -8,7 +8,7 @@
  * Controller for Add new User or Edit Existing User
  */
 angular.module('nanodesuApp')
-    .controller('UserAddCtrl', function($log, $scope, $routeParams, alertify, ApiService){
+    .controller('UserAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, AuthService){
         var uri = '/admin/users';
         var username = $routeParams.username;
         $scope.passwd = true; // model to hide password field when edit user
@@ -57,6 +57,7 @@ angular.module('nanodesuApp')
                     data,
                     function(success){
                         $log.debug(success);
+                        AuthService.newPermissions(data);
                         alertify.success('Success! Update User Data');
                     },
                     function(error){

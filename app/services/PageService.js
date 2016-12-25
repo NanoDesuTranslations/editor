@@ -259,16 +259,14 @@ angular.module('nanodesuApp')
                 function(param){
                     $log.debug('param: '+param.id+' name: '+param.name);
                     $log.debug('for: '+param.name+'status: '+inArray(getViewPermissions(),param.id));
-                    if(inArray(getViewPermissions(), param.id)){
-                        var series = {};
-                        series.name = param.name;
-                        series.id = param.id;
-                        series.deleted = param.config.deleted;
-                        series.status = param.config.status;
-                        series.created = param.config.created;
-                        series.updated = param.config.updated;
-                        this.push(series);
-                    }
+                    var series = {};
+                    series.name = param.name;
+                    series.id = param.id;
+                    series.deleted = param.config.deleted;
+                    series.status = param.config.status;
+                    series.created = param.config.created;
+                    series.updated = param.config.updated;
+                    this.push(series);
                 },
                 tempResult
             );

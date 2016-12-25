@@ -34,14 +34,7 @@
             <td><span ng-if="blog.meta.updated">{{ blog.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td> 
             <td>
                 <div ng-show="isGranted">
-                    <a ng-href="#/blogs/{{ blog.series }}/edit/{{ blog.id }}" class="btn btn-warning">
-                        <i class="fa fa-pencil"></i>
-                        Edit
-                    </a>
-                    <button type="button" class="btn btn-danger" ng-click="delete(blog.id)">
-                        <i class="fa fa-trash"></i>
-                        Delete
-                    </button>
+                    <nd-action edit="blogs/{{ blog.series }}/edit/{{ blog.id }}" delete="delete(blog.id)"></nd-action>
                 </div>
             </td>
         </tr>

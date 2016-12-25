@@ -36,14 +36,7 @@
             <td>{{ page.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
             <td><span ng-if="page.meta.updated">{{ page.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</span></td>
             <td ng-show="page.isGranted">
-                <a ng-href="#/translations/{{ page.series }}/edit/{{ page.id }}" class="btn btn-warning">
-                    <i class="fa fa-pencil"></i>
-                    Edit
-                </a>
-                <button type="button" class="btn btn-danger" ng-click="delete(page.id)">
-                    <i class="fa fa-trash"></i>
-                    Delete
-                </button>
+                <nd-action edit="translations/{{ page.series }}/edit/{{ page.id }}" delete="delete(page.id)"></nd-action>
             </td>
         </tr>
     </tbody>

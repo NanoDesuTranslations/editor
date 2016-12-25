@@ -31,14 +31,7 @@
             <td>{{ project.config.created * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
             <td><span ng-if="project.config.updated">{{ project.config.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</span></td>
             <td>
-                <a ng-href="#/projects/edit/{{ project.id }}" class="btn btn-warning">
-                    <i class="fa fa-pencil"></i>
-                    Edit
-                </a>
-                <button type="button" class="btn btn-danger" ng-click="delete(project.id)">
-                    <i class="fa fa-trash"></i>
-                    Delete
-                </button>
+                <nd-action edit="projects/edit/{{ project.id }}" delete="delete(project.id)"></nd-action>
             </td>
         </tr>
     </tbody>

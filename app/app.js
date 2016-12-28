@@ -25,8 +25,8 @@ angular
         //$locationProvider.html5Mode(true); need server side re-writing to avoid token invalid when refresh the page
         $routeProvider
             .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                templateUrl: 'views/project_list.html',
+                controller: 'ProjectListCtrl'
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
@@ -63,9 +63,9 @@ angular
                 templateUrl: 'views/project_form.html',
                 controller: 'ProjectAddCtrl'
             })
-            .when('/projects/list', {
-                templateUrl: 'views/project_list.html',
-                controller: 'ProjectListCtrl'
+            .when('/build', {
+                templateUrl: 'views/main.html',
+                controller: 'MainCtrl'
             })
             .when('/translations/:id', {
                 templateUrl: 'views/translation.html',

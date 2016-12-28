@@ -18,7 +18,7 @@
  * }
  */
 angular.module('nanodesuApp')
-    .service('AuthService', function($log, $location, ApiService){
+    .service('AuthService', function($log, $window, ApiService){
 
         /**
          * @ngdoc method
@@ -49,7 +49,7 @@ angular.module('nanodesuApp')
                     $log.debug(success);
                     setUsername(username);
                     storeCredentials(success);
-                    $location.path('/');
+                    $window.location.href = '#/';
                 },
                 function(error){
                     $log.debug('Error Login');

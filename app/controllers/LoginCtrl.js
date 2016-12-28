@@ -8,7 +8,7 @@
  * Controller for Login Action
  */
 angular.module('nanodesuApp')
-    .controller('LoginCtrl', function($log, $scope, $location, AuthService){
+    .controller('LoginCtrl', function($log, $scope, $window, AuthService){
         $scope.isNavCollapsed = true; // for responsive navigation in index.html
         $scope.isLogin = AuthService.isLogin();
         $scope.isAdmin = AuthService.isAdmin();
@@ -38,7 +38,7 @@ angular.module('nanodesuApp')
          */
         $scope.logout = function() {
             AuthService.logout();
-            $location.path('/login');
+            $window.location.href = '#/login';
         };
 
     });

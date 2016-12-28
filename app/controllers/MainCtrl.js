@@ -27,7 +27,7 @@ angular.module('nanodesuApp')
 
         $scope.preview = function(){
             ApiService.setUrl($nd.preview);
-            ApiService.http().query(
+            ApiService.http().get(
                 function(success){
                     $log.debug(success);
                     alertify.success('Success! Please Check at /test');
@@ -41,7 +41,7 @@ angular.module('nanodesuApp')
 
         $scope.deploy = function(){
             ApiService.setUrl($nd.deploy);
-            ApiService.http().query(
+            ApiService.http().get(
                 function(success){
                     $log.debug(success);
                     alertify.success('Success! Please Check at');

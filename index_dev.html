@@ -30,9 +30,10 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
-                <ul class="nav navbar-nav" ng-show="isAdmin">
-                    <li><a href="#/users">Users</a></li>
-                    <li><a href="#/projects">Projects</a></li>
+                <ul class="nav navbar-nav" ng-show="isLogin">
+                    <li ng-show="isAdmin"><a href="#/users">Users</a></li>
+                    <li ng-show="isAdmin"><a href="#/projects">Projects</a></li>
+                    <li><a href="#/build">Deploy</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right nav-pills">
                     <li class="dropdown" uib-dropdown ng-show="isLogin">

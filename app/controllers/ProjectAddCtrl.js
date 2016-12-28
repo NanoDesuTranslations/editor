@@ -9,7 +9,6 @@
  */
 angular.module('nanodesuApp')
     .controller('ProjectAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, SeriesService){
-        var uri = '/series';
         var seriesId = $routeParams.id;
         $scope.series = getSeries();
         $scope.level = []; // used in dynamic field for hierarchy
@@ -69,7 +68,7 @@ angular.module('nanodesuApp')
             var series = {};
             if(seriesId){
                 $log.debug('id exist');
-                ApiService.setUrl(uri);
+                ApiService.setUrl($nd.series);
 
                 // since using callback I decide to put the value into scope directly
                 ApiService.http().get(

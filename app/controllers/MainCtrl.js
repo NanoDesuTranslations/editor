@@ -9,8 +9,6 @@
  */
 angular.module('nanodesuApp')
     .controller('MainCtrl', function($log, $scope, alertify, ApiService, AuthService){
-        var preview = '/build';
-        var deploy = '/build/deploy';
         $scope.isAdmin = AuthService.isAdmin();
         $scope.panel = false; //in purpose to hide or shown panel deploy and preview button
 
@@ -28,7 +26,7 @@ angular.module('nanodesuApp')
         };
 
         $scope.preview = function(){
-            ApiService.setUrl(preview);
+            ApiService.setUrl($nd.preview);
             ApiService.http().query(
                 function(success){
                     $log.debug(success);
@@ -42,7 +40,7 @@ angular.module('nanodesuApp')
         };
 
         $scope.deploy = function(){
-            ApiService.setUrl(deploy);
+            ApiService.setUrl($nd.deploy);
             ApiService.http().query(
                 function(success){
                     $log.debug(success);

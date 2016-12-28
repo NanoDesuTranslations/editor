@@ -9,8 +9,7 @@
  */
 angular.module('nanodesuApp')
     .controller('ProjectCtrl', function($log, $scope, alertify, ApiService, SeriesService){
-        var uri = '/series';
-        ApiService.setUrl(uri);
+        ApiService.setUrl($nd.series);
 
         ApiService.http().query(
             function(success){

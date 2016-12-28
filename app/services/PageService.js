@@ -11,8 +11,6 @@
  */
 angular.module('nanodesuApp')
     .service('PageService', function($log, $window, alertify, ApiService, AuthService){
-        var uriPage = '/pages';
-        var uriSeries = '/series';
 
         /**
          * @ngdoc method
@@ -67,7 +65,7 @@ angular.module('nanodesuApp')
          */
         this.save = function(page){
             $log.debug('PageService: save function');
-            ApiService.setUrl(uriPage);
+            ApiService.setUrl($nd.pages);
             ApiService.http().save(
                 page,
                 function(succes){
@@ -92,7 +90,7 @@ angular.module('nanodesuApp')
          */
         this.update = function(page, pageId){
             $log.debug('PageService: update function');
-            ApiService.setUrl(uriPage);
+            ApiService.setUrl($nd.pages);
             ApiService.http().update(
                 {'id': pageId}, page,
                 function(succes){
@@ -119,7 +117,7 @@ angular.module('nanodesuApp')
             $log.debug('PageService: delete function');
             $log.debug(id);
             var deleted = true;
-            ApiService.setUrl(uriPage);
+            ApiService.setUrl($nd.pages);
 
             ApiService.http().get(
                 {'id': id},
@@ -247,8 +245,7 @@ angular.module('nanodesuApp')
          * create list of series object based on users view
          *
          * @param {Object} series object from pages endpoint
-         * @return {array} list of series object based on
-         * user permissions and the series is not deleted
+         * @return {array} list of series object that not deleted
          */
         function seriesInit(param){
             $log.debug('PageService: seriesInit function');

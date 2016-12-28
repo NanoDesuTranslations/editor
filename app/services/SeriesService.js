@@ -11,7 +11,6 @@
  */
 angular.module('nanodesuApp')
     .service('SeriesService', function($log, $window, alertify, ApiService){
-        var uri = '/series';
 
         /**
          * @ngdoc method
@@ -25,7 +24,7 @@ angular.module('nanodesuApp')
         this.save = function(series){
             $log.debug('SeriesService: save function');
             $log.debug(series);
-            ApiService.setUrl(uri);
+            ApiService.setUrl($nd.series);
 
             ApiService.http().save(
                 series,
@@ -53,7 +52,7 @@ angular.module('nanodesuApp')
         this.update = function(id, series){
             $log.debug('SeriesService: save function');
             $log.debug(series);
-            ApiService.setUrl(uri);
+            ApiService.setUrl($nd.series);
 
             ApiService.http().update(
                 {'id': id}, series,
@@ -79,7 +78,7 @@ angular.module('nanodesuApp')
          */
         this.delete = function(seriesId) {
             var deleted = true;
-            ApiService.setUrl(uri);
+            ApiService.setUrl($nd.series);
 
             ApiService.http().get(
                 {'id': seriesId},

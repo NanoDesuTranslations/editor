@@ -9,11 +9,10 @@
  */
 angular.module('nanodesuApp')
     .controller('BlogCtrl', function($log, $scope, $routeParams, alertify, ApiService, PageService){
-        var uri = '/pages';
         var seriesId = $routeParams.id;
         $scope.blogs = [];
 
-        ApiService.setUrl(uri);
+        ApiService.setUrl($nd.pages);
         ApiService.http().get(
             function(success){
                 $log.debug(success);

@@ -9,7 +9,6 @@
  */
 angular.module('nanodesuApp')
     .controller('UserAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, AuthService){
-        var uri = '/admin/users';
         var username = $routeParams.username;
         $scope.passwd = true; // model to hide password field when edit user
         $scope.user = getUser(username);
@@ -17,7 +16,7 @@ angular.module('nanodesuApp')
         $scope.view = {};
         $scope.edit = {};
 
-        ApiService.setUrl('/series');
+        ApiService.setUrl($nd.series);
         ApiService.http().query(
             function(success){
                 $log.debug('retrieve series data');
@@ -39,16 +38,10 @@ angular.module('nanodesuApp')
             $scope.passwd = param;
         };
 
-        /**
-         * TODO:
-         * Currently if we update the permissions we need user 
-         * to logout and then login again to recreate the localStorage.
-         * Need to find out the better solutions
-         */
         $scope.submit = function() {
             $log.debug('UserAddCtrl: submit function');
             $log.debug($scope.user);
-            ApiService.setUrl(uri);
+            ApiService.setUrl($nd.user);
             var data = reformatData($scope.user);
             $log.debug(data);
             if(username){
@@ -97,7 +90,7 @@ angular.module('nanodesuApp')
             var user = {};
             if(userName){
                 $log.debug('username exist');
-                ApiService.setUrl(uri);
+                ApiService.setUrl($nd.user);
                 ApiService.http().get(
                     function(success){
                         // convert from api into ng-model
@@ -248,4 +241,3 @@ angular.module('nanodesuApp')
         }
     });
 })();
-

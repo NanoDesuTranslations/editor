@@ -26,7 +26,6 @@
  */
 angular.module('nanodesuApp')
     .controller('TranslationAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, PageService){
-        var uri = '/pages';
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
         $scope.title = false; // before the data save, don't show back button
@@ -37,7 +36,7 @@ angular.module('nanodesuApp')
         $scope.isCollapsed = false;
         $scope.page = getPages();
 
-        ApiService.setUrl(uri);
+        ApiService.setUrl($nd.pages);
         ApiService.http().get(
             function(success){
                 $log.debug(success);
@@ -82,7 +81,7 @@ angular.module('nanodesuApp')
             var pages = {};
             pages.meta = {};
             if(pageId){
-                ApiService.setUrl(uri);
+                ApiService.setUrl($nd.pages);
                 ApiService.http().get(
                     {'id': pageId},
                     function(success){

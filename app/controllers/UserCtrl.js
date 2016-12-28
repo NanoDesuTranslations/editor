@@ -9,8 +9,7 @@
  */
 angular.module('nanodesuApp')
     .controller('UserCtrl', function($log, $scope, alertify, ApiService){
-        var uri = '/admin/users';
-        ApiService.setUrl(uri);
+        ApiService.setUrl($nd.user);
 
         ApiService.http().get(
             function(success){
@@ -27,7 +26,7 @@ angular.module('nanodesuApp')
         $scope.delete = function(userId) {
             alertify.confirm('Are You Sure?', function(){
                 $log.debug('Yes Button was choosen');
-                ApiService.setUrl(uri+'/c');
+                ApiService.setUrl($nd.user+'/c');
 
                 ApiService.http().delete(
                     {'id': userId},

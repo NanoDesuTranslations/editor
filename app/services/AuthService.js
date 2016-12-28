@@ -19,7 +19,6 @@
  */
 angular.module('nanodesuApp')
     .service('AuthService', function($log, $location, ApiService){
-        var uri = '/user/login';
 
         /**
          * @ngdoc method
@@ -36,7 +35,7 @@ angular.module('nanodesuApp')
         this.login = function(username, password){
             $log.debug('AuthService: login function');
             // TODO: always put setUrl before, to avoid using old url from another Ctrl or Service
-            ApiService.setUrl(uri);
+            ApiService.setUrl($nd.login);
             
             var data = {
                 'username': username,

@@ -9,9 +9,8 @@
  */
 angular.module('nanodesuApp')
     .controller('ProjectListCtrl', function($log, $scope, alertify, ApiService, PageService){
-        var uri = '/pages';
         $scope.series = [];
-        ApiService.setUrl(uri);
+        ApiService.setUrl($nd.pages);
         ApiService.http().get(
             function(success){
                 $log.debug(success);

@@ -1,6 +1,14 @@
 ﻿// $nd object for app-specific debug utilities
 var $nd = (function () {
     var objND = {};
+    
+    objND.pages = '/pages';
+    objND.series = '/series';
+    objND.user = '/admin/users';
+    objND.login = '/user/login';
+    objND.preview = '/build';
+    objND.deploy = '/build/deploy';
+
     objND.assert = function (fTest, message) {
         if (fTest) return;
         if (window.console && console.assert) {

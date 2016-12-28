@@ -9,7 +9,6 @@
  */
 angular.module('nanodesuApp')
     .controller('BlogAddCtrl', function($log, $scope, $routeParams, alertify, AuthService, ApiService, PageService){
-        var uri = '/pages';
         var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
@@ -32,7 +31,7 @@ angular.module('nanodesuApp')
         };
         /* end */
 
-        ApiService.setUrl(uri);
+        ApiService.setUrl($nd.pages);
         ApiService.http().get(
             function(success){
                 $log.debug(success);
@@ -71,7 +70,7 @@ angular.module('nanodesuApp')
             $log.debug('BlogAddCtrl: init function');
             var blog = {};
             if(pageId){
-                ApiService.setUrl(uri);
+                ApiService.setUrl($nd.pages);
                 ApiService.http().get(
                     {'id': pageId},
                     function(success){

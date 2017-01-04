@@ -23,8 +23,8 @@ angular.module('nanodesuApp')
          */
         $scope.login = function(){
             $log.debug('LoginCtrl: login function');
-            var username = $scope.username;
-            var password = $scope.password;
+            let username = $scope.username;
+            let password = $scope.password;
             $log.debug(username+' '+password);
             AuthService.login(username, password);
         };
@@ -38,6 +38,7 @@ angular.module('nanodesuApp')
          */
         $scope.logout = function() {
             AuthService.logout();
+            $window.location.reload();
             $window.location.href = '#/login';
         };
 

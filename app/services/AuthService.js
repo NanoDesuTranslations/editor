@@ -49,6 +49,7 @@ angular.module('nanodesuApp')
                     $log.debug(success);
                     setUsername(username);
                     storeCredentials(success);
+                    $window.location.reload();
                     $window.location.href = '#/';
                 },
                 function(error){

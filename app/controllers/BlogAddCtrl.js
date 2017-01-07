@@ -13,7 +13,7 @@ angular.module('nanodesuApp')
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
         $scope.blog = init();
-        $scope.title = false; // before the data save, don't show back button
+        $scope.done = false; // before the data save, don't show back button
 
         /* angular-ui bootstrap for collapse */
         $scope.isCollapsed = false;
@@ -49,11 +49,11 @@ angular.module('nanodesuApp')
             if(pageId){
                 $log.debug('edit');
                 PageService.update(data, pageId);
-                $scope.title = true;
+                $scope.done = true;
             } else {
                 $log.debug('save');
                 PageService.save(data);
-                $scope.title = true;
+                $scope.done = true;
             }
         };
 
@@ -96,7 +96,7 @@ angular.module('nanodesuApp')
                         'deleted': false,
                         'blog': {
                             'pinned': 0,
-                            'published_date': null,
+                            'published_date': new Date(),
                             'author': AuthService.getUsername() 
                         }
                     }

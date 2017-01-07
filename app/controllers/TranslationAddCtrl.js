@@ -26,9 +26,10 @@
  */
 angular.module('nanodesuApp')
     .controller('TranslationAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, PageService){
+        var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
-        $scope.title = false; // before the data save, don't show back button
+        $scope.done = false; // before the data save, don't show back button
 
         /**
          * angular-ui bootstrap for collapse
@@ -59,11 +60,11 @@ angular.module('nanodesuApp')
             if(pageId){
                 $log.debug('edit');
                 PageService.update(data, pageId);
-                $scope.title = true;
+                $scope.done = true;
             } else {
                 $log.debug('save');
                 PageService.save(data);
-                $scope.title = true;
+                $scope.done = true;
             }
         };
 
@@ -96,7 +97,7 @@ angular.module('nanodesuApp')
                 );
             } else {
                 $log.debug('Create New');
-                mdeEditor().value();
+                simpleMde.value();
                 pages = {
                     'content': null,
                     'series': seriesId,
@@ -129,7 +130,7 @@ angular.module('nanodesuApp')
         function reformatData(param){
             $log.debug('TranslationAddCtrl: reformatData function');
             var data = param;
-            data.content = mdeEditor().value();
+            data.content = simpleMDE.value();
             data.meta.status = $nd.string2Int0(data.meta.status);
             if(data.meta.order){
                 data.meta.order = $nd.string2Int0(data.meta.order);
@@ -162,29 +163,10 @@ angular.module('nanodesuApp')
             $log.debug('TranslationCtrl: reverseData function');
             page.meta.status = page.meta.status.toString();
             page.meta.updated = $nd.createEpochTime();
-            mdeEditor().value(page.content);
+            simpleMDE.value(page.content);
             return page;
         }
 
-        /**
-         * @ngdoc method
-         * @name mdeEditor
-         * @methodOf TranslationAddCtrl
-         * @description
-         * This function does two things.  
-         * One: it breaks the rules by directly manipulating the DOM from an AngularJS controller. 
-         * Two: it allows delaying until the last possible moment the time when the SimpleMDE markdown 
-         * editor is initialized. 
-         *  
-         * @return {Object} simpleMDE
-         */
-        var mde = null;
-        function mdeEditor(){
-            if(!mde){
-                mde = new SimpleMDE(document.getElementById("content"));
-            }
-            return mde;
-        }
 
     });
 })();

@@ -130,7 +130,7 @@ angular.module('nanodesuApp')
         function reformatData(param){
             $log.debug('TranslationAddCtrl: reformatData function');
             var data = param;
-            data.content = simpleMDE.value();
+            data.content = simpleMde.value();
             data.meta.status = $nd.string2Int0(data.meta.status);
             if(data.meta.order){
                 data.meta.order = $nd.string2Int0(data.meta.order);
@@ -163,7 +163,7 @@ angular.module('nanodesuApp')
             $log.debug('TranslationCtrl: reverseData function');
             page.meta.status = page.meta.status.toString();
             page.meta.updated = $nd.createEpochTime();
-            simpleMDE.value(page.content);
+            simpleMde.value(page.content);
             return page;
         }
 

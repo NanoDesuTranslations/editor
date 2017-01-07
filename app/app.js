@@ -64,8 +64,8 @@ angular
                 controller: 'ProjectAddCtrl'
             })
             .when('/build', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                templateUrl: 'views/build.html',
+                controller: 'BuildCtrl'
             })
             .when('/translations/:id', {
                 templateUrl: 'views/translation.html',

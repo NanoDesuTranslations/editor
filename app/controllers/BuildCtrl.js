@@ -3,19 +3,20 @@
 
 /**
  * @ngdoc controller
- * @name nanodesuApp.controller:MainCtrl
+ * @name nanodesuApp.controller:BuildCtrl
  * @description
  * Controller for Main Page
  */
 angular.module('nanodesuApp')
-    .controller('MainCtrl', function($log, $scope, alertify, ApiService, AuthService){
+    .controller('BuildCtrl', function($log, $scope, alertify, ApiService, AuthService){
         $scope.isAdmin = AuthService.isAdmin();
         $scope.panel = false; //in purpose to hide or shown panel deploy and preview button
+        $scope.link = false; //show the url after click preview or build
 
         /**
          * @ngdoc method
          * @name panelAction
-         * @methodOf nanodesuApp.controller.MainCtrl
+         * @methodOf nanodesuApp.controller.BuildCtrl
          * @description
          * function to change $scope.panel value
          *
@@ -30,6 +31,7 @@ angular.module('nanodesuApp')
             ApiService.http().get(
                 function(success){
                     $log.debug(success);
+                    $scope.link = true;
                     alertify.success('Success! Please Check at /test');
                 },
                 function(error){
@@ -44,7 +46,8 @@ angular.module('nanodesuApp')
             ApiService.http().get(
                 function(success){
                     $log.debug(success);
-                    alertify.success('Success! Please Check at');
+                    $scope.link = true;
+                    alertify.success('Success! Please Check at nanodesutranslations.org');
                 },
                 function(error){
                     $log.debug(error);

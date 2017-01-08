@@ -4,7 +4,7 @@
     </button>
 </div>
 <br />
-<div ng-show="panel" class="col-md-4 col-md-offset-4 text-center">
+<div ng-show="panel" class="col-md-6 col-md-offset-3 text-center">
     <div class="panel panel-danger">
         <div class="panel-heading">
             Ready to Posting
@@ -12,22 +12,15 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="panel-body">
+        <div class="panel-body btn-toolbar">
             <button type="button" class="btn btn-warning" ng-click="preview()">
-                Preview
+                Generate Preview
             </button>
+            <a ng-href="/test" class="btn btn-info">View Preview</a>
             <button type="button" ng-class="{true: '', false: 'disabled'}[isAdmin]" class="btn btn-danger" ng-click="deploy()">
-                Post
+                Generate and Deploy
             </button>
             <br />
-        </div>
-    </div>
-</div>
-<div ng-show="link" class="col-md-4 col-md-offset-4">
-    <div class="panel panel-info">
-        <div class="panel-body">
-            <p>Check Preview at: <a ng-href="#/test">here</a><br />
-            Deployment will shown at: <a ng-href="http://nanodesutranslations.org/">http://nanodesutranslations.org/</a></p>
         </div>
     </div>
 </div>

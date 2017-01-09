@@ -8,12 +8,11 @@
  * Controller for Add new Blog or Edit Existing Blog
  */
 angular.module('nanodesuApp')
-    .controller('BlogAddCtrl', function($log, $scope, $routeParams, alertify, AuthService, ApiService, PageService){
+    .controller('BlogAddCtrl', function($log, $scope, $routeParams, $timeout, alertify, AuthService, ApiService, PageService){
         var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
         $scope.blog = init();
-        $scope.done = false; // before the data save, don't show back button
 
         /* angular-ui bootstrap for collapse */
         $scope.isCollapsed = false;
@@ -30,6 +29,13 @@ angular.module('nanodesuApp')
             $scope.popup.opened = true;
         };
         /* end */
+
+        $timeout(
+            function(){
+                $scope.blogForm.$setDirty();
+            }, 
+            10000
+        );
 
         ApiService.setUrl($nd.pages);
         ApiService.http().get(
@@ -49,11 +55,11 @@ angular.module('nanodesuApp')
             if(pageId){
                 $log.debug('edit');
                 PageService.update(data, pageId);
-                $scope.done = true;
+                $scope.blogForm.$setPristine();
             } else {
                 $log.debug('save');
                 PageService.save(data);
-                $scope.done = true;
+                $scope.blogForm.$setPristine();
             }
         };
 
@@ -97,7 +103,7 @@ angular.module('nanodesuApp')
                         'blog': {
                             'pinned': 0,
                             'published_date': new Date(),
-                            'author': AuthService.getUsername() 
+                            'author': AuthService.getUsername()
                         }
                     }
                 };
@@ -111,7 +117,7 @@ angular.module('nanodesuApp')
          * @name reformatData
          * @methodOf nanodesuApp.controller.BlogAddCtrl
          * @description
-         * private function to reformat data from html so it 
+         * private function to reformat data from html so it
          * can be saved
          *
          * @param {Object} $scope.blog

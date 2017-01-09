@@ -25,17 +25,23 @@
  * }
  */
 angular.module('nanodesuApp')
-    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, PageService){
+    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, $timeout, alertify, ApiService, PageService){
         var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
-        $scope.done = false; // before the data save, don't show back button
 
         /**
          * angular-ui bootstrap for collapse
          */
         $scope.isCollapsed = false;
         $scope.page = getPages();
+
+        $timeout(
+            function(){
+                $scope.translationForm.$setDirty();
+            }, 
+            10000
+        );
 
         ApiService.setUrl($nd.pages);
         ApiService.http().get(
@@ -60,11 +66,12 @@ angular.module('nanodesuApp')
             if(pageId){
                 $log.debug('edit');
                 PageService.update(data, pageId);
-                $scope.done = true;
+                $scope.translationForm.$setPristine();
             } else {
                 $log.debug('save');
                 PageService.save(data);
                 $scope.done = true;
+                $scope.translationForm.$setPristine();
             }
         };
 

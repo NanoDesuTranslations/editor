@@ -1,5 +1,10 @@
-<form role="form" class="form-horizontal" ng-submit="submit()">
-    <nd-save title="Translations Management Form for {{ series.name }}" url="#/translations/{{ series.id }}" done="{{ done }}"></nd-save>
+<form role="form" name="translationForm" class="form-horizontal" ng-submit="submit()">
+    <div ng-if="translationForm.$pristine">
+        <nd-save title="Translations Management Form for {{ series.name }}" url="#/translations/{{ series.id }}" done="true"></nd-save>
+    </div>
+    <div ng-if="translationForm.$dirty">
+        <nd-save title="Translations Management Form for {{ series.name }}" url="#/translations/{{ series.id }}" done="false"></nd-save>
+    </div>
     <hr />
     <div class="controls">
         <div class="row">

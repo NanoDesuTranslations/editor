@@ -29,6 +29,7 @@ angular.module('nanodesuApp')
         var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
+        var edit = 0; //flag when open edit menu
 
         /**
          * angular-ui bootstrap for collapse
@@ -36,12 +37,17 @@ angular.module('nanodesuApp')
         $scope.isCollapsed = false;
         $scope.page = getPages();
 
-        $timeout(
-            function(){
-                $scope.translationForm.$setDirty();
-            }, 
-            10000
-        );
+        simpleMde.codemirror.on('change', function(){
+            $log.debug(edit);
+            $log.debug(edit === 1);
+            if(edit === 1){
+                $log.debug('isDirty?');
+                $timeout(function(){
+                    $scope.translationForm.$setDirty();
+                });
+            }
+            edit++;
+        });
 
         ApiService.setUrl($nd.pages);
         ApiService.http().get(

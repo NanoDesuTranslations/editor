@@ -10,20 +10,6 @@
 angular.module('nanodesuApp')
     .controller('BuildCtrl', function($log, $scope, alertify, ApiService, AuthService){
         $scope.isAdmin = AuthService.isAdmin();
-        $scope.panel = false; //in purpose to hide or shown panel deploy and preview button
-
-        /**
-         * @ngdoc method
-         * @name panelAction
-         * @methodOf nanodesuApp.controller.BuildCtrl
-         * @description
-         * function to change $scope.panel value
-         *
-         * @param {boolean} true/false
-         */
-        $scope.panelAction = function(param){
-            $scope.panel = param;
-        };
 
         $scope.preview = function(){
             ApiService.setUrl($nd.preview);

@@ -10,6 +10,8 @@ npm-debug.log
 bower_components
 node_modules
 public
+docs
+dest
 
 #For IDE
 *.iml

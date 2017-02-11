@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.initConfig({
         'pkg': grunt.file.readJSON('package.json'),
@@ -69,6 +70,12 @@ module.exports = function(grunt) {
                     'keepalive': true
                 }
             }
+        },
+        'jsdoc': {
+            'src': ['app/**/*.js'],
+            'options': {
+                'destination': 'docs'
+            }
         }
     });
 
@@ -78,6 +85,7 @@ module.exports = function(grunt) {
             'copy',
             'concat',
             'uglify',
+            'jsdoc'
             //'connect',
         ]);
 };

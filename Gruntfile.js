@@ -17,7 +17,15 @@ module.exports = function(grunt) {
             'public': {
                 'files': [
                     // copy index.html
-                    {'expand': true, 'src': ['index.html'], 'dest': 'public/', 'filter': 'isFile'},
+                    {
+                        'expand': true,
+                        'src': ['index_production.html'],
+                        'dest': 'public/',
+                        'filter': 'isFile',
+                        'rename': function(dest) {
+                            return dest + 'index.html';
+                        }
+                    },
                     // copy html template in views
                     {'expand': true, 'src': ['views/**'], 'dest': 'public/'},
                     {'expand': true, 'src': ['assets/js/*'], 'dest': 'public/', 'filter': 'isFile'},

@@ -1,6 +1,6 @@
 <h2>User Management</h2>
 <hr />
-<a href="#/users/add" class="btn btn-success">
+<a href="#!/users/add" class="btn btn-success">
     <i class="fa fa-plus"></i>
     Create New User
 </a>
@@ -21,7 +21,7 @@
             <td>{{ user.username }}</td>
             <td>{{ user.perms.admin == true ? 'Yes' : 'No' }}</td>
             <td>
-                <a ng-href="#/users/edit/{{ user.username }}" class="btn btn-warning">
+                <a ng-href="#!/users/edit/{{ user.username }}" class="btn btn-warning">
                     <i class="fa fa-pencil"></i>
                     Edit
                 </a>

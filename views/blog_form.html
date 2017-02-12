@@ -1,9 +1,9 @@
 <form role="form" name="blogForm" class="form-horizontal" ng-submit="submit()">
     <div ng-if="blogForm.$pristine">
-        <nd-save title="Blog Management Form for {{ series.name }}" url="#/blogs/{{ series.id }}" done="true"></nd-save>
+        <nd-save title="Blog Management Form for {{ series.name }}" url="blogs/{{ series.id }}" done="true"></nd-save>
     </div>
     <div ng-if="blogForm.$dirty">
-        <nd-save title="Blog Management Form for {{ series.name }}" url="#/blogs/{{ series.id }}" done="false"></nd-save>
+        <nd-save title="Blog Management Form for {{ series.name }}" url="blogs/{{ series.id }}" done="false"></nd-save>
     </div>
     <hr />
     <div class="controls">

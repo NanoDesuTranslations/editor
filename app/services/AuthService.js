@@ -36,7 +36,7 @@ angular.module('nanodesuApp')
             $log.debug('AuthService: login function');
             // TODO: always put setUrl before, to avoid using old url from another Ctrl or Service
             ApiService.setUrl($nd.login);
-            
+
             var data = {
                 'username': username,
                 'password': password
@@ -50,7 +50,7 @@ angular.module('nanodesuApp')
                     setUsername(username);
                     storeCredentials(success);
                     $window.location.reload();
-                    $window.location.href = '#/';
+                    $window.location.href = '#!/';
                 },
                 function(error){
                     $log.debug('Error Login');
@@ -172,7 +172,7 @@ angular.module('nanodesuApp')
             $log.debug('AuthService: isAdmin function');
             var isAdmin = '';
             if(localStorage.getItem('isAdmin') !== null){
-                // JSON.parse is use to convert from String into boolean http://stackoverflow.com/a/21285901/5852226 
+                // JSON.parse is use to convert from String into boolean http://stackoverflow.com/a/21285901/5852226
                 isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
             }
             $log.debug(isAdmin);

@@ -1,4 +1,3 @@
-<!-- <nd-title title="Project List" url="#/"></nd-title> -->
 <h2>Project List</h2>
 <hr />
 <nd-search></nd-search>
@@ -26,11 +25,11 @@
             <td>{{ srs.created * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
             <td><span ng-if="srs.updated !== 0">{{ srs.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</span></td>
             <td>
-                <a ng-href="#/translations/{{ srs.id }}" class="btn btn-success">
+                <a ng-href="#!/translations/{{ srs.id }}" class="btn btn-success">
                     <i class="fa fa-folder-open"></i>
                     Translations
                 </a>
-                <a ng-href="#/blogs/{{ srs.id }}" class="btn btn-info">
+                <a ng-href="#!/blogs/{{ srs.id }}" class="btn btn-info">
                     <i class="fa fa-book"></i>
                     Blog Post
                 </a>

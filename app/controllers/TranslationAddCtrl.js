@@ -55,7 +55,7 @@ angular.module('nanodesuApp')
                 $log.debug(success);
                 $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
                 // to separate when create or edit page
-                if(!pageId){ 
+                if(!pageId){
                     $scope.hierarchy = PageService.getSeriesHierarchy(success.series, seriesId);
                 }
             },
@@ -148,12 +148,13 @@ angular.module('nanodesuApp')
             if(data.meta.order){
                 data.meta.order = $nd.string2Int0(data.meta.order);
             }
+            // IMPORTANT: Always store hierarcy as int
             angular.forEach(
                 $scope.hierarchy,
                 function(param){
                     $log.debug(param);
                     if(param.value){
-                        data.meta[param.label] = param.value.toString();
+                        data.meta[param.label] = $nd.string2Int0(param.value);
                     }
                 }
             );
@@ -183,4 +184,4 @@ angular.module('nanodesuApp')
 
     });
 })();
- 
+

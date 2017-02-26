@@ -25,16 +25,12 @@
  * }
  */
 angular.module('nanodesuApp')
-    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, $timeout, alertify, ApiService, PageService){
+    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, $timeout, $uibModal, alertify, ApiService, PageService){
         var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
         var edit = 0; //flag when open edit menu
 
-        /**
-         * angular-ui bootstrap for collapse
-         */
-        $scope.isCollapsed = false;
         $scope.page = getPages();
 
         simpleMde.codemirror.on('change', function(){
@@ -48,6 +44,13 @@ angular.module('nanodesuApp')
             }
             edit++;
         });
+
+        $scope.help = function(){
+            $uibModal.open({
+                templateUrl: 'views/templates/modal/manual_editor.html',
+                size: 'lg'
+            });
+        }
 
         ApiService.setUrl($nd.pages);
         ApiService.http().get(

@@ -107,5 +107,33 @@ angular.module('nanodesuApp')
                 }
             );
         };
+
+
+        /**
+         * @ngdoc method
+         * @name removeDeleted
+         * @methodOf nanodesuApp.service:SeriesService
+         * @description
+         * remove deleted series from the list
+         *
+         * @param {array} list of all series
+         * @return {array} list of all series without deleted series
+         */
+        this.removeDeleted = function(series) {
+            $log.debug('SeriesService: removeDeleted');
+            var result = [];
+            angular.forEach(
+                series,
+                function(param) {
+                    $log.debug('isDeleted: '+param.config.deleted);
+                    if(!param.config.deleted) {
+                        this.push(param);
+                    }
+                },
+                result
+            );
+            return result;
+        };
+
     });
 })();

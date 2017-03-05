@@ -15,7 +15,7 @@ angular.module('nanodesuApp')
             function(success){
                 $log.debug('Success Retrieve Series Data');
                 $log.debug(success);
-                $scope.projects = success;
+                $scope.projects = SeriesService.removeDeleted(success);
             },
             function(error){
                 $log.debug('Error! '+error);

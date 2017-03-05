@@ -8,7 +8,7 @@
  * Controller for User Management
  */
 angular.module('nanodesuApp')
-    .controller('UserCtrl', function($log, $scope, alertify, ApiService){
+    .controller('UserCtrl', function($log, $window, $scope, alertify, ApiService){
         ApiService.setUrl($nd.user);
 
         ApiService.http().get(
@@ -23,16 +23,16 @@ angular.module('nanodesuApp')
             }
         );
 
-        $scope.delete = function(userId) {
+        $scope.delete = function(username) {
             alertify.confirm('Are You Sure?', function(){
                 $log.debug('Yes Button was choosen');
-                ApiService.setUrl($nd.user+'/c');
+                ApiService.setUrl($nd.user + '/' + username);
 
                 ApiService.http().delete(
-                    {'id': userId},
                     function(success){
                         $log.debug(success);
-                        alertify.success('Success! Users with id: '+userId+' is already deleted');
+                        alertify.success('Success! Users with username: ' + username + ' is already deleted');
+                        $window.location.reload();
                     },
                     function(error){
                         $log.debug(error);

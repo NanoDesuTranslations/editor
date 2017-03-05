@@ -21,14 +21,7 @@
             <td>{{ user.username }}</td>
             <td>{{ user.perms.admin == true ? 'Yes' : 'No' }}</td>
             <td>
-                <a ng-href="#!/users/edit/{{ user.username }}" class="btn btn-warning">
-                    <i class="fa fa-pencil"></i>
-                    Edit
-                </a>
-                <!--<button type="button" class="btn btn-danger" ng-click="delete()">
-                    <i class="fa fa-trash"></i>
-                    Delete
-                </button>-->
+                <nd-action edit="users/edit/{{ user.username }}" delete="delete(user.username)"></nd-action>
             </td>
         </tr>
     </tbody>

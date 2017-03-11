@@ -50,7 +50,7 @@ angular.module('nanodesuApp')
                 templateUrl: 'views/templates/modal/manual_editor.html',
                 size: 'lg'
             });
-        }
+        };
 
         ApiService.setUrl($nd.pages);
         ApiService.http().get(

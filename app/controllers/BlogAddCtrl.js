@@ -33,8 +33,8 @@ angular.module('nanodesuApp')
 
         simpleMde.codemirror.on('change', function(){
             $log.debug(edit);
-            $log.debug(edit === 1);
-            if(edit === 1){
+            $log.debug(edit === 5);
+            if(edit === 5){
                 $log.debug('isDirty?');
                 $timeout(function(){
                     $scope.blogForm.$setDirty();
@@ -57,16 +57,16 @@ angular.module('nanodesuApp')
 
         $scope.submit = function(){
             $log.debug('BlogAddCtrl: init function');
-            var data = reformatData($scope.blog);
+            var data = $scope.blog;
             if(pageId){
                 $log.debug('edit');
-                PageService.update(data, pageId);
-                $scope.blogForm.$setPristine();
+                PageService.update(reformatData(data), pageId);
             } else {
                 $log.debug('save');
-                PageService.save(data);
-                $scope.blogForm.$setPristine();
+                PageService.save(reformatData(data));
             }
+            $scope.blog = init();
+            $scope.blogForm.$setPristine();
         };
 
         /**
@@ -132,8 +132,8 @@ angular.module('nanodesuApp')
         function reformatData(param){
             $log.debug('BlogAddCtrl: reformatData function');
             var data = param;
+            data.meta.blog.published_date = $nd.convertToEpochTime(param.meta.blog.published_date);
             $log.debug(data.meta.blog.published_date);
-            data.meta.blog.published_date = $nd.convertToEpochTime(data.meta.blog.published_date);
             data.content = simpleMde.value();
             data.meta.status = $nd.string2Int0(data.meta.status);
             return data;

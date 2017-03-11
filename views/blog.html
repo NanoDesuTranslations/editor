@@ -13,6 +13,7 @@
             <th>Title</th>
             <th>Status</th>
             <th>Pinned</th>
+            <th>Published Date</th>
             <th>Created By</th>
             <th>Created</th>
             <th>Updated</th>
@@ -29,6 +30,7 @@
                 <span ng-if="blog.meta.status === 9">Published</span>
             </td>
             <td>{{ blog.meta.blog.pinned === 1 ? 'Yes' : 'No' }}</td>
+            <td>{{ blog.meta.blog.published_date * 1000 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
             <td>{{ blog.meta.blog.author }}</td>
             <td>{{ blog.meta.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td><span ng-if="blog.meta.updated">{{ blog.meta.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span></td> 

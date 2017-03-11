@@ -35,8 +35,8 @@ angular.module('nanodesuApp')
 
         simpleMde.codemirror.on('change', function(){
             $log.debug(edit);
-            $log.debug(edit === 1);
-            if(edit === 1){
+            $log.debug(edit === 5);
+            if(edit === 5){
                 $log.debug('isDirty?');
                 $timeout(function(){
                     $scope.translationForm.$setDirty();
@@ -75,13 +75,13 @@ angular.module('nanodesuApp')
             if(pageId){
                 $log.debug('edit');
                 PageService.update(data, pageId);
-                $scope.translationForm.$setPristine();
             } else {
                 $log.debug('save');
                 PageService.save(data);
                 $scope.done = true;
-                $scope.translationForm.$setPristine();
             }
+            $scope.page = getPages();
+            $scope.translationForm.$setPristine();
         };
 
         /**

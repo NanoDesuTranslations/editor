@@ -18,7 +18,7 @@
  * }
  */
 angular.module('nanodesuApp')
-    .service('AuthService', function($log, $window, ApiService){
+    .service('AuthService', function($log, $window, alertify, ApiService){
 
         /**
          * @ngdoc method
@@ -53,6 +53,7 @@ angular.module('nanodesuApp')
                     $window.location.href = '#!/';
                 },
                 function(error){
+                    alertify.error('Error! Username or Password is not matched, please contact admin');
                     $log.debug('Error Login');
                     $log.debug(error);
                 }

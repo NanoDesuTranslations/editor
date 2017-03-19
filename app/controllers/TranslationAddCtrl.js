@@ -156,8 +156,9 @@ angular.module('nanodesuApp')
                 $scope.hierarchy,
                 function(param){
                     $log.debug(param);
+                    // if the hierarchy is null don't send it into server
                     if(param.value){
-                        data.meta[param.label] = $nd.string2Int0(param.value);
+                        data.meta[param.label] = param.value;
                     }
                 }
             );

@@ -80,7 +80,7 @@ angular.module('nanodesuApp')
                 PageService.save(data);
                 $scope.done = true;
             }
-            $scope.page = getPages();
+            $scope.page = reverseData(data);
             $scope.translationForm.$setPristine();
         };
 
@@ -95,6 +95,7 @@ angular.module('nanodesuApp')
          */
         function getPages(){
             $log.debug('TranslationAddCtrl: getPages function');
+            $log.debug('page id: '+pageId);
             var pages = {};
             pages.meta = {};
             if(pageId){
@@ -151,7 +152,6 @@ angular.module('nanodesuApp')
             if(data.meta.order){
                 data.meta.order = $nd.string2Int0(data.meta.order);
             }
-            // IMPORTANT: Always store hierarcy as int
             angular.forEach(
                 $scope.hierarchy,
                 function(param){

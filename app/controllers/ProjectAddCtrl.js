@@ -91,7 +91,8 @@ angular.module('nanodesuApp')
                         'updated': null,
                         'status': '5',
                         'hierarchy': [],
-                        'deleted': false
+                        'deleted': false,
+                        'fixed_nav_entries': false
                     }
                 };
             }
@@ -148,6 +149,8 @@ angular.module('nanodesuApp')
             data.config['header-url'] = $scope.headerUrl;
             data.config.hierarchy = addHierarchy();
             data.config.status = $nd.string2Int0(data.config.status);
+            $log.debug('reformat data');
+            $log.debug(data);
             return data;
         }
 
@@ -172,6 +175,7 @@ angular.module('nanodesuApp')
             temp.config.updated = series.config.updated;
             temp.config.status = status.toString(); 
             temp.config.deleted = series.config.deleted;
+            temp.config.fixed_nav_entries = series.config.fixed_nav_entries;
 
             $scope.headerUrl = series.config['header-url'];
             reverseHierarchy(series.config.hierarchy);

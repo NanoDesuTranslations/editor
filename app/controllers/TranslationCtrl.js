@@ -42,7 +42,7 @@ angular.module('nanodesuApp')
                 }
             );
         };
-        
+
         /**
          * @ngdoc method
          * @name init
@@ -50,6 +50,7 @@ angular.module('nanodesuApp')
          * @description
          * Create list of object which is mainly from pages object
          * and add new field hierarchy, id, and name of series
+         * exclude blog
          *
          * @param {Object} Object pages and Series from /pages endpoint
          * @return {array} List of new object
@@ -59,6 +60,8 @@ angular.module('nanodesuApp')
             var tempResult = [];
             var tempPages = initPages(param.pages);
             var tempSeries = initSeries(param.series);
+            $log.debug('print temp pages');
+            $log.debug(tempPages);
             angular.forEach(
                 tempPages,
                 function(data){
@@ -66,7 +69,9 @@ angular.module('nanodesuApp')
                     $log.debug(tempSeries);
                     data.hierarchy = tempSeries.hierarchy;
                     data.seriesName = tempSeries.name;
-                    this.push(data);
+                    if(data.meta.blog === false) {
+                        this.push(data);
+                    }
                 },
                 tempResult
             );
@@ -81,10 +86,10 @@ angular.module('nanodesuApp')
          * create list of object based on seriesId
          *
          * @param {Object} Object pages from /pages endpoint
-         * @return {array} List of new object from pages that matches 
+         * @return {array} List of new object from pages that matches
          * with seriesId
          */
-        
+
         function initPages(param){
             $log.debug('TranslationCtrl: initPages function');
             $log.debug(param);
@@ -134,4 +139,4 @@ angular.module('nanodesuApp')
         }
 
     });
-})(); 
+})();

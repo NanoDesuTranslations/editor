@@ -8,15 +8,20 @@
  * Controller for Add new Blog or Edit Existing Blog
  */
 angular.module('nanodesuApp')
-    .controller('BlogAddCtrl', function($log, $scope, $routeParams, $timeout, alertify, AuthService, ApiService, PageService){
+    .controller('BlogAddCtrl', function($log, $scope, $routeParams, $timeout, $uibModal, alertify, AuthService, ApiService, PageService){
         var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
         var edit = 0; //flag when open edit menu
         $scope.blog = init();
 
-        /* angular-ui bootstrap for collapse */
-        $scope.isCollapsed = false;
+        $scope.help = function(){
+            $uibModal.open({
+                controller: 'BlogAddCtrl',
+                templateUrl: 'views/templates/modal/manual_editor.html',
+                size: 'lg'
+            });
+        };
         /* Related to Angular Bootstrap DatePicker */
         $scope.today = function(){
             $scope.blog.meta.blog.published_date = new Date();

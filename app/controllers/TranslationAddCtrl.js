@@ -13,6 +13,7 @@
  *  'content': content of the page,
  *  'meta': {
  *    'title': title of the pages
+ *    'nav_title': navigation menu title of the pages
  *    'status': draft, hiddend, or published
  *    'order': the order of the page
  *    'path': optional url
@@ -120,6 +121,7 @@ angular.module('nanodesuApp')
                     'series': seriesId,
                     'meta': {
                         'title': null,
+                        'nav_title': null,
                         'status': '5',
                         'order': null,
                         'path': null,

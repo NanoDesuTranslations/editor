@@ -107,6 +107,7 @@ angular.module('nanodesuApp')
                     'series': seriesId,
                     'meta': {
                         'title': null,
+                        'nav_title': null,
                         'status': '5',
                         'created': $nd.createEpochTime(),
                         'updated': null,

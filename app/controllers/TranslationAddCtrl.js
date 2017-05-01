@@ -81,7 +81,7 @@ angular.module('nanodesuApp')
                 PageService.save(data);
                 $scope.done = true;
             }
-            $scope.page = reverseData(data);
+            //$scope.page = reverseData(data);
             $scope.translationForm.$setPristine();
         };
 

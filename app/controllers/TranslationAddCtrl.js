@@ -27,24 +27,12 @@
  */
 angular.module('nanodesuApp')
     .controller('TranslationAddCtrl', function($log, $scope, $routeParams, $timeout, $uibModal, alertify, ApiService, PageService){
-        var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
-        var edit = 0; //flag when open edit menu
+
+        $scope.tinymceOptions = $nd.tinymceOptions;
 
         $scope.page = getPages();
-
-        simpleMde.codemirror.on('change', function(){
-            $log.debug(edit);
-            $log.debug(edit === 5);
-            if(edit === 5){
-                $log.debug('isDirty?');
-                $timeout(function(){
-                    $scope.translationForm.$setDirty();
-                });
-            }
-            edit++;
-        });
 
         $scope.help = function(){
             $uibModal.open({
@@ -115,7 +103,6 @@ angular.module('nanodesuApp')
                 );
             } else {
                 $log.debug('Create New');
-                simpleMde.value();
                 pages = {
                     'content': null,
                     'series': seriesId,
@@ -149,7 +136,6 @@ angular.module('nanodesuApp')
         function reformatData(param){
             $log.debug('TranslationAddCtrl: reformatData function');
             var data = param;
-            data.content = simpleMde.value();
             data.meta.status = $nd.string2Int0(data.meta.status);
             if(data.meta.order){
                 data.meta.order = $nd.string2Int0(data.meta.order);
@@ -183,7 +169,6 @@ angular.module('nanodesuApp')
             $log.debug('TranslationCtrl: reverseData function');
             page.meta.status = page.meta.status.toString();
             page.meta.updated = $nd.createEpochTime();
-            simpleMde.value(page.content);
             return page;
         }
 

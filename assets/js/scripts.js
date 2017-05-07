@@ -1,7 +1,7 @@
 ﻿// $nd object for app-specific debug utilities
 var $nd = (function () {
     var objND = {};
-    
+
     objND.pages = '/pages';
     objND.series = '/series';
     objND.user = '/admin/users';
@@ -46,7 +46,7 @@ var $nd = (function () {
         if (typeof s == "string") {
             // When used as a conversion function, Number() will convert the string only if
             // the string is a number literal (+ surrounding whitespace).  The result  may be a floating point value.
-            var ret = Number(s); 
+            var ret = Number(s);
             if (isNaN(ret)) ret=s;
             return ret;
         } else {

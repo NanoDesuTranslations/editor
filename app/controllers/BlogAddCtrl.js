@@ -9,10 +9,11 @@
  */
 angular.module('nanodesuApp')
     .controller('BlogAddCtrl', function($log, $scope, $routeParams, $timeout, $uibModal, alertify, AuthService, ApiService, PageService){
-        var simpleMde = new SimpleMDE(document.getElementById('content'));
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
-        var edit = 0; //flag when open edit menu
+
+        $scope.tinymceOptions = $nd.tinymceOptions;
+
         $scope.blog = init();
 
         $scope.help = function(){
@@ -35,18 +36,6 @@ angular.module('nanodesuApp')
             $scope.popup.opened = true;
         };
         /* end */
-
-        simpleMde.codemirror.on('change', function(){
-            $log.debug(edit);
-            $log.debug(edit === 5);
-            if(edit === 5){
-                $log.debug('isDirty?');
-                $timeout(function(){
-                    $scope.blogForm.$setDirty();
-                });
-            }
-            edit++;
-        });
 
         ApiService.setUrl($nd.pages);
         ApiService.http().get(
@@ -140,7 +129,6 @@ angular.module('nanodesuApp')
             var data = param;
             data.meta.blog.published_date = $nd.convertToEpochTime(param.meta.blog.published_date);
             $log.debug(data.meta.blog.published_date);
-            data.content = simpleMde.value();
             data.meta.status = $nd.string2Int0(data.meta.status);
             return data;
         }
@@ -162,7 +150,6 @@ angular.module('nanodesuApp')
             data.meta.status = data.meta.status.toString();
             data.meta.blog.published_date = $nd.convertToUtc(data.meta.blog.published_date);
             data.meta.updated = $nd.createEpochTime();
-            simpleMde.value(data.content);
             return data;
         }
     });

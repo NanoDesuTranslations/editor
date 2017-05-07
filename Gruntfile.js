@@ -35,8 +35,6 @@ module.exports = function(grunt) {
                 'files': [
                     {'expand': true, 'src': ['bower_components/alertifyjs/dist/**'], 'dest': 'public/', 'filter': 'isFile'},
                     {'expand': true, 'src': ['bower_components/bootstrap/dist/**'], 'dest': 'public/', 'filter': 'isFile'},
-                    {'expand': true, 'src': ['bower_components/jquery/dist/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
-                    {'expand': true, 'src': ['bower_components/simplemde/dist/**'], 'dest': 'public/', 'filter': 'isFile'},
                     {'expand': true, 'src': ['bower_components/font-awesome-bower/**'], 'dest': 'public/', 'filter': 'isFile'},
                     {'expand': true, 'src': ['bower_components/angular/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
                     {'expand': true, 'src': ['bower_components/angular-animate/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
@@ -45,6 +43,8 @@ module.exports = function(grunt) {
                     {'expand': true, 'src': ['bower_components/angular-route/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
                     {'expand': true, 'src': ['bower_components/angular-touch/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
                     {'expand': true, 'src': ['bower_components/angularUtils-pagination/*.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/angular-ui-tinymce/dist/*.min.js'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['bower_components/tinymce/**'], 'dest': 'public/', 'filter': 'isFile'},
                 ]
             }
         },

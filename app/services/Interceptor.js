@@ -9,7 +9,7 @@
  * intercept any $http request and response
  */
 angular.module('nanodesuApp')
-    .factory('ndInterceptor', function($log, $rootScope) {
+    .factory('ndInterceptor', function($q, $log, $rootScope) {
 
         var loadings = 0;
         var token = localStorage.getItem('token');
@@ -25,21 +25,35 @@ angular.module('nanodesuApp')
                 return config;
             },
             response: function(response) {
-                $log.debug('response interceptor' + response);
+                $log.debug('response interceptor');
 
                 if((--loadings) === 0) {
                     $rootScope.$broadcast('loader_hide');
+                }
+
+                if(response.status === 200) {
+                    if(response.config.method === 'POST') {
+                        $rootScope.$broadcast('created');
+                    } else if(response.config.method === 'PUT') {
+                        $rootScope.$broadcast('updated');
+                    }
                 }
 
                 return response;
             },
             responseError: function(response) {
                 // TODO: perform error message by checking the response code.
-                $log.debug('responseError interceptor' + response);
+                $log.debug('responseError interceptor');
+                if(response.status === 401) {
+                    $rootScope.$broadcast('unauthorized');
+                }
                 
-                $rootScope.$broadcast('loader_hide');
+                if((--loadings) === 0) {
+                    $rootScope.$broadcast('loader_hide');
+                }
+                $rootScope.$broadcast('error');
                 
-                return response;
+                return $q.reject(response);
             }
         };
 

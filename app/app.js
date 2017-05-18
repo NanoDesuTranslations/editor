@@ -18,11 +18,13 @@ angular
         'ui.tinymce',
         'angularUtils.directives.dirPagination'
         ])
-    .config(function ($routeProvider, $compileProvider, $logProvider, $locationProvider){
+    .config(function ($routeProvider, $compileProvider, $logProvider, 
+                $httpProvider, $locationProvider){
         // just use this on production
         $compileProvider.debugInfoEnabled(false);
         $logProvider.debugEnabled(false); // change to false in production
 
+        $httpProvider.interceptors.push('ndInterceptor');
         //$locationProvider.html5Mode(true); need server side re-writing to avoid token invalid when refresh the page
         $routeProvider
             .when('/', {

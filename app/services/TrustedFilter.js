@@ -1,5 +1,5 @@
 (function() {
-'use strict'
+'use strict';
 
 /**
  * @ngdoc filter
@@ -12,6 +12,6 @@ angular.module('nanodesuApp')
     .filter('trusted', function($sce) {
         return function(text) {
             return $sce.trustAsHtml(text);
-        }
+        };
     });
 })();

@@ -31,7 +31,7 @@ angular.module('nanodesuApp')
          */
         this.setUsername = function(username) {
             localStorage.setItem('username', username);
-        }
+        };
 
         /**
          * @ngdoc method
@@ -116,12 +116,13 @@ angular.module('nanodesuApp')
          */
         this.isAdmin = function() {
             $log.debug('AuthService: isAdmin function');
+
             var isAdmin = '';
             if(localStorage.getItem('isAdmin') !== null){
                 // JSON.parse is use to convert from String into boolean http://stackoverflow.com/a/21285901/5852226
                 isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
             }
-            $log.debug(isAdmin);
+
             return isAdmin;
         };
 
@@ -177,7 +178,7 @@ angular.module('nanodesuApp')
             localStorage.setItem('token', param.token);
             localStorage.setItem('view', param.permissions.view);
             localStorage.setItem('edit', param.permissions.edit);
-        }
+        };
 
         /**
          * @ngdoc method
@@ -193,7 +194,7 @@ angular.module('nanodesuApp')
             localStorage.removeItem('isAdmin');
             localStorage.removeItem('view');
             localStorage.removeItem('edit');
-        }
+        };
 
         /**
          * @ngdoc method

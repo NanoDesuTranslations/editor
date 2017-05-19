@@ -1,5 +1,5 @@
 (function() {
-'use strict'
+'use strict';
 
 /**
  * @ngdoc interceptors
@@ -21,7 +21,7 @@ angular.module('nanodesuApp')
                 loadings++;
                 $rootScope.$broadcast('loader_show');
 
-                config.headers['Authorization'] = token;
+                config.headers.Authorization = token;
                 return config;
             },
             response: function(response) {

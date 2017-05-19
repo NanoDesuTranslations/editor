@@ -38,10 +38,8 @@ angular.module('nanodesuApp')
             if(username){
                 $log.debug('update');
 
-                var user = UserResources.update(data);
-                if(user.$resolved) {
-                    AuthService.newPermissions(data);
-                }
+                UserResources.update(data);
+                AuthService.newPermissions(data);
 
             } else {
                 $log.debug('insert');

@@ -60,7 +60,7 @@ angular.module('nanodesuApp')
         $scope.$on('deploy', function() {
             $scope.alerts = [{
                     type: 'success', 
-                    msg: 'Success! You can check the result at <a href="nanodesutranslations.org">nanodesutranslations.org</a>'
+                    msg: 'Success! You can check the result at <a href="http://nanodesutranslations.org">nanodesutranslations.org</a>'
             }];
         });
 

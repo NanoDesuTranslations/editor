@@ -18,7 +18,7 @@ angular.module('nanodesuApp')
         };
 
         $scope.deploy = function(){
-            build.get();
+            deploy.get();
         };
     });
 })();

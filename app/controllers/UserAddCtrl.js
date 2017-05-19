@@ -8,7 +8,7 @@
  * Controller for Add new User or Edit Existing User
  */
 angular.module('nanodesuApp')
-    .controller('UserAddCtrl', function($log, $scope, $routeParams, alertify, ApiService, AuthService){
+    .controller('UserAddCtrl', function($log, $scope, $routeParams, UserResources, SeriesResources, AuthService){
         var username = $routeParams.username;
         $scope.passwd = true; // model to hide password field when edit user
         $scope.user = getUser(username);
@@ -16,14 +16,7 @@ angular.module('nanodesuApp')
         $scope.view = {};
         $scope.edit = {};
 
-        ApiService.setUrl($nd.series);
-        ApiService.http().query(
-            function(success){
-                $log.debug('retrieve series data');
-                $log.debug(success);
-                $scope.series = success;
-            }
-        );
+        $scope.series = SeriesResources.query();
 
         /**
          * @ngdoc method
@@ -40,37 +33,20 @@ angular.module('nanodesuApp')
 
         $scope.submit = function() {
             $log.debug('UserAddCtrl: submit function');
-            $log.debug($scope.user);
-            ApiService.setUrl($nd.user);
+
             var data = reformatData($scope.user);
-            $log.debug(data);
             if(username){
                 $log.debug('update');
-                ApiService.http().update(
-                    data,
-                    function(success){
-                        $log.debug(success);
-                        AuthService.newPermissions(data);
-                        alertify.success('Success! Update User Data');
-                    },
-                    function(error){
-                        $log.debug(error);
-                        alertify.error('Error! Please Contact Admin');
-                    }
-                );
+
+                var user = UserResources.update(data);
+                if(user.$resolved) {
+                    AuthService.newPermissions(data);
+                }
+
             } else {
                 $log.debug('insert');
-                ApiService.http().save(
-                    data,
-                    function(success){
-                        $log.debug(success);
-                        alertify.success('Success! Save User Data');
-                    },
-                    function(error){
-                        $log.debug(error);
-                        alertify.error('Error! Please Contact Admin');
-                    }
-                );
+
+                UserResources.save(data);
             }
         };
 
@@ -85,27 +61,21 @@ angular.module('nanodesuApp')
          * @return {Object} User
          */
         function getUser(userName) {
-            $log.debug('UserAddCtrl: getUser function');
-            $log.debug('username: '+userName);
+            $log.debug('UserAddCtrl: perform populate user object for data binding in html form');
             var user = {};
             if(userName){
                 $log.debug('username exist');
-                ApiService.setUrl($nd.user);
-                ApiService.http().get(
-                    function(success){
-                        // convert from api into ng-model
-                        var temp = findUser(success.users);
-                        $scope.user = reverseData(temp);
-                        // hide password field
-                        $scope.passwd = false;
-                    },
-                    function(error){
-                        $log.debug(error);
-                        alertify.error('Error! Please Contact Admin');
-                    }
-                );
+
+                UserResources.get(function(success) {
+                    var tempUsers = findUser(success.users);
+                    $scope.user = reverseData(tempUsers);
+                    // hide password field
+                    $scope.passwd = false;
+                }, function(error) {});
+
             } else {
                 $log.debug('username not exist');
+
                 user = {
                     'username': '',
                     'password': '',
@@ -116,6 +86,7 @@ angular.module('nanodesuApp')
                     }
                 };
             }
+
             return user;
         }
 
@@ -131,21 +102,20 @@ angular.module('nanodesuApp')
          * @return {array} single users
          */
         function findUser(data){
-            $log.debug('UserAddCtrl: findUser function');
-            $log.debug(data);
+            $log.debug('UserAddCtrl: find user in list of array');
+
             var result = [];
+
             angular.forEach(
                 data,
                 function(param){
-                    $log.debug('param: '+ param.username);
-                    $log.debug('username: '+ username);
                     if(param.username === username){
                         this.push(param);
                     }
                 },
                 result
             );
-            $log.debug(result);
+
             return result;
         }
 
@@ -161,13 +131,12 @@ angular.module('nanodesuApp')
          * @return {Object} users
          */
         function reformatData(data){
-            $log.debug('UserAddCtrl: reformatData function');
-            $log.debug(data);
-            $log.debug($scope.view);
-            $log.debug($scope.edit);
+            $log.debug('UserAddCtrl: reformat data from HTML into specify format that can be accepted by API');
+
             var result = data;
             var tempView = [];
             var tempEdit = [];
+
             // view permissions
             angular.forEach(
                 $scope.view, 
@@ -177,6 +146,7 @@ angular.module('nanodesuApp')
                     }
                 }, 
                 tempView);
+
             // edit permissions
             angular.forEach(
                 $scope.edit, 
@@ -204,8 +174,8 @@ angular.module('nanodesuApp')
          * @return {object} ng-model for users
          */
         function reverseData(param){
-            $log.debug('UserAddCtrl: reverseData function');
-            $log.debug(param[0].perms);
+            $log.debug('UserAddCtrl: reformat data from API to match with HTML binding');
+
             var result = {};
             result.permissions = {};
 
@@ -229,14 +199,14 @@ angular.module('nanodesuApp')
          * @return {object} seriesId: true
          */
         function arrayToObject(param){
-            $log.debug('UserAddCtrl: arrayToObject function');
-            $log.debug(param);
+            $log.debug('UserAddCtrl: convert from aray to object');
+
             var result = {};
             for(var i = 0; i < param.length; i++){
                 var name = param[i];
                 result[name] = true;
             }
-            $log.debug(result);
+
             return result;
         }
     });

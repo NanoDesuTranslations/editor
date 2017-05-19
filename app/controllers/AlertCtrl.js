@@ -22,6 +22,13 @@ angular.module('nanodesuApp')
             }];
         });
 
+        $scope.$on('login_success', function() {
+            $scope.alerts = [{
+                    type: 'success', 
+                    msg: 'Success! Please wait you will redirect into home page' 
+            }];
+        });
+
         $scope.$on('login_failed', function() {
             $scope.alerts = [{
                     type: 'danger', 

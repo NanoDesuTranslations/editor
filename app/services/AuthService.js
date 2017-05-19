@@ -22,61 +22,6 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
-         * @name login
-         * @methodOf nanodesuApp.service:AuthService
-         * @description
-         * Hit login endpoint with username and password data
-         *
-         * @param {string} username
-         * @param {string} password
-         *
-         * @return {boolean} status true or false
-         */
-        this.login = function(username, password){
-            $log.debug('AuthService: login function');
-            // TODO: always put setUrl before, to avoid using old url from another Ctrl or Service
-            ApiService.setUrl($nd.login);
-
-            var data = {
-                'username': username,
-                'password': password
-            };
-
-           ApiService.http().save(
-                data,
-                function(success){
-                    $log.debug('Success Login');
-                    $log.debug(success);
-                    setUsername(username);
-                    storeCredentials(success);
-                    $window.location.reload();
-                    $window.location.href = '#!/';
-                },
-                function(error){
-                    alertify.error('Error! Username or Password is not matched, please contact admin');
-                    $log.debug('Error Login');
-                    $log.debug(error);
-                }
-            );
-        };
-
-        /**
-         * @ngdoc method
-         * @name logout
-         * @methodOf nanodesuApp.service:AuthService
-         * @description
-         * remove all credentials data
-         *
-         *
-         * @return {boolean} true
-         */
-        this.logout = function() {
-            $log.debug('AuthService: logout function');
-            removeCredentials();
-        };
-
-        /**
-         * @ngdoc method
          * @name setUsername
          * @methodOf nanodesuApp.service:AuthService
          * @description
@@ -84,7 +29,7 @@ angular.module('nanodesuApp')
          *
          * @param {string} username
          */
-        function setUsername(username) {
+        this.setUsername = function(username) {
             localStorage.setItem('username', username);
         }
 
@@ -225,7 +170,7 @@ angular.module('nanodesuApp')
          *
          * @param {Object} authorization info from API
          */
-        function storeCredentials(param) {
+        this.storeCredentials = function(param) {
             $log.debug('AuthService: storeCredentials function');
             $log.debug('Authorization Info: '+JSON.stringify(param));
             localStorage.setItem('isAdmin', param.permissions.admin);
@@ -242,7 +187,7 @@ angular.module('nanodesuApp')
          * private function to delete data in localStorage
          *
          */
-        function removeCredentials() {
+        this.removeCredentials = function() {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
             localStorage.removeItem('isAdmin');

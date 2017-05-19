@@ -8,7 +8,8 @@
  * Controller for Login Action
  */
 angular.module('nanodesuApp')
-    .controller('LoginCtrl', function($log, $scope, $window, AuthService){
+    .controller('LoginCtrl', function($log, $scope, $window, $resource, AuthService){
+        var login = $resource('/user/login');
         $scope.isNavCollapsed = true; // for responsive navigation in index.html
         $scope.isLogin = AuthService.isLogin();
         $scope.isAdmin = AuthService.isAdmin();
@@ -22,11 +23,23 @@ angular.module('nanodesuApp')
          * Method to hit login endpoint and redirect into home page
          */
         $scope.login = function(){
-            $log.debug('LoginCtrl: login function');
-            var username = $scope.username;
-            var password = $scope.password;
-            $log.debug(username+' '+password);
-            AuthService.login(username, password);
+            $log.debug('LoginCtrl: perform login action');
+
+            var data = {
+                'username': $scope.username,
+                'password': $scope.password
+            };
+
+            login.save(data, function(success){
+                $log.debug('success login');
+                $log.debug(success);
+
+                AuthService.setUsername($scope.username);
+                AuthService.storeCredentials(success);
+                $log.debug('break');
+                $window.location.reload();
+                $window.location.href = '';
+            }, function(error){});
         };
 
         /**
@@ -37,9 +50,11 @@ angular.module('nanodesuApp')
          * remove all credentials and redirect into login page
          */
         $scope.logout = function() {
-            AuthService.logout();
+            $log.debug('LoginCtrl: perform login action');
+
+            AuthService.removeCredentials();
             $window.location.reload();
-            $window.location.href = '#/login';
+            $window.location.href = '#!/login';
         };
 
     });

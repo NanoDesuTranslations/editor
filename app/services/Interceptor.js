@@ -42,16 +42,19 @@ angular.module('nanodesuApp')
                 return response;
             },
             responseError: function(response) {
-                // TODO: perform error message by checking the response code.
                 $log.debug('responseError interceptor');
-                if(response.status === 401) {
-                    $rootScope.$broadcast('unauthorized');
+
+                if(response.status === 400) {
+                    if(response.config.url === '/user/login') {
+                        $rootScope.$broadcast('login_failed');
+                    } else {
+                        $rootScope.$broadcast('error');
+                    }
                 }
                 
                 if((--loadings) === 0) {
                     $rootScope.$broadcast('loader_hide');
                 }
-                $rootScope.$broadcast('error');
                 
                 return $q.reject(response);
             }

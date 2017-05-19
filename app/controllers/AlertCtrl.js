@@ -22,6 +22,13 @@ angular.module('nanodesuApp')
             }];
         });
 
+        $scope.$on('login_failed', function() {
+            $scope.alerts = [{
+                    type: 'danger', 
+                    msg: 'Failed! Your username or password is wrong, please try again!'
+            }];
+        });
+
         $scope.$on('created', function() {
             $scope.alerts = [{
                     type: 'success', 

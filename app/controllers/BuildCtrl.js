@@ -8,35 +8,17 @@
  * Controller for Main Page
  */
 angular.module('nanodesuApp')
-    .controller('BuildCtrl', function($log, $scope, alertify, ApiService, AuthService){
+    .controller('BuildCtrl', function($log, $scope, $resource, AuthService){
+        var preview = $resource('/build');
+        var deploy = $resource('/build/deploy');
         $scope.isAdmin = AuthService.isAdmin();
 
         $scope.preview = function(){
-            ApiService.setUrl($nd.preview);
-            ApiService.http().get(
-                function(success){
-                    $log.debug(success);
-                    alertify.success('Success! Please Check at /test');
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
-                }
-            );
+            preview.get();
         };
 
         $scope.deploy = function(){
-            ApiService.setUrl($nd.deploy);
-            ApiService.http().get(
-                function(success){
-                    $log.debug(success);
-                    alertify.success('Success! Please Check at nanodesutranslations.org');
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
-                }
-            );
+            build.get();
         };
     });
 })();

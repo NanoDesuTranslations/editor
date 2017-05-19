@@ -50,6 +50,20 @@ angular.module('nanodesuApp')
             }];
         });
 
+        $scope.$on('preview', function() {
+            $scope.alerts = [{
+                    type: 'success', 
+                    msg: 'Success! You can check the result <a href="/test">here</a>'
+            }];
+        });
+
+        $scope.$on('deploy', function() {
+            $scope.alerts = [{
+                    type: 'success', 
+                    msg: 'Success! You can check the result at <a href="nanodesutranslations.org">nanodesutranslations.org</a>'
+            }];
+        });
+
         $scope.$on('error', function() {
             $scope.alerts = [{
                     type: 'danger', 

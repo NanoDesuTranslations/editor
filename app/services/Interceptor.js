@@ -34,6 +34,10 @@ angular.module('nanodesuApp')
                 if(response.status === 200) {
                     if(response.config.url === '/user/login') {
                         $rootScope.$broadcast('login_success');
+                    } else if(response.config.url === '/build') {
+                        $rootScope.$broadcast('preview');
+                    } else if(response.config.url === '/build/deploy') {
+                        $rootScope.$broadcast('deploy');
                     } else if(response.config.method === 'POST') {
                         $rootScope.$broadcast('created');
                     } else if(response.config.method === 'PUT') {

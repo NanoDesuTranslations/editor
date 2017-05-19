@@ -55,7 +55,7 @@
 
         <div ng-controller="AlertCtrl">
             <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">
-            {{ alert.msg }}
+                <div ng-bind-html="alert.msg | trusted"></div>
             </div>
         </div>
 
@@ -102,6 +102,7 @@
     <script src="app/services/UserResources.js"></script>
     <script src="app/services/SeriesResources.js"></script>
     <script src="app/services/PagesResources.js"></script>
+    <script src="app/services/TrustedFilter.js"></script>
     <script src="app/directives/SearchDirective.js"></script>
     <script src="app/directives/FormTitleDirective.js"></script>
     <script src="app/directives/ActionButtonDirective.js"></script>

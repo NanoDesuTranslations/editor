@@ -8,26 +8,16 @@
  * Controller for Translations Project which is call /series
  */
 angular.module('nanodesuApp')
-    .controller('ProjectCtrl', function($log, $scope, alertify, ApiService, SeriesService){
-        ApiService.setUrl($nd.series);
+    .controller('ProjectCtrl', function($log, $scope, alertify, SeriesResources, SeriesService){
 
-        ApiService.http().query(
-            function(success){
-                $log.debug('Success Retrieve Series Data');
-                $log.debug(success);
-                $scope.projects = SeriesService.removeDeleted(success);
-            },
-            function(error){
-                $log.debug('Error! '+error);
-                alertify.error('Error! Please Contact Admin');
-            }
-        );
+        SeriesResources.query(function(success) {
+            $scope.projects = SeriesService.removeDeleted(success);
+        }, function(error) {});
 
         $scope.delete = function(seriesId){
             alertify.confirm(
                 'Are You Sure?', 
                 function(){
-                    $log.debug('Yes Button was choosen');
                     SeriesService.delete(seriesId);
                 },
                 function(){

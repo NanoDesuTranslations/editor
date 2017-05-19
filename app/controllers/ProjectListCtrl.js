@@ -8,18 +8,12 @@
  * Controller for List All Project by Users
  */
 angular.module('nanodesuApp')
-    .controller('ProjectListCtrl', function($log, $scope, alertify, ApiService, PageService){
+    .controller('ProjectListCtrl', function($log, $scope, PagesResources, PageService){
         $scope.series = [];
-        ApiService.setUrl($nd.pages);
-        ApiService.http().get(
-            function(success){
-                $log.debug(success);
-                $scope.series = PageService.init(success);
-            },
-            function(error){
-                $log.debug(error);
-                alertify.error('Error! Please Contact Admin');
-            }
-        );
+
+        PagesResources.get(function(success) {
+            $scope.series = PageService.init(success);
+        }, function(error) {});
+
     });
 })(); 

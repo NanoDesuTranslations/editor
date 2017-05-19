@@ -10,62 +10,7 @@
  *
  */
 angular.module('nanodesuApp')
-    .service('SeriesService', function($log, $window, alertify, ApiService){
-
-        /**
-         * @ngdoc method
-         * @name save
-         * @methodOf nanodesuApp.service:SeriesService
-         * @description
-         * perform save for series
-         *
-         * @param {Object} series
-         */
-        this.save = function(series){
-            $log.debug('SeriesService: save function');
-            $log.debug(series);
-            ApiService.setUrl($nd.series);
-
-            ApiService.http().save(
-                series,
-                function(success){
-                    $log.debug(success);
-                    alertify.success('Success! New Project has been saved');
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
-                }
-            );
-        };
-
-        /**
-         * @ngdoc method
-         * @name update
-         * @methodOf nanodesuApp.service:SeriesService
-         * @description
-         * perform update for series
-         *
-         * @param {string} id
-         * @param {Object} series
-         */
-        this.update = function(id, series){
-            $log.debug('SeriesService: save function');
-            $log.debug(series);
-            ApiService.setUrl($nd.series);
-
-            ApiService.http().update(
-                {'id': id}, series,
-                function(success){
-                    $log.debug(success);
-                    alertify.success('Success! Project has been updated');
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
-                }
-            );
-        };
+    .service('SeriesService', function($log, $window, SeriesResources){
 
         /**
          * @ngdoc method
@@ -77,35 +22,22 @@ angular.module('nanodesuApp')
          * @param {string} seriesId
          */
         this.delete = function(seriesId) {
+            $log.debug('SeriesService: perform soft delete on series');
+
             var deleted = true;
-            ApiService.setUrl($nd.series);
 
-            ApiService.http().get(
-                {'id': seriesId},
-                function(success){
-                    $log.debug(success);
-                    var series = success;
-                    series.config.deleted = deleted;
+            SeriesResources.get({id: seriesId}, function(success) {
 
-                    ApiService.http().update(
-                        {'id': seriesId},
-                        series,
-                        function(success){
-                            $log.debug(success);
-                            alertify.success('Success! Series with id: '+seriesId+'already deleted');
-                            $window.location.reload();
-                        },
-                        function(error){
-                            $log.debug(error);
-                            alertify.error('Error! Please Contact Admin');
-                        }
-                    );
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
+                var series = success;
+
+                series.config.deleted = deleted;
+                series.$update();
+
+                if(series.$resolved) {
+                    $window.location.reload();
                 }
-            );
+            }, function(error) {});
+
         };
 
 
@@ -120,18 +52,21 @@ angular.module('nanodesuApp')
          * @return {array} list of all series without deleted series
          */
         this.removeDeleted = function(series) {
-            $log.debug('SeriesService: removeDeleted');
+            $log.debug('SeriesService: remove series with deleted flag');
+            $log.debug(series);
+
             var result = [];
+
             angular.forEach(
                 series,
                 function(param) {
-                    $log.debug('isDeleted: '+param.config.deleted);
                     if(!param.config.deleted) {
                         this.push(param);
                     }
                 },
                 result
             );
+
             return result;
         };
 

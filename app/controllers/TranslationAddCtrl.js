@@ -26,7 +26,7 @@
  * }
  */
 angular.module('nanodesuApp')
-    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, $timeout, $uibModal, alertify, ApiService, PageService){
+    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, PagesResources, PageService){
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
 
@@ -34,43 +34,32 @@ angular.module('nanodesuApp')
 
         $scope.page = getPages();
 
-        $scope.help = function(){
-            $uibModal.open({
-                templateUrl: 'views/templates/modal/manual_editor.html',
-                size: 'lg'
-            });
-        };
-
-        ApiService.setUrl($nd.pages);
-        ApiService.http().get(
-            function(success){
-                $log.debug(success);
-                $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
-                // to separate when create or edit page
-                if(!pageId){
-                    $scope.hierarchy = PageService.getSeriesHierarchy(success.series, seriesId);
-                }
-            },
-            function(error){
-                $log.debug(error);
-                alertify.error('Error! Please Contact Admin');
+        PagesResources.get(function(success) {
+            $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
+            // to separate when create or edit page
+            if(!pageId){
+                $scope.hierarchy = PageService.getSeriesHierarchy(success.series, seriesId);
             }
-        );
+        }, function(error) {});
 
         $scope.submit = function(){
             $log.debug('TranslationAddCtrl: submit function');
+
             var data = reformatData($scope.page);
-            $log.debug(data);
             if(pageId){
                 $log.debug('edit');
-                PageService.update(data, pageId);
+
+                PagesResources.update({id: pageId}, data);
+
             } else {
                 $log.debug('save');
-                PageService.save(data);
+
+                PagesResources.save(data);
+
                 $scope.done = true;
             }
-            //$scope.page = reverseData(data);
             $scope.translationForm.$setPristine();
+            $scope.page = reverseData(data);
         };
 
         /**
@@ -83,24 +72,18 @@ angular.module('nanodesuApp')
          * @return {Object} page
          */
         function getPages(){
-            $log.debug('TranslationAddCtrl: getPages function');
-            $log.debug('page id: '+pageId);
+            $log.debug('TranslationAddCtrl: populate the HTML binding with existing or empty data');
             var pages = {};
             pages.meta = {};
+
             if(pageId){
-                ApiService.setUrl($nd.pages);
-                ApiService.http().get(
-                    {'id': pageId},
-                    function(success){
-                        $log.debug(success);
-                        $scope.hierarchy = PageService.getExistingHierarchy(success);
-                        $scope.page = reverseData(success.page);
-                    },
-                    function(error){
-                        $log.debug(error);
-                        alertify.error('Error! Please Contact Admin');
-                    }
-                );
+                $log.debug('The data is existing');
+
+                PagesResources.get({id: pageId}, function(success) {
+                    $scope.hierarchy = PageService.getExistingHierarchy(success);
+                    $scope.page = reverseData(success.page);
+                }, function(error) {});
+
             } else {
                 $log.debug('Create New');
                 pages = {
@@ -118,7 +101,7 @@ angular.module('nanodesuApp')
                     }
                 };
             }
-            $log.debug(pages);
+
             return pages;
         }
 
@@ -128,29 +111,30 @@ angular.module('nanodesuApp')
          * @methodOf nanodesuApp.controller.TranslationAddCtrl
          * @description
          * private function to clean data from html such as convert string to int
-         * add content from simpleMDE, restructure the hierarchy
          *
          * @param {Object} $scope.page
          * @return {Object} page
          */
         function reformatData(param){
-            $log.debug('TranslationAddCtrl: reformatData function');
+            $log.debug('TranslationAddCtrl: reformat data from HTML binding so the API can consume it');
+
             var data = param;
             data.meta.status = $nd.string2Int0(data.meta.status);
+
             if(data.meta.order){
                 data.meta.order = $nd.string2Int0(data.meta.order);
             }
+
             angular.forEach(
                 $scope.hierarchy,
                 function(param){
-                    $log.debug(param);
                     // if the hierarchy is null don't send it into server
                     if(param.value){
                         data.meta[param.label] = param.value;
                     }
                 }
             );
-            $log.debug(data);
+
             return data;
         }
 
@@ -166,7 +150,8 @@ angular.module('nanodesuApp')
          * @return {Object} page
          */
         function reverseData(page){
-            $log.debug('TranslationCtrl: reverseData function');
+            $log.debug('TranslationCtrl: reverse data from API so it will be match with HTML binding');
+
             page.meta.status = page.meta.status.toString();
             page.meta.updated = $nd.createEpochTime();
             return page;

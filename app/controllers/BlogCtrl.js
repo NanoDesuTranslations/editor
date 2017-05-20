@@ -8,28 +8,20 @@
  * Controller for Blog Posts
  */
 angular.module('nanodesuApp')
-    .controller('BlogCtrl', function($log, $scope, $routeParams, alertify, ApiService, PageService){
+    .controller('BlogCtrl', function($log, $scope, $routeParams, alertify, PagesResources, PageService){
         var seriesId = $routeParams.id;
         $scope.blogs = [];
 
-        ApiService.setUrl($nd.pages);
-        ApiService.http().get(
-            function(success){
-                $log.debug(success);
-                var data = success.pages;
-                $scope.isGranted = PageService.getUserPermissions(seriesId);
-                $scope.series = PageService.getSeriesNameAndId(success.series, seriesId); 
-                $scope.blogs = getBlogs(data);
-            },
-            function(error){
-                $log.debug(error);
-                alertify.error('Error! Please Contact Admin');
-            }
-        );
+        PagesResources.get(function(success) {
+            var data = success.pages;
+            $scope.isGranted = PageService.getUserPermissions(seriesId);
+            $scope.series = PageService.getSeriesNameAndId(success.series, seriesId); 
+            $scope.blogs = getBlogs(data);
+        }, function(error) {});
 
         $scope.delete = function(pageId){
             $log.debug('BlogCtrl: delete function');
-            $log.debug(pageId);
+
             alertify.confirm(
                 'Are You Sure?',
                 function(){
@@ -43,7 +35,8 @@ angular.module('nanodesuApp')
         };
         
         function getBlogs(param){
-            $log.debug('BlogCtrl: getBlogs function');
+            $log.debug('BlogCtrl: populate data so it will be not have deleted flag, part of series by series id and type of blog');
+
             var result = [];
             angular.forEach(
                 param,
@@ -57,7 +50,7 @@ angular.module('nanodesuApp')
                 },
                 result
             );
-            $log.debug(result);
+
             return result;
         }
     });

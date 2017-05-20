@@ -115,7 +115,7 @@ angular.module('nanodesuApp')
          * @return {boolean} admin
          */
         this.isAdmin = function() {
-            $log.debug('AuthService: isAdmin function');
+            $log.debug('AuthService: convert isAdmin from String to boolean');
 
             var isAdmin = '';
             if(localStorage.getItem('isAdmin') !== null){

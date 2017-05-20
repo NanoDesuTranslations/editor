@@ -10,7 +10,7 @@
  *
  */
 angular.module('nanodesuApp')
-    .service('PageService', function($log, $window, alertify, ApiService, AuthService){
+    .service('PageService', function($log, $window, alertify, ApiService, PagesResources, AuthService){
 
         /**
          * @ngdoc method
@@ -24,13 +24,16 @@ angular.module('nanodesuApp')
          * @return {array} list of object consist series id and series name
          */
         this.init = function(param, seriesId){
-            $log.debug('PageService: initProjectList function');
+            $log.debug('PageService: decided to show a list of series or pages based on pages endpoint');
+
             var result = '';
             if(seriesId){
                 $log.debug('Create Page List');
+
                 result = pageInit(param, seriesId);
             } else {
                 $log.debug('Create Series List');
+
                 result = seriesInit(param.series);
             }
             return result;
@@ -47,7 +50,8 @@ angular.module('nanodesuApp')
          * @return {boolean}
          */
         this.getUserPermissions = function(seriesId){
-            $log.debug('PageService: getUserPermissions function');
+            $log.debug('PageService: check is the user have the privilege or if it is a admin');
+
             if(inArray(getEditPermissions(), seriesId) || AuthService.isAdmin()){
                 return true;
             }
@@ -114,38 +118,21 @@ angular.module('nanodesuApp')
          * @param {string} pageId
          */
         this.delete = function(id){
-            $log.debug('PageService: delete function');
-            $log.debug(id);
+            $log.debug('PageService: marked pages with deleted flag');
+
             var deleted = true;
-            ApiService.setUrl($nd.pages);
 
-            ApiService.http().get(
-                {'id': id},
-                function(success){
-                    var page = success.page;
-                    $log.debug(page);
-                    page.meta.deleted = deleted;
+            PagesResources.get({id: id}, function(success) {
+                var page = success.page;
+                page.meta.deleted = deleted;
 
-                    ApiService.http().update(
-                        {'id': id},
-                        page,
-                        function(success){
-                            $log.debug(success);
-                            alertify.success('Success! Pages with id: '+id+'already deleted');
-                            // currently we need to reload the page in order update the data
-                            $window.location.reload();
-                        },
-                        function(error){
-                            $log.debug(error);
-                            alertify.error('Error! Please Contact Admin');
-                        }
-                    );
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
+                var update = PagesResources.update({id: id}, page);
+
+                if(update.$resolved) {
+                    $window.location.reload();
                 }
-            );
+            }, function(error) {});
+
         };
 
         /**
@@ -229,11 +216,12 @@ angular.module('nanodesuApp')
          * @return {Object} consist series name and id
          */
         this.getSeriesNameAndId = function(param, seriesId){
-            $log.debug('PageService: getSeriesNameAndId function');
-            $log.debug(param[seriesId].name);
+            $log.debug('PageService: return series name and id');
+
             var result = {};
             result.name = param[seriesId].name;
             result.id = seriesId;
+
             return result;
         };
 
@@ -248,14 +236,14 @@ angular.module('nanodesuApp')
          * @return {array} list of series object that not deleted
          */
         function seriesInit(param){
-            $log.debug('PageService: seriesInit function');
+            $log.debug('PageService: populate series based on /pages endpoint');
+
             var data = param;
             var tempResult = [];
+
             angular.forEach(
                 data,
                 function(param){
-                    $log.debug('param: '+param.id+' name: '+param.name);
-                    $log.debug('for: '+param.name+'status: '+inArray(getViewPermissions(),param.id));
                     var series = {};
                     series.name = param.name;
                     series.id = param.id;
@@ -268,7 +256,7 @@ angular.module('nanodesuApp')
                 tempResult
             );
             var result = removeDeletedSeries(tempResult);
-            $log.debug(result);
+
             return result;
         }
 
@@ -334,7 +322,8 @@ angular.module('nanodesuApp')
          * @return {array} view permissions
          */
         function getEditPermissions(){
-            $log.debug('PageService: getEditPermissions function');
+            $log.debug('PageService: check if the user have privilege on the series');
+            
             return AuthService.getEdit().split(','); // since in localStorage just store it as plain String
         }
 
@@ -350,7 +339,8 @@ angular.module('nanodesuApp')
          * @return {array} list of series object that not deleted
          */
         function removeDeletedSeries(series){
-            $log.debug('PageService: removeDeletedSeries function');
+            $log.debug('PageService: remove series with flag deleted');
+
             var data = series;
             var result = [];
             angular.forEach(
@@ -362,7 +352,7 @@ angular.module('nanodesuApp')
                 },
                 result
             );
-            $log.debug(result);
+
             return result;
         }
 
@@ -378,22 +368,21 @@ angular.module('nanodesuApp')
          * @return {array} list of page object that not deleted
          */
         function removeDeletedPage(page){
-            $log.debug('PageService: removeDeletedPage function');
-            $log.debug(page);
+            $log.debug('PageService: remove pages with flag deleted');
+
             var data = page;
             var result = [];
+
             angular.forEach(
                 data,
                 function(param){
-                    $log.debug(param);
-                    $log.debug(param.meta.deleted);
                     if(!param.meta.deleted){
                         this.push(param);
                     }
                 },
                 result
             );
-            $log.debug(result);
+
             return result;
         }
 

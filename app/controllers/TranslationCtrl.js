@@ -8,29 +8,19 @@
  * Controller for Translations Page
  */
 angular.module('nanodesuApp')
-    .controller('TranslationCtrl', function($log, $scope, $routeParams, alertify, ApiService, PageService){
+    .controller('TranslationCtrl', function($log, $scope, $routeParams, alertify, PagesResources, PageService){
         var seriesId = $routeParams.id;
-        ApiService.setUrl($nd.pages);
-        ApiService.http().get(
-            function(success){
-                $log.debug(success);
-                var data = init(success);
-                $log.debug('TranslationCtrl init');
-                $log.debug(data);
-                $scope.pages = PageService.init(data, seriesId);
-                $scope.isGranted = PageService.getUserPermissions(seriesId);
-                $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
-                $log.debug($scope.isGranted);
-            },
-            function(error){
-                $log.debug(error);
-                alertify.error('Error! Please Contact Admin');
-            }
-        );
+
+        PagesResources.get(function(success) {
+            var data = init(success);
+            $scope.pages = PageService.init(data, seriesId);
+            $scope.isGranted = PageService.getUserPermissions(seriesId);
+            $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
+        }, function(error) {});
 
         $scope.delete = function(pageId){
-            $log.debug('TranslationCtrl: delete function');
-            $log.debug(pageId);
+            $log.debug('TranslationCtrl: set flag deleted');
+            
             alertify.confirm(
                 'Are You Sure?',
                 function(){
@@ -56,17 +46,15 @@ angular.module('nanodesuApp')
          * @return {array} List of new object
          */
         function init(param){
-            $log.debug('TranslationCtrl: init function');
+            $log.debug('TranslationCtrl: populate the data based on /pages endpoint and added information from the series');
+
             var tempResult = [];
             var tempPages = initPages(param.pages);
             var tempSeries = initSeries(param.series);
-            $log.debug('print temp pages');
-            $log.debug(tempPages);
+
             angular.forEach(
                 tempPages,
                 function(data){
-                    $log.debug('initPages');
-                    $log.debug(tempSeries);
                     data.hierarchy = tempSeries.hierarchy;
                     data.seriesName = tempSeries.name;
                     if(data.meta.blog === false) {
@@ -91,20 +79,19 @@ angular.module('nanodesuApp')
          */
 
         function initPages(param){
-            $log.debug('TranslationCtrl: initPages function');
-            $log.debug(param);
+            $log.debug('TranslationCtrl: list of pages based on seriesId');
+
             var result = [];
             angular.forEach(
                 param,
                 function(data){
-                    $log.debug(seriesId);
                     if(data.series === seriesId){
                         this.push(data);
                     }
                 },
                 result
             );
-            $log.debug(result);
+
             return result;
         }
 
@@ -120,13 +107,12 @@ angular.module('nanodesuApp')
          * @return {Object} Object with name and hierarchy field
          */
         function initSeries(param){
-            $log.debug('TranslationCtrl: initSeries function');
-            $log.debug(param);
+            $log.debug('TranslationCtrl: populate series data to shown on the table list');
+
             var result = {};
             angular.forEach(
                 param,
                 function(key, value){
-                    $log.debug(key+' '+value);
                     if(value === seriesId){
                         result.name = key.name;
                         result.hierarchy = key.config.hierarchy;
@@ -134,7 +120,7 @@ angular.module('nanodesuApp')
                 },
                 result
             );
-            $log.debug(result);
+
             return result;
         }
 

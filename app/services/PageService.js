@@ -10,7 +10,7 @@
  *
  */
 angular.module('nanodesuApp')
-    .service('PageService', function($log, $window, alertify, ApiService, PagesResources, AuthService){
+    .service('PageService', function($log, $window, alertify, PagesResources, AuthService){
 
         /**
          * @ngdoc method
@@ -60,56 +60,6 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
-         * @name save
-         * @methodOf nanodesuApp.service:PageService
-         * @description
-         * perform save for page
-         *
-         * @param {Object} page
-         */
-        this.save = function(page){
-            $log.debug('PageService: save function');
-            ApiService.setUrl($nd.pages);
-            ApiService.http().save(
-                page,
-                function(succes){
-                    $log.debug(succes);
-                    alertify.success('Success! New Translations has been saved');
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
-                }
-            );
-        };
-
-        /**
-         * @ngdoc method
-         * @name edit
-         * @methodOf nanodesuApp.service:PageService
-         * @description
-         * perform update for page
-         *
-         * @param {Object} page
-         */
-        this.update = function(page, pageId){
-            $log.debug('PageService: update function');
-            ApiService.setUrl($nd.pages);
-            ApiService.http().update(
-                {'id': pageId}, page,
-                function(succes){
-                    $log.debug(succes);
-                    alertify.success('Success! Translations with id '+pageId+' has been updated');
-                },
-                function(error){
-                    $log.debug(error);
-                    alertify.error('Error! Please Contact Admin');
-                }
-            );
-        };
-
-        /**
-         * @ngdoc method
          * @name delete
          * @methodOf nanodesuApp.service:PageService
          * @description
@@ -126,11 +76,9 @@ angular.module('nanodesuApp')
                 var page = success.page;
                 page.meta.deleted = deleted;
 
-                var update = PagesResources.update({id: id}, page);
+                PagesResources.update({id: id}, page);
 
-                if(update.$resolved) {
-                    $window.location.reload();
-                }
+                $window.location.reload();
             }, function(error) {});
 
         };
@@ -182,16 +130,16 @@ angular.module('nanodesuApp')
          * series hierarchy and the value
          */
         this.getExistingHierarchy = function(param){
-            $log.debug('PageService: getExistingHierarchy function');
+            $log.debug('PageService: populate hierarchy from series');
+
             var page = param.page;
             var series = param.series;
             var seriesHierarchy = series[0].config.hierarchy;
             var result = [];
+
             angular.forEach(
                 seriesHierarchy,
                 function(param){
-                    $log.debug(param);
-                    $log.debug(page.meta[param]);
                     var hierarchy = {
                         'label': param,
                         'value': page.meta[param] ? page.meta[param] : null
@@ -200,7 +148,7 @@ angular.module('nanodesuApp')
                 },
                 result
             );
-            $log.debug(result);
+
             return result;
         };
 
@@ -425,7 +373,8 @@ angular.module('nanodesuApp')
          * @return {array} list of hierarchy label from series config
          */
         function getSeriesHierarchy(param){
-            $log.debug('PageService: getSeriesHierarchy function');
+            $log.debug('PageService: get series hierarchy from series on /pages endpoint');
+
             var result = param.config.hierarchy;
             return result;
         }

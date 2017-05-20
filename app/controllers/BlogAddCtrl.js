@@ -8,7 +8,7 @@
  * Controller for Add new Blog or Edit Existing Blog
  */
 angular.module('nanodesuApp')
-    .controller('BlogAddCtrl', function($log, $scope, $routeParams, $timeout, $uibModal, alertify, AuthService, ApiService, PageService){
+    .controller('BlogAddCtrl', function($log, $scope, $routeParams, AuthService, PagesResources, PageService){
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
 
@@ -16,13 +16,6 @@ angular.module('nanodesuApp')
 
         $scope.blog = init();
 
-        $scope.help = function(){
-            $uibModal.open({
-                controller: 'BlogAddCtrl',
-                templateUrl: 'views/templates/modal/manual_editor.html',
-                size: 'lg'
-            });
-        };
         /* Related to Angular Bootstrap DatePicker */
         $scope.today = function(){
             $scope.blog.meta.blog.published_date = new Date();
@@ -37,27 +30,22 @@ angular.module('nanodesuApp')
         };
         /* end */
 
-        ApiService.setUrl($nd.pages);
-        ApiService.http().get(
-            function(success){
-                $log.debug(success);
-                $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
-            },
-            function(error){
-                $log.debug(error);
-                alertify.error('Error! Please Contact Admin');
-            }
-        );
+        PagesResources.get(function(success) {
+            $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
+        }, function(error) {});
 
         $scope.submit = function(){
-            $log.debug('BlogAddCtrl: init function');
-            var data = $scope.blog;
+            $log.debug('BlogAddCtrl: submit into API');
+
+            $scope.blog.meta.blog.published_date = $nd.convertToEpochTime($scope.blog.meta.blog.published_date);
+            $scope.blog.meta.status = $nd.string2Int0($scope.blog.meta.status);
+
             if(pageId){
                 $log.debug('edit');
-                PageService.update(reformatData(data), pageId);
+                PagesResources.update({id: pageId}, $scope.blog);
             } else {
                 $log.debug('save');
-                PageService.save(reformatData(data));
+                PagesResources.save($scope.blog);
             }
             $scope.blog = init();
             $scope.blogForm.$setPristine();
@@ -73,24 +61,19 @@ angular.module('nanodesuApp')
          * @return {Object} page
          */
         function init(){
-            $log.debug('BlogAddCtrl: init function');
+            $log.debug('BlogAddCtrl: populate data either is exist or new');
+
             var blog = {};
             if(pageId){
-                ApiService.setUrl($nd.pages);
-                ApiService.http().get(
-                    {'id': pageId},
-                    function(success){
-                        $log.debug(success);
-                        $log.debug(success.page);
-                        $scope.blog = reverseData(success.page);
-                    },
-                    function(error){
-                        $log.debug(error);
-                        alertify.error('Error! Please Contact Admin');
-                    }
-                );
+                $log.debug('exisiting data');
+
+                PagesResources.get({id: pageId}, function(success) {
+                    $scope.blog = reverseData(success.page);
+                }, function(error) {});
+
             } else {
                 $log.debug('create new');
+
                 blog = {
                     'content': null,
                     'series': seriesId,
@@ -109,7 +92,7 @@ angular.module('nanodesuApp')
                     }
                 };
             }
-            $log.debug(blog);
+
             return blog;
         }
 
@@ -125,11 +108,13 @@ angular.module('nanodesuApp')
          * @return {Object} blog
          */
         function reformatData(param){
-            $log.debug('BlogAddCtrl: reformatData function');
+            $log.debug('BlogAddCtrl: reformat data from HTML so it can be consumed by API');
+
             var data = param;
-            data.meta.blog.published_date = $nd.convertToEpochTime(param.meta.blog.published_date);
-            $log.debug(data.meta.blog.published_date);
+            
+            data.meta.blog.published_date = $nd.convertToEpochTime(data.meta.blog.published_date);
             data.meta.status = $nd.string2Int0(data.meta.status);
+
             return data;
         }
 
@@ -145,7 +130,8 @@ angular.module('nanodesuApp')
          * @return {Object} page
          */
         function reverseData(param){
-            $log.debug('BlogAddCtrl: reverseData function');
+            $log.debug('BlogAddCtrl: reverse data from API so it can be binding to HTML');
+
             var data = param;
             data.meta.status = data.meta.status.toString();
             data.meta.blog.published_date = $nd.convertToUtc(data.meta.blog.published_date);

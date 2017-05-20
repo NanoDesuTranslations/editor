@@ -18,7 +18,7 @@
  * }
  */
 angular.module('nanodesuApp')
-    .service('AuthService', function($log, $window, alertify, ApiService){
+    .service('AuthService', function($log, $window, alertify){
 
         /**
          * @ngdoc method
@@ -43,7 +43,8 @@ angular.module('nanodesuApp')
          * @return {string} username
          */
         this.getUsername = function() {
-            $log.debug('AuthService: getUsername function');
+            $log.debug('AuthService: return username from localStorage');
+            
             var username = '';
             if(localStorage.getItem('username') !== null){
                 username = localStorage.getItem('username');
@@ -61,7 +62,8 @@ angular.module('nanodesuApp')
          * @return {string} token
          */
         this.getToken = function() {
-            $log.debug('AuthService: getToken function');
+            $log.debug('AuthService: return token from localStorage');
+
             var token = '';
             if(localStorage.getItem('token') !== null){
                 token = localStorage.getItem('token');
@@ -79,7 +81,8 @@ angular.module('nanodesuApp')
          * @return {string} view
          */
         this.getView = function() {
-            $log.debug('AuthService: getView function');
+            $log.debug('AuthService: return list of series that can be viewed from localStorage');
+
             var view = [];
             if(localStorage.getItem('view') !== null){
                 view = localStorage.getItem('view');
@@ -97,7 +100,8 @@ angular.module('nanodesuApp')
          * @return {string} edit
          */
         this.getEdit = function() {
-            $log.debug('AuthService: getEdit function');
+            $log.debug('AuthService: return list of series that can be edited from localStorage');
+
             var edit = [];
             if(localStorage.getItem('edit') !== null){
                 edit = localStorage.getItem('edit');
@@ -137,7 +141,7 @@ angular.module('nanodesuApp')
          */
         this.newPermissions = function(data){
             $log.debug('AuthService: renewPermissions function');
-            $log.debug(data.permissions.view);
+            
             removePermission();
             renewPermissions(data);
         };
@@ -153,6 +157,7 @@ angular.module('nanodesuApp')
          */
         this.isLogin = function() {
             $log.debug('AuthService: isLogin function');
+
             var status = '';
             if(localStorage.getItem('token')) {
                 status = true;
@@ -174,6 +179,7 @@ angular.module('nanodesuApp')
         this.storeCredentials = function(param) {
             $log.debug('AuthService: storeCredentials function');
             $log.debug('Authorization Info: '+JSON.stringify(param));
+
             localStorage.setItem('isAdmin', param.permissions.admin);
             localStorage.setItem('token', param.token);
             localStorage.setItem('view', param.permissions.view);

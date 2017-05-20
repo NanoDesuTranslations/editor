@@ -28,7 +28,7 @@ module.exports = function(grunt) {
                     },
                     // copy html template in views
                     {'expand': true, 'src': ['views/**'], 'dest': 'public/'},
-                    {'expand': true, 'src': ['assets/js/*'], 'dest': 'public/', 'filter': 'isFile'},
+                    {'expand': true, 'src': ['assets/**'], 'dest': 'public/', 'filter': 'isFile'},
                 ]
             },
             'libs': {

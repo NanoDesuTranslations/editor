@@ -8,7 +8,7 @@
  * Controller for Add new User or Edit Existing User
  */
 angular.module('nanodesuApp')
-    .controller('UserAddCtrl', function($log, $scope, $routeParams, UserResources, SeriesResources, AuthService){
+    .controller('UserAddCtrl', function($log, $scope, $routeParams, UserResources, SeriesResources, SeriesService, AuthService){
         var username = $routeParams.username;
         $scope.passwd = true; // model to hide password field when edit user
         $scope.user = getUser(username);
@@ -16,7 +16,9 @@ angular.module('nanodesuApp')
         $scope.view = {};
         $scope.edit = {};
 
-        $scope.series = SeriesResources.query();
+        SeriesResources.query(function(success) {
+            $scope.series = SeriesService.removeDeleted(success);
+        }, function(error) {});
 
         /**
          * @ngdoc method
@@ -131,7 +133,7 @@ angular.module('nanodesuApp')
         function reformatData(data){
             $log.debug('UserAddCtrl: reformat data from HTML into specify format that can be accepted by API');
 
-            var result = data;
+            var result = angular.copy(data);
             var tempView = [];
             var tempEdit = [];
 

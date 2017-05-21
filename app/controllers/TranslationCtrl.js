@@ -8,7 +8,7 @@
  * Controller for Translations Page
  */
 angular.module('nanodesuApp')
-    .controller('TranslationCtrl', function($log, $scope, $routeParams, alertify, PagesResources, PageService){
+    .controller('TranslationCtrl', function($log, $scope, $rootScope, $routeParams, alertify, PagesResources, PageService){
         var seriesId = $routeParams.id;
 
         PagesResources.get(function(success) {
@@ -18,6 +18,15 @@ angular.module('nanodesuApp')
             $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
         }, function(error) {});
 
+        $rootScope.$on('refreshTranslations', function() {
+            PagesResources.get(function(success) {
+                var data = init(success);
+                $scope.pages = PageService.init(data, seriesId);
+                $scope.isGranted = PageService.getUserPermissions(seriesId);
+                $scope.series = PageService.getSeriesNameAndId(success.series, seriesId);
+            }, function(error) {});
+        });
+
         $scope.delete = function(pageId){
             $log.debug('TranslationCtrl: set flag deleted');
             
@@ -25,7 +34,16 @@ angular.module('nanodesuApp')
                 'Are You Sure?',
                 function(){
                     $log.debug('Yes Button was choosen');
-                    PageService.delete(pageId);
+
+                    PagesResources.get({id: pageId}, function(success) {
+                        var page = success.page;
+                        page.meta.deleted = true;
+
+                        PagesResources.update({id: pageId}, page, function(success) {
+                            $rootScope.$broadcast('refreshTranslations');
+                        }, function(error) {});
+                    });
+
                 },
                 function(){
                     $log.debug('Cancel Button was choosen');

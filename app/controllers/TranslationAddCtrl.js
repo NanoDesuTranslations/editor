@@ -118,7 +118,7 @@ angular.module('nanodesuApp')
         function reformatData(param){
             $log.debug('TranslationAddCtrl: reformat data from HTML binding so the API can consume it');
 
-            var data = param;
+            var data = angular.copy(param);
             data.meta.status = $nd.string2Int0(data.meta.status);
 
             if(data.meta.order){

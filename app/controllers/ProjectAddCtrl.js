@@ -137,7 +137,7 @@ angular.module('nanodesuApp')
          */
         function reformatData(series){
             $log.debug('ProjectAddCtrl: reformat data from HTML so API can accept it');
-            var data = series;
+            var data = angular.copy(series);
             data.config['header-url'] = $scope.headerUrl;
             data.config.hierarchy = addHierarchy();
             data.config.status = $nd.string2Int0(data.config.status);

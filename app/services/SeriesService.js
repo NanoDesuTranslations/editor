@@ -10,36 +10,7 @@
  *
  */
 angular.module('nanodesuApp')
-    .service('SeriesService', function($log, $window, SeriesResources){
-
-        /**
-         * @ngdoc method
-         * @name delete
-         * @methodOf nanodesuApp.service:SeriesService
-         * @description
-         * perform soft delete for series
-         *
-         * @param {string} seriesId
-         */
-        this.delete = function(seriesId) {
-            $log.debug('SeriesService: perform soft delete on series');
-
-            var deleted = true;
-
-            SeriesResources.get({id: seriesId}, function(success) {
-
-                var series = success;
-
-                series.config.deleted = deleted;
-                series.$update();
-
-                if(series.$resolved) {
-                    $window.location.reload();
-                }
-            }, function(error) {});
-
-        };
-
+    .service('SeriesService', function($log){
 
         /**
          * @ngdoc method

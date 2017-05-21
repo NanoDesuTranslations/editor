@@ -10,7 +10,7 @@
  *
  */
 angular.module('nanodesuApp')
-    .service('PageService', function($log, $window, alertify, PagesResources, AuthService){
+    .service('PageService', function($log, alertify, AuthService){
 
         /**
          * @ngdoc method
@@ -56,31 +56,6 @@ angular.module('nanodesuApp')
                 return true;
             }
             return false;
-        };
-
-        /**
-         * @ngdoc method
-         * @name delete
-         * @methodOf nanodesuApp.service:PageService
-         * @description
-         * perform soft delete for pages
-         *
-         * @param {string} pageId
-         */
-        this.delete = function(id){
-            $log.debug('PageService: marked pages with deleted flag');
-
-            var deleted = true;
-
-            PagesResources.get({id: id}, function(success) {
-                var page = success.page;
-                page.meta.deleted = deleted;
-
-                PagesResources.update({id: id}, page);
-
-                $window.location.reload();
-            }, function(error) {});
-
         };
 
         /**

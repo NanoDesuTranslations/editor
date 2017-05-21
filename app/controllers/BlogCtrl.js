@@ -8,7 +8,7 @@
  * Controller for Blog Posts
  */
 angular.module('nanodesuApp')
-    .controller('BlogCtrl', function($log, $scope, $routeParams, alertify, PagesResources, PageService){
+    .controller('BlogCtrl', function($log, $scope, $rootScope, $routeParams, alertify, PagesResources, PageService){
         var seriesId = $routeParams.id;
         $scope.blogs = [];
 
@@ -19,6 +19,15 @@ angular.module('nanodesuApp')
             $scope.blogs = getBlogs(data);
         }, function(error) {});
 
+        $rootScope.$on('refreshBlog', function() {
+            PagesResources.get(function(success) {
+                var data = success.pages;
+                $scope.isGranted = PageService.getUserPermissions(seriesId);
+                $scope.series = PageService.getSeriesNameAndId(success.series, seriesId); 
+                $scope.blogs = getBlogs(data);
+            }, function(error) {});
+        });
+
         $scope.delete = function(pageId){
             $log.debug('BlogCtrl: delete function');
 
@@ -26,7 +35,15 @@ angular.module('nanodesuApp')
                 'Are You Sure?',
                 function(){
                     $log.debug('Yes Button was choosen');
-                    PageService.delete(pageId);
+
+                    PagesResources.get({id: pageId}, function(success) {
+                        var page = success.page;
+                        page.meta.deleted = true;
+
+                        PagesResources.update({id: pageId}, page, function(success) {
+                            $rootScope.$broadcast('refreshBlog');
+                        }, function(error) {});
+                    });
                 },
                 function(){
                     $log.debug('Cancel Button was choosen');

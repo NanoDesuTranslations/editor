@@ -75,7 +75,7 @@ angular.module('nanodesuApp')
                 function(data){
                     data.hierarchy = tempSeries.hierarchy;
                     data.seriesName = tempSeries.name;
-                    if(data.meta.blog === false) {
+                    if(typeof data.meta.blog === 'undefined' || data.meta.blog === false) {
                         this.push(data);
                     }
                 },

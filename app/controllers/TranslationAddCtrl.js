@@ -45,21 +45,43 @@ angular.module('nanodesuApp')
         $scope.submit = function(){
             $log.debug('TranslationAddCtrl: submit function');
 
-            var data = reformatData($scope.page);
+            $scope.page.meta.status = $nd.string2Int0($scope.page.meta.status);
+
+            if($scope.page.meta.order){
+                $scope.page.meta.order = $nd.string2Int0($scope.page.meta.order);
+            }
+
             if(pageId){
                 $log.debug('edit');
 
-                PagesResources.update({id: pageId}, data);
+                angular.forEach(
+                    $scope.hierarchy,
+                        function(param){
+                            $scope.page.meta[param.label] = param.value;
+                        }
+                );
+
+                PagesResources.update({id: pageId}, $scope.page);
 
             } else {
                 $log.debug('save');
 
-                PagesResources.save(data);
+                angular.forEach(
+                    $scope.hierarchy,
+                        function(param){
+                            // if the hierarchy is null don't send it into server
+                            if(param.value){
+                                $scope.page.meta[param.label] = param.value;
+                            }
+                        }
+                );
+
+                PagesResources.save($scope.page);
 
                 $scope.done = true;
             }
             $scope.translationForm.$setPristine();
-            $scope.page = reverseData(data);
+            $scope.page = getPages();
         };
 
         /**
@@ -103,39 +125,6 @@ angular.module('nanodesuApp')
             }
 
             return pages;
-        }
-
-        /**
-         * @ngdoc method
-         * @name reformatData
-         * @methodOf nanodesuApp.controller.TranslationAddCtrl
-         * @description
-         * private function to clean data from html such as convert string to int
-         *
-         * @param {Object} $scope.page
-         * @return {Object} page
-         */
-        function reformatData(param){
-            $log.debug('TranslationAddCtrl: reformat data from HTML binding so the API can consume it');
-
-            var data = angular.copy(param);
-            data.meta.status = $nd.string2Int0(data.meta.status);
-
-            if(data.meta.order){
-                data.meta.order = $nd.string2Int0(data.meta.order);
-            }
-
-            angular.forEach(
-                $scope.hierarchy,
-                function(param){
-                    // if the hierarchy is null don't send it into server
-                    if(param.value){
-                        data.meta[param.label] = param.value;
-                    }
-                }
-            );
-
-            return data;
         }
 
         /**

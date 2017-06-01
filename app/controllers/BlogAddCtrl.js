@@ -98,28 +98,6 @@ angular.module('nanodesuApp')
 
         /**
          * @ngdoc method
-         * @name reformatData
-         * @methodOf nanodesuApp.controller.BlogAddCtrl
-         * @description
-         * private function to reformat data from html so it
-         * can be saved
-         *
-         * @param {Object} $scope.blog
-         * @return {Object} blog
-         */
-        function reformatData(param){
-            $log.debug('BlogAddCtrl: reformat data from HTML so it can be consumed by API');
-
-            var data = param;
-            
-            data.meta.blog.published_date = $nd.convertToEpochTime(data.meta.blog.published_date);
-            data.meta.status = $nd.string2Int0(data.meta.status);
-
-            return data;
-        }
-
-        /**
-         * @ngdoc method
          * @name reverseData
          * @methodOf nanodesuApp.controller.BlogAddCtrl
          * @description

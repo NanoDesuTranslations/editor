@@ -15,7 +15,6 @@ angular
         'ngResource',
         'ngAlertify',
         'ui.bootstrap',
-        'ui.tinymce',
         'angularUtils.directives.dirPagination'
         ])
     .config(function ($routeProvider, $compileProvider, $logProvider, 

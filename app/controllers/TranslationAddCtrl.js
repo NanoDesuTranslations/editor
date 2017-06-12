@@ -26,11 +26,20 @@
  * }
  */
 angular.module('nanodesuApp')
-    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, PagesResources, PageService){
+    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, $timeout, PagesResources, PageService){
+        var simpleMde = new SimpleMDE(document.getElementById('content'));
+        var edit = 0; //flag when open menu then edit on simplemde editor
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
 
-        $scope.tinymceOptions = $nd.tinymceOptions;
+        simpleMde.codemirror.on('change', function() {
+            if(edit === 5) {
+                $timeout(function() {
+                    $scope.translationForm.$setDirty();
+                });
+            }
+            edit++;
+        });
 
         $scope.page = getPages();
 
@@ -46,6 +55,7 @@ angular.module('nanodesuApp')
             $log.debug('TranslationAddCtrl: submit function');
 
             $scope.page.meta.status = $nd.string2Int0($scope.page.meta.status);
+            $scope.page.content = simpleMde.value();
 
             if($scope.page.meta.order){
                 $scope.page.meta.order = $nd.string2Int0($scope.page.meta.order);
@@ -143,6 +153,7 @@ angular.module('nanodesuApp')
 
             page.meta.status = page.meta.status.toString();
             page.meta.updated = $nd.createEpochTime();
+            simpleMde.value(page.content);
             return page;
         }
 

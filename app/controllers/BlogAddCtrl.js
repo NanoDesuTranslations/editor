@@ -8,11 +8,20 @@
  * Controller for Add new Blog or Edit Existing Blog
  */
 angular.module('nanodesuApp')
-    .controller('BlogAddCtrl', function($log, $scope, $routeParams, AuthService, PagesResources, PageService){
+    .controller('BlogAddCtrl', function($log, $scope, $routeParams, $timeout, AuthService, PagesResources, PageService){
+        var simpleMde = new SimpleMDE(document.getElementById('content'));
+        var edit = 0; //flag when open blog menu and start editing on simplemde
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
 
-        $scope.tinymceOptions = $nd.tinymceOptions;
+        simpleMde.codemirror.on('change', function() {
+            if(edit === 5) {
+                $timeout(function() {
+                    $scope.blogForm.$setDirty();
+                });
+            }
+            edit++;
+        });
 
         $scope.blog = init();
 
@@ -38,6 +47,7 @@ angular.module('nanodesuApp')
             $log.debug('BlogAddCtrl: submit into API');
 
             $scope.blog.meta.blog.published_date = $nd.convertToEpochTime($scope.blog.meta.blog.published_date);
+            $scope.blog.content = simpleMde.value();
             $scope.blog.meta.status = $nd.string2Int0($scope.blog.meta.status);
 
             if(pageId){
@@ -114,6 +124,7 @@ angular.module('nanodesuApp')
             data.meta.status = data.meta.status.toString();
             data.meta.blog.published_date = $nd.convertToUtc(data.meta.blog.published_date);
             data.meta.updated = $nd.createEpochTime();
+            simpleMde.value(data.content);
             return data;
         }
     });

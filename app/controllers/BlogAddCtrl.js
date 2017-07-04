@@ -52,12 +52,17 @@ angular.module('nanodesuApp')
 
             if(pageId){
                 $log.debug('edit');
-                PagesResources.update({id: pageId}, $scope.blog);
+                PagesResources.update({id: pageId}, $scope.blog, function(success) {
+                    $scope.blog.meta.blog.published_date = $nd.convertToUtc($scope.blog.meta.blog.published_date);
+                    $scope.blog.meta.status = $scope.blog.meta.status.toString();
+                }, function(error) {});
             } else {
                 $log.debug('save');
-                PagesResources.save($scope.blog);
+                PagesResources.save($scope.blog, function(success) {
+                    $scope.blog.meta.blog.published_date = $nd.convertToUtc($scope.blog.meta.blog.published_date);
+                    $scope.blog.meta.status = $scope.blog.meta.status.toString();
+                }, function(error) {});
             }
-            $scope.blog = init();
             $scope.blogForm.$setPristine();
         };
 

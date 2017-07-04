@@ -71,7 +71,9 @@ angular.module('nanodesuApp')
                         }
                 );
 
-                PagesResources.update({id: pageId}, $scope.page);
+                PagesResources.update({id: pageId}, $scope.page, function(success) {
+                    $scope.page.meta.status = $scope.page.meta.status.toString();
+                }, function(error) {});
 
             } else {
                 $log.debug('save');
@@ -86,12 +88,13 @@ angular.module('nanodesuApp')
                         }
                 );
 
-                PagesResources.save($scope.page);
+                PagesResources.save($scope.page, function(success) {
 
+                }, function(error) {});
+                    $scope.page.meta.status = $scope.page.meta.status.toString();
                 $scope.done = true;
             }
             $scope.translationForm.$setPristine();
-            $scope.page = getPages();
         };
 
         /**

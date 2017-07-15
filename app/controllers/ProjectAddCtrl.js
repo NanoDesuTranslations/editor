@@ -45,10 +45,8 @@ angular.module('nanodesuApp')
             var series = reformatData($scope.series);
             if(seriesId){
                 SeriesResources.update({id: seriesId}, series);
-                $scope.series = reverseData(series);
             } else {
                 SeriesResources.save(series);
-                $scope.series = reverseData(series);
             }
         };
 

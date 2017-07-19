@@ -15,6 +15,7 @@ angular
         'ngResource',
         'ngAlertify',
         'ui.bootstrap',
+        'ui.tinymce',
         'angularUtils.directives.dirPagination'
         ])
     .config(function ($routeProvider, $compileProvider, $logProvider, 
@@ -68,6 +69,10 @@ angular
             .when('/build', {
                 templateUrl: 'views/build.html',
                 controller: 'BuildCtrl'
+            })
+            .when('/import', {
+                templateUrl: 'views/wp_import.html',
+                controller: 'WpImportCtrl'
             })
             .when('/translations/:id', {
                 templateUrl: 'views/translation.html',

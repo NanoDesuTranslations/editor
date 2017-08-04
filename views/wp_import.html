@@ -7,7 +7,29 @@
             </button>
         </div>
         <div class="panel-body btn-toolbar">
-            <!-- content here -->
+            <form class="form-horizontal">
+
+                <div class="form-group">
+                    <label for="series" class="col-sm-2 control-label">Series</label>
+                    <div class="col-sm-10">
+                        <select ng-options="s.name for s in series track by s.id" ng-model="project" class="form-control">
+                            <option value="">-- Choose One --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="wp" class="col-sm-2 control-label">Wordpress URL</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="site" placeholder="Wordpress URL"/>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-success" ng-click="import()">
+                    Import
+                </button>
+
+            </form>
         </div>
     </div>
 </div>

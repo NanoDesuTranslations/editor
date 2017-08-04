@@ -8,7 +8,12 @@
  * Controller for Main Page
  */
 angular.module('nanodesuApp')
-    .controller('WpImportCtrl', function($log, $scope){
+    .controller('WpImportCtrl', function($log, $scope, SeriesResources, WpResources, SeriesService){
+
+        SeriesResources.query(function(success) {
+            $scope.series = SeriesService.removeDeleted(success);
+            $log.debug($scope.series);
+        }, function(error) {});
 
     });
 })();

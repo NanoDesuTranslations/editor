@@ -16,7 +16,7 @@ angular.module('nanodesuApp')
         }, function(error) {});
 
         $scope.import = function() {
-            $log.debug($scope.project + " " + $scope.site);
+            WpResources.get({'series': $scope.project.id, 'site': $scope.site});
         };
 
     });

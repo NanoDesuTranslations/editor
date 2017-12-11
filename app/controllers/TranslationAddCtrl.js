@@ -89,9 +89,8 @@ angular.module('nanodesuApp')
                 );
 
                 PagesResources.save($scope.page, function(success) {
-
+                  $scope.page.meta.status = $scope.page.meta.status.toString();
                 }, function(error) {});
-                    $scope.page.meta.status = $scope.page.meta.status.toString();
                 $scope.done = true;
             }
             $scope.translationForm.$setPristine();

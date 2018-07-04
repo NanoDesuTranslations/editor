@@ -26,11 +26,25 @@
  * }
  */
 angular.module('nanodesuApp')
-    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, $timeout, PagesResources, PageService){
+    .controller('TranslationAddCtrl', function($log, $scope, $routeParams, $timeout, $uibModal, PagesResources, PageService){
         var simpleMde = new SimpleMDE(document.getElementById('content'));
         var edit = 0; //flag when open menu then edit on simplemde editor
         var seriesId = $routeParams.seriesId;
         var pageId = $routeParams.pageId;
+        var urlPreview = '/p/' + pageId;
+
+        /**
+         * Open Angular UI Bootstrap Modal
+         */
+        $scope.preview = function() {
+          $uibModal.open({
+            templateUrl: 'views/templates/modal/preview.html',
+            size: 'lg',
+            controller: function($scope) {
+              $scope.url = urlPreview;
+            },
+          });
+        };
 
         simpleMde.codemirror.on('change', function() {
             if(edit === 5) {
